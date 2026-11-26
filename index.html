@@ -676,6 +676,22 @@ body{margin:0}
 .fmadd input{flex:1;min-width:0;font:800 18px var(--body);padding:10px;border-radius:12px}
 .adtag{font-size:11px;font-weight:900;letter-spacing:.06em;opacity:.7;margin-left:4px}
 .srow2.many > span{flex:1 1 150px!important;min-width:150px!important}
+.world.bears{grid-column:1 / -1;min-height:120px;flex-direction:row;align-items:center;gap:18px;justify-content:flex-start;--wbg:linear-gradient(135deg,#0b162a,#1c2c4a 60%,#c83803)}
+.world.bears .bl{width:96px;height:96px;flex:none;display:flex;align-items:center;justify-content:center;font-size:72px}
+.world.bears .bl img{width:100%;height:100%;object-fit:contain}
+.world.bears .wn{font-size:30px}
+.bpoll{position:fixed;inset:0;z-index:9990;background:radial-gradient(circle at 50% 30%,#1c2c4a,#0b162a 70%);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:70px 16px 24px;box-sizing:border-box;overflow:hidden;text-align:center}
+.bpoll .bk{position:absolute;left:14px;top:14px;background:#fff;color:#0b162a;border-radius:999px;padding:10px 18px;font:900 18px var(--body);z-index:3}
+.bpoll .logo{width:min(62vw,46vh,420px);aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:min(40vw,30vh)}
+.bpoll .logo img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 10px 30px rgba(0,0,0,.5))}
+.bpoll h2{font:700 clamp(26px,4.4vw,44px)/1.1 var(--display);margin:0;text-wrap:balance}
+.bpoll .cap{min-height:1.4em;font-weight:800;font-size:clamp(16px,2.4vw,22px);color:#ffb38a}
+.bpoll .row{display:flex;gap:18px;justify-content:center;position:relative;width:100%;min-height:80px}
+.bpoll .yes,.bpoll .no{font:900 clamp(22px,3.4vw,32px) var(--body);border-radius:22px;padding:16px 38px;box-shadow:inset 0 -6px 0 rgba(0,0,0,.2);transition:transform .25s,left .25s,top .25s}
+.bpoll .yes{background:#c83803;color:#fff}
+.bpoll .no{background:#fff;color:#0b162a}
+.bpoll .no.run{position:fixed;z-index:2}
+.bpoll .got{font:700 clamp(40px,8vw,80px)/1 var(--display);color:#ffb38a;animation:pop .4s}
 </style>
 
 <canvas id="snow"></canvas>
@@ -734,7 +750,7 @@ body{margin:0}
     <button class="pill" id="edit">⭐ Stars &amp; names</button>
   </div>
   <div id="worlds"></div>
-  <div class="foot">Games ask who's playing, then get easier or harder by age. Stars are saved on this tablet only.</div>
+  <div class="foot">Games ask who's playing. Win with 2 stars or more to level up.</div>
 </div>
 
 <div id="wview" hidden>
@@ -2922,8 +2938,10 @@ var WORLDS=[
 var world=null;
 function byId(id){for(var i=0;i<GAMES.length;i++)if(GAMES[i].id===id)return GAMES[i];return null;}
 function renderHome(){var box=$("#worlds");box.innerHTML="";
-  WORLDS.forEach(function(w){var b=h("button","world","<div class='pat'>"+new Array(16).join(w.pat)+"</div><span class='we'>"+w.em+"</span><span class='wn'>"+w.name+"</span>"+"<span class='wnew'>+5 NEW</span>"+"<span class='wd'>"+w.games.length+" games · "+w.bl+"</span>");
-    b.style.setProperty("--wbg",w.bg);b.addEventListener("click",function(){sfx.pop();openWorld(w);});box.appendChild(b);});}
+  WORLDS.forEach(function(w){var b=h("button","world","<div class='pat'>"+new Array(16).join(w.pat)+"</div><span class='we'>"+w.em+"</span><span class='wn'>"+w.name+"</span>"+"<span class='wnew'>+5 NEW</span>"+"<span class='wd'>"+(w.games.length+(w.links||[]).length)+" games · "+w.bl+"</span>");
+    b.style.setProperty("--wbg",w.bg);b.addEventListener("click",function(){sfx.pop();openWorld(w);});box.appendChild(b);});
+  var bl=LS.get("cg-bears",""),bb=h("button","world bears","<span class='bl'>"+(bl?"<img src='"+bl+"' alt=''>":"🐻")+"</span><span><span class='wn'>Bears Poll</span><span class='wnew' style='position:static;display:inline-block;margin-left:10px'>NEW</span><span class='wd' style='display:block'>One quick question. Be honest!</span></span>");
+  bb.addEventListener("click",function(){bearsPoll();});box.appendChild(bb);}
 /* ================= family sync (Firestore REST). The family code lives only on the tablets and the private QR sheet, never in this repo. ================= */
 var FB={key:"AIzaSyCxbZEqlOZmUv7RLlXW-Im62fKRa7I_5D8",proj:"arizona-girls"};
 var FAM=LS.get("cg-fam",""),ME=LS.get("cg-me",-1),ADMIN=LS.get("cg-admin",false),MSGS=LS.get("cg-msgs",[])||[],PICT=LS.get("cg-pict",{})||{};
@@ -2967,6 +2985,7 @@ function cloudSync(){if(!FAM||CLOUD.busy)return Promise.resolve();CLOUD.busy=tru
     players.forEach(function(pp,i){var r=R["p"+i];if(r)mergeP(i,r);var l=recP(i);if(!r||JSON.stringify(r)!==JSON.stringify(l))out["p"+i]=l;});
     if(R.faces){var ch=false;for(var k in R.faces)if(R.faces.hasOwnProperty(k)&&FACES[k]!==R.faces[k]){FACES[k]=R.faces[k];ch=true;}if(ch)LS.set("cg-faces",FACES);}
     else if(Object.keys(FACES).length)out.faces=FACES;
+    if(R.bears&&R.bears!==LS.get("cg-bears","")){LS.set("cg-bears",R.bears);try{renderHome();}catch(e){}}
     if(R.msgs)MSGS=R.msgs;LS.set("cg-msgs",MSGS);
     _save0();LS.set("cg-lv",LV);LS.set("cg-pics",PICS);LS.set("cg-pict",PICT);
     CLOUD.ok=true;CLOUD.err="";CLOUD.last=Date.now();cloudRender();return fsPut(out);
@@ -3053,8 +3072,28 @@ function openParent(){var o=h("div","brk msgs pview");
     o.querySelector("#pSync").addEventListener("click",function(){this.textContent="Refreshing…";cloudSync().then(draw);});}
   draw();document.body.appendChild(o);}
 
+
+/* ================= Bears poll (a prank from John). The logo comes from the private family record only. ================= */
+function bearsPoll(){var LOGO=LS.get("cg-bears",""),o=h("div","bpoll"),tries=0;
+  var CAPS=["Hmm, that button seems broken. Try the other one!","Confirm: the Bears stink? 🤔","Error 404: \"No\" not found.","The No button is on a snack break. 🍿","Did you mean: YES, the Bears stink?","Nice try! The No button ran away. 🏃","This tablet only accepts correct answers. 😇","The No button has left the building. 🚪"];
+  function logo(){return "<div class='logo'>"+(LOGO?"<img src='"+LOGO+"' alt='Bears logo'>":"🐻")+"</div>";}
+  function ask(){o.innerHTML="<button class='bk'>‹ Back</button>"+logo()+"<h2>Do you agree the Bears stink?</h2><div class='cap'></div><div class='row'><button class='yes'>Yes</button><button class='no'>No</button></div>";
+    o.querySelector(".bk").addEventListener("click",close);var no=o.querySelector(".no"),cap=o.querySelector(".cap");
+    o.querySelector(".yes").addEventListener("click",reveal);
+    function dodge(e){if(e){e.preventDefault();e.stopPropagation();}tries++;try{tone(220-tries*12,0.12,"square",0.08);}catch(x){}
+      cap.textContent=CAPS[Math.min(tries-1,CAPS.length-1)];
+      if(tries>=6){no.textContent="Yes";no.className="yes";no.removeEventListener("pointerdown",dodge);no.removeEventListener("click",dodge);no.addEventListener("click",reveal);no.style.cssText="";return;}
+      var sc=Math.max(0.45,1-tries*0.1),W=innerWidth,H=innerHeight;no.classList.add("run");no.style.transform="scale("+sc+")";
+      no.style.left=Math.round(20+Math.random()*Math.max(40,W-200))+"px";no.style.top=Math.round(90+Math.random()*Math.max(40,H-200))+"px";}
+    no.addEventListener("pointerdown",dodge);no.addEventListener("click",dodge);}
+  function reveal(){try{sfx.good();confetti();}catch(x){}
+    o.innerHTML="<button class='bk'>‹ Back</button>"+logo()+"<div class='got'>GOTCHA! 😂</div><h2>We know you LOVE the Bears! 🧡💙</h2><p class='cap'>"+(tries?"The No button tried to escape "+tries+" time"+(tries>1?"s":"")+". It never had a chance. ":"")+"Bear down! 🐻</p><button class='yes' id='bpAgain'>Ask me again</button>";
+    o.querySelector(".bk").addEventListener("click",close);o.querySelector("#bpAgain").addEventListener("click",function(){tries=0;ask();});}
+  function close(){sfx.tick();o.remove();}
+  ask();document.body.appendChild(o);sfx.pop();}
+
 /* ================= "new version" banner ================= */
-var APPV="2026.11.26l";
+var APPV="2026.11.26m";
 function verCheck(){if(!/^https?:$/.test(location.protocol)||/claude|localhost|127\.0/.test(location.hostname))return;
   fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.json():null;}).then(function(j){
     if(!j||!j.v||j.v===APPV||document.querySelector(".upd"))return;var b=h("button","upd","✨ New version! Tap to update");
