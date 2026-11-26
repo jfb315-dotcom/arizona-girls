@@ -566,7 +566,7 @@ body.bedOn>*:not(#bedFrame){visibility:hidden}
 .hqag{font-family:inherit;background:rgba(79,255,160,.07);color:#e8fff2;border:3px solid;border-radius:16px;padding:22px 18px;min-width:190px;cursor:pointer}
 .hqag b{display:block;font-size:22px;letter-spacing:2px}
 .hqag span{display:block;font-size:13px;opacity:.7;margin-top:6px}
-#hqPad svg{border:3px solid #4fffa0;border-radius:40px;padding:16px;background:rgba(79,255,160,.06);touch-action:none;cursor:pointer;box-shadow:0 0 30px rgba(79,255,160,.25)}
+#hqPad svg{display:block;margin:0 auto;border:3px solid #4fffa0;border-radius:40px;padding:16px;background:rgba(79,255,160,.06);touch-action:none;cursor:pointer;box-shadow:0 0 30px rgba(79,255,160,.25)}
 .hqbar{width:260px;height:12px;border:2px solid #4fffa0;border-radius:6px;margin:16px auto 0;overflow:hidden}
 .hqbar i{display:block;height:100%;width:0;background:#4fffa0}
 .hqg{font-family:Oswald,"Arial Narrow",sans-serif;font-size:64px;letter-spacing:6px;color:#4fffa0;text-shadow:0 0 24px rgba(79,255,160,.7)}
@@ -5750,6 +5750,13 @@ window.addEventListener("resize",function(){skyKey="";renderSky();fitText($("ver
 /* ---------- Cousins' HQ: John's Spy HQ and Fun pages, opened from the cousins' home page ---------- */
 function hqTone(f,d){var a=audio();if(a)tone(f,a.currentTime+0.01,d||0.1,0.12);}
 var HQ=(location.hash||"").replace("#","")==="fun"?"fun":"spy";
+/* shrink the radar on shorter screens so the red Scan Agent ID button stays visible */
+function hqFitRadar(){var card=document.getElementById("radarCard"),r=document.getElementById("radar");if(!card||!r)return;
+  r.style.transform="";r.style.marginBottom="";r.style.marginRight="";
+  var over=card.scrollHeight-card.clientHeight;if(over<=2)return;
+  var k=Math.max(0.4,(380-over-6)/380);r.style.transformOrigin="top left";r.style.transform="scale("+k+")";
+  var m=Math.round(380*(k-1))+"px";r.style.marginBottom=m;r.style.marginRight=m;}
+window.addEventListener("resize",function(){setTimeout(hqFitRadar,60);});setTimeout(hqFitRadar,300);setTimeout(hqFitRadar,1200);
 document.documentElement.className+=" hq-"+HQ;
 var _hqSet=setPage;setPage=function(){_hqSet(HQ==="spy"?3:1);};
 var _hqClose=closeView;closeView=function(){var was=view;_hqClose();if(HQ==="fun"){if(was==="fun"||!was)location.href="index.html";else openView("fun");}};
