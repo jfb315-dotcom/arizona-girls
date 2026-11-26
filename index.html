@@ -205,6 +205,7 @@ button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 .sctl button{background:var(--snow);color:var(--ink);border-radius:20px;min-height:66px;font-weight:900;font-size:17px;box-shadow:inset 0 -5px 0 rgba(0,0,0,.12)}
 .sctl button span{display:block;font-size:26px}
 .sctl .wide{grid-column:span 2;background:var(--gold)}
+@media (max-height:700px) and (orientation:landscape){.sctl{gap:6px}.sctl button{min-height:48px;font-size:14px;border-radius:16px}.sctl button span{font-size:20px}}
 
 /* keys */
 .keys{position:absolute;left:16px;right:16px;bottom:16px;top:84px;display:flex;gap:10px;align-items:flex-start;justify-content:center}
@@ -734,7 +735,7 @@ body{margin:0}
   <div class="mgrid2">
     <button class="gt gt-games" id="toGames" style="--g:#ff8fb1">
       <span class="k">Play</span><span class="em">🎮</span>
-      <span class="h">Games</span><span class="s">71 games in 6 worlds</span>
+      <span class="h">Games</span><span class="s">68 games in 6 worlds</span>
       <span class="wm"><span data-w="0"><i>✨</i>Sparkle</span><span data-w="1"><i>🌲</i>Woods</span><span data-w="2"><i>🐍</i>Snakes</span><span data-w="3"><i>🎄</i>Holidays</span><span data-w="4"><i>🧠</i>Brain</span><span data-w="5"><i>👯</i>Together</span></span>
     </button>
     <a class="gt gt-spy" href="hq.html#spy" style="--g:#4fffa0">
@@ -1003,7 +1004,7 @@ var WORDS={
 2:[["SANTA","🎅"],["SLEIGH","🛷"],["COOKIE","🍪"],["CANDLE","🕯️"],["MITTEN","🧤"],["PRESENT","🎁"],["ANGEL","👼"],["CANDY","🍬"],["SCARF","🧣"],["SKATES","⛸️"],["COCOA","☕"],["WINTER","⛄"]],
 3:[["REINDEER","🦌"],["SNOWFLAKE","❄️"],["CHIMNEY","🏠"],["ORNAMENT","🎄"],["GINGERBREAD","🍪"],["MISTLETOE","🌿"],["SNOWBALL","⚪"],["STOCKING","🧦"],["WORKSHOP","🔨"],["FIREPLACE","🔥"],["HOLIDAY","🎉"],["ICICLE","🧊"]]
 };
-var CHALLENGES=["Waddle like a penguin across the room","Sing one line of Jingle Bells","Make your best reindeer face","Do 5 jumping jacks","Tell a joke","Freeze like a snowman for 10 seconds","Talk like Santa: Ho ho ho!","Spin around 3 times","Hop on one foot 10 times","Pretend to unwrap a giant present","Be a robot elf for 20 seconds","Say 'snowflake' 5 times fast","Give a sister a high five","Do your silliest dance","Act like a cat who saw snow","Whisper a secret wish","Pretend to ice skate","Make an animal noise, others guess","Name 3 things that are green","Balance a pillow on your head","Do a dramatic weather report","Walk like you're in deep snow","Count backwards from 10","Make up a new holiday song title"];
+var CHALLENGES=["Say 'red lorry, yellow lorry' 5 times fast", "Name 5 kinds of snakes in 10 seconds", "Spell CHRISTMAS backwards", "Hold a plank for 20 seconds", "Do 15 jumping jacks while counting by 3s", "Tell a riddle nobody can solve", "Balance on one foot with your eyes closed for 15 seconds", "Name a country for every letter A to F", "Do your best news-anchor weather report for Phoenix", "Make up a 4-line poem about a deer", "Hum a song; everyone else has to guess it", "Say the alphabet backwards from M", "Wall sit for 30 seconds", "Name 6 animals that live in the desert", "Act out a movie; no talking, others guess", "Say 'unique New York' 5 times fast", "Name 5 things in the room that start with S", "Do 10 squats, then tell a joke", "Explain how to make a sandwich, but only in questions", "Count from 1 to 20 skipping every number with a 3", "Name 4 states that border Arizona", "Pretend to be a game-show host for 20 seconds", "Make up a secret handshake with the person on your left", "Name 3 Bible books that start with J", "Do a 10-second hunting-guide whisper about a wild turkey", "Sing a line of any song in an opera voice", "Freestyle rap 2 lines about pie", "Keep a straight face while everyone tries to make you laugh"];
 
 /* ================= games ================= */
 var GAMES=[];
@@ -1424,7 +1425,7 @@ start:function(el){
 }});
 
 /* ---- Snowman Builder (new) ---- */
-game({id:"snowman",name:"Snowman Maker",em:"⛄",cats:["make","holiday"],bl:"Dress up your own snowman. Hats, scarves, silly faces.",tc:"#d6ecff",
+game({id:"snowman",name:"Snowman Maker",em:"⛄",cats:["make","holiday"],bl:"Build your own snowman, or take the memory challenge: copy a snowman you saw for 8 seconds.",tc:"#d6ecff",stars:true,
 start:function(el){
   var S={hat:1,scarf:1,eyes:0,nose:0,mouth:0,arms:1,btn:0,hold:0,sky:0,snow:true};
   var OPT={hat:["none","🎩","👑","🧢","🎓","🎀"],scarf:["none","#e8424f","#36b37e","#4b8cff","#ff8fb1","stripes"],eyes:["dots","googly","sleepy","hearts","stars"],nose:["carrot","red ball","button"],mouth:["smile","grin","oh","silly"],arms:["none","sticks","mittens"],btn:["coal","candy","none"],hold:["","🧹","🎈","⭐","🍭","🎁","🐦"],sky:["night","day","sunset","snowy pink"]};
@@ -1457,6 +1458,15 @@ start:function(el){
   Object.keys(NAMES).forEach(function(k){var b=h("button","","<span>"+ICON[k]+"</span>"+NAMES[k]);b.addEventListener("click",function(){S[k]=(S[k]+1)%OPT[k].length;sfx.pop();draw();});ctl.appendChild(b);});
   var sn=h("button","","<span>❄️</span>Snow");sn.addEventListener("click",function(){S.snow=!S.snow;draw();});ctl.appendChild(sn);
   var sur=h("button","wide","<span>🎲</span>Surprise me!");sur.addEventListener("click",function(){Object.keys(OPT).forEach(function(k){S[k]=rnd(0,OPT[k].length-1);});sfx.good();draw();});ctl.appendChild(sur);
+    var mem=h("button","wide","<span>🧠</span>Memory challenge");mem.style.background="var(--mint)";ctl.appendChild(mem);
+  var T=null,chk=null,busy=false;
+  mem.addEventListener("click",function(){if(busy)return;busy=true;sfx.pop();mem.style.display="none";sur.style.display="none";T={};Object.keys(OPT).forEach(function(k){T[k]=rnd(0,OPT[k].length-1);});T.snow=S.snow;
+    Object.keys(T).forEach(function(k){S[k]=T[k];});draw();var t=8;score("Remember it! "+t);
+    var iv=setInterval(function(){t--;if(!G||G.done){clearInterval(iv);return;}if(t>0){score("Remember it! "+t);sfx.tick();return;}clearInterval(iv);
+      Object.keys(OPT).forEach(function(k){S[k]=0;});draw();score("Now build it!");sfx.pop();
+      chk=h("button","wide","<span>✅</span>Check my snowman");chk.style.background="var(--candy)";chk.style.color="#fff";ctl.appendChild(chk);
+      chk.addEventListener("click",function(){var ks=Object.keys(OPT),m=ks.filter(function(k){return S[k]===T[k];}).length;
+        Object.keys(T).forEach(function(k){S[k]=T[k];});draw();finish({stars:m===ks.length?3:m>=ks.length-2?2:m>=ks.length-4?1:0,msg:"You matched "+m+" of "+ks.length+" things."});});},1000);});
   draw();score("");
 }});
 
@@ -1494,7 +1504,7 @@ start:function(el){
 }});
 
 /* ---- Silly Spinner (new) ---- */
-game({id:"spin",name:"Silly Spinner",em:"🎡",cats:["together"],bl:"Spin the wheel and do the silly challenge.",tc:"#ffb0d9",both:true,
+game({id:"spin",name:"Silly Spinner",em:"🎡",cats:["together"],bl:"Spin the wheel and take on the challenge: tongue twisters, brain teasers and dares.",tc:"#ffb0d9",both:true,
 start:function(el){
   var wrap=h("div","center");el.appendChild(wrap);var holder=h("div");holder.style.cssText="position:relative;width:min(56vh,80vw,calc(100vh - 300px));height:min(56vh,80vw,calc(100vh - 300px))";wrap.appendChild(holder);
   var ch=h("div","chal","Tap Spin!");wrap.appendChild(ch);var sb=h("button","btn go","Spin!");wrap.appendChild(sb);
@@ -1517,14 +1527,15 @@ start:function(el){
 /* ---- Freeze Dance (new) ---- */
 game({id:"freeze",name:"Freeze Dance",em:"🕺",cats:["together"],bl:"Dance while the music plays. Freeze when it stops!",tc:"#a8f0ff",both:true,
 start:function(el){
-  var wrap=h("div","center");el.appendChild(wrap);var big=h("div","dance","🎶");var sub=h("div","chal","Press Start, then dance! When the music stops, FREEZE like a statue.");var b=h("button","btn go","Start the music");wrap.appendChild(big);wrap.appendChild(sub);wrap.appendChild(b);
-  var on=false,phase="",beat=0;
+  var wrap=h("div","center");el.appendChild(wrap);var big=h("div","dance","🎶");var sub=h("div","chal","Press Start, then dance! When the music stops, FREEZE in the pose on screen. Anyone who moves is out. Each round gets faster.");var b=h("button","btn go","Start the music");wrap.appendChild(big);wrap.appendChild(sub);wrap.appendChild(b);
+  var on=false,phase="",beat=0,rd=0;
+  var TW=["Dance in slow motion","Only move your arms","Dance like a robot","Dance on one foot","Dance like a snake","Dance like nobody's watching","Copy the person on your left","Moonwalk!"],PO=["Freeze on one foot!","Freeze like a flamingo!","Freeze with your arms up high!","Freeze in a superhero pose!","Freeze like a museum statue!","Freeze crouched down low!","Freeze making a silly face!","Freeze like a rattlesnake ready to strike!"];
   var CH=[[261.63,329.63,392],[349.23,440,523.25],[392,493.88,587.33],[261.63,329.63,392]],PENT=[523.25,587.33,659.25,783.99,880,1046.5];
   function music(){if(!on||phase!=="dance")return;var c=CH[Math.floor(beat/8)%4];if(beat%2===0)tone(c[0]/2,0.22,"triangle",0.22);if(beat%4===2)tone(c[1+rnd(0,1)],0.14,"square",0.05);
     if(Math.random()<0.7)tone(pick(PENT),0.16,"triangle",0.12);beat++;later(music,210);}
-  function dance(){phase="dance";big.textContent=pick(["💃","🕺","🎶","🦌","⛄"]);sub.textContent="Dance! Dance! Dance!";el.parentNode.style.background="linear-gradient(180deg,#5a2a8a,#e8424f)";music();later(freeze,rnd(5000,12000));}
-  function freeze(){phase="freeze";big.textContent="FREEZE!";sub.textContent="Don't move a muscle… 🥶";el.parentNode.style.background="linear-gradient(180deg,#0b1834,#5ab8ff)";tone(1200,0.3,"sine",0.15);later(dance,rnd(3000,5500));}
-  b.addEventListener("click",function(){on=!on;if(on){b.textContent="Stop";dance();}else{b.textContent="Start the music";phase="";big.textContent="🎶";sub.textContent="Press Start to dance again.";el.parentNode.style.background="";}});
+  function dance(){phase="dance";big.textContent=pick(["💃","🕺","🎶","🦌","⛄"]);rd++;score("Round "+rd);sub.textContent=(rd>1?pick(TW):"Dance! Dance! Dance!")+" · If you move after FREEZE, you're out!";el.parentNode.style.background="linear-gradient(180deg,#5a2a8a,#e8424f)";music();later(freeze,rnd(Math.max(2200,6000-rd*350),Math.max(4000,11000-rd*600)));}
+  function freeze(){phase="freeze";big.textContent="FREEZE!";sub.textContent=rd>1?pick(PO):"Don't move a muscle… 🥶";el.parentNode.style.background="linear-gradient(180deg,#0b1834,#5ab8ff)";tone(1200,0.3,"sine",0.15);later(dance,rnd(3000,5500));}
+  b.addEventListener("click",function(){on=!on;if(on){b.textContent="Stop";rd=0;dance();}else{b.textContent="Start the music";phase="";big.textContent="🎶";sub.textContent="Press Start to dance again.";el.parentNode.style.background="";}});
   score("");
 }});
 
@@ -2762,7 +2773,7 @@ function mfmt(c){return c<100?c+"¢":"$"+(c/100).toFixed(2);}
 function mHTML(m,cls){return m[3]?"<span class='coin "+(cls||"")+"' style='width:"+(m[3]*1.3)+"px;height:"+(m[3]*1.3)+"px;background:"+m[2]+"'>"+m[1]+"</span>":"<span class='bill "+(cls||"")+"' style='background:"+m[2]+"'>"+m[1]+"</span>";}
 game({id:"money",name:"Money Counter",em:"💵",bl:"Count coins, pay the exact amount, figure out change.",tc:"#a5f0d3",levels:true,
 start:function(el,L){
-  var D=curD(),N=8,n=0,right=0,kinds=D<2.4?4:D<3.2?5:7;
+  var D=Math.max(2.8,curD())+Math.min(1.2,((L||1)-1)*0.3),N=8,n=0,right=0,kinds=D<3.2?5:7;
   var w=h("div","n2wrap");el.appendChild(w);
   function count(){var k=rnd(3,Math.min(9,P([5,7,9]))),set=[];for(var i=0;i<k;i++)set.push(MONEY[rnd(0,kinds-1)]);set.sort(function(a,b){return b[0]-a[0];});var tot=set.reduce(function(s,m){return s+m[0];},0);
     var o=[tot];[5,10,-5,-10,25,1,-1,100].forEach(function(d){if(o.length<4&&tot+d>0&&o.indexOf(tot+d)<0&&Math.random()<0.7)o.push(tot+d);});while(o.length<4){var z=tot+rnd(-30,30);if(z>0&&o.indexOf(z)<0)o.push(z);}
@@ -2946,7 +2957,7 @@ var WORLDS=[
   {id:"sparkle",name:"Sparkle Studio",em:"✨",pat:"✨💖",bg:"linear-gradient(135deg,#ff8fb1,#b07cff)",body:"linear-gradient(180deg,#3a1450 0%,#7a2f7a 55%,#c2559a 100%)",games:["nails","unicorn","cupcake","bracelet","snowman","draw","colormix","pattern","jewels","boutique","outfit"],bl:"nails, unicorns, cupcakes"},
   {id:"woods",name:"Wild Woods",em:"🌲",pat:"🌲🍂",bg:"linear-gradient(135deg,#7a9a3e,#3e5420)",body:"linear-gradient(180deg,#1a2410 0%,#2f4419 55%,#55702c 100%)",games:["wildlife","deer","targets","tracks","turkey","trailcam","fishing","archery","birds","compass","survival"],bl:"wildlife, deer, targets"},
   {id:"snake",name:"Snake Zone",em:"🐍",pat:"🐍〰️",bg:"linear-gradient(135deg,#2fb36d,#0d5a3a)",body:"linear-gradient(180deg,#06241a 0%,#0d4a32 55%,#1f7a4e 100%)",games:["snake","snakequiz","charmer","ladders","smaze","venom","rattle","sword","lineup"],bl:"grow, guess, charm"},
-  {id:"christmas",name:"Holidays",links:[["tcatch","🥧","Feast Catch","Catch the food, dodge the broccoli."],["ttriv","🦃","Turkey Trivia","Thanksgiving questions, 1 or 2 players."],["twhack","🔨","Whack-a-Turkey","Tap the turkeys when they pop up."],["tstack","🥞","Pie Tower","Stack the pies sky high."],["tmatch","🍂","Harvest Match","Find the matching pairs."],["xdrop","🎁","Present Drop","Land gifts in the chimneys."],["xtriv","🎄","Christmas Trivia","Christmas questions, 1 or 2 players."],["xrace","🦌","Reindeer Race","Race a sister, or race Comet."],["xfly","🛷","Sleigh Ride","Fly past the chimneys."],["xmatch","🎅","Ornament Match","Find the matching ornaments."]],em:"🎄",pat:"❄️🎄",bg:"linear-gradient(135deg,#e8424f,#a81f30)",body:"linear-gradient(180deg,#0b1834 0%,#0e1f3d 45%,#24477a 100%)",games:["catch","match","fly","whack","keys","balloon","stack","rrun","sball","lights","wsearch"],bl:"gifts, elves, sleigh"},
+  {id:"christmas",name:"Holidays",links:[["tcatch","🥧","Feast Catch","Catch the food, dodge the broccoli."],["ttriv","🦃","Turkey Trivia","Thanksgiving questions, 1 or 2 players."],["twhack","🔨","Whack-a-Turkey","Tap the turkeys when they pop up."],["tstack","🥞","Pie Tower","Stack the pies sky high."],["tmatch","🍂","Harvest Match","Find the matching pairs."],["xdrop","🎁","Present Drop","Land gifts in the chimneys."],["xtriv","🎄","Christmas Trivia","Christmas questions, 1 or 2 players."]],em:"🎄",pat:"❄️🎄",bg:"linear-gradient(135deg,#e8424f,#a81f30)",body:"linear-gradient(180deg,#0b1834 0%,#0e1f3d 45%,#24477a 100%)",games:["catch","match","fly","whack","keys","balloon","stack","rrun","sball","lights","wsearch"],bl:"gifts, elves, sleigh"},
   {id:"brain",name:"Brain Games",em:"🧠",pat:"🧠💡",bg:"linear-gradient(135deg,#4b8cff,#283f9a)",body:"linear-gradient(180deg,#0b1834 0%,#1a2f6a 55%,#3a55b0 100%)",games:["math","word","code","simon","slide","sudoku","memgrid","picross","clock","money"],bl:"math, words, puzzles"},
   {id:"together",name:"Play Together",em:"👯",pat:"👯🎲",bg:"linear-gradient(135deg,#ffc94a,#ff8f3d)",body:"linear-gradient(180deg,#2a1636 0%,#6a2f3a 55%,#c2662f 100%)",games:["race","quiz","ladders","spin","freeze","four","dots","drawg","buzz","membattle"],bl:"race, quiz, dance"}];
 var world=null;
@@ -3113,7 +3124,7 @@ function bearsPoll(){var LOGO=LS.get("cg-bears","")||BEARS_LOGO,o=h("div","bpoll
   ask();document.body.appendChild(o);sfx.pop();}
 
 /* ================= "new version" banner ================= */
-var APPV="2026.11.26s";
+var APPV="2026.11.26t";
 function verCheck(){if(!/^https?:$/.test(location.protocol)||/claude|localhost|127\.0/.test(location.hostname))return;
   fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.json():null;}).then(function(j){
     if(!j||!j.v||j.v===APPV||document.querySelector(".upd"))return;var b=h("button","upd","✨ New version! Tap to update");
