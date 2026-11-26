@@ -576,6 +576,19 @@ body{margin:0}
   .n2wrap{gap:8px;padding:6px 12px 10px}
   .card{padding:16px 18px}.card h2{font-size:26px}.card p{font-size:16px;margin:6px 0 10px}.card .em{font-size:48px}
 }
+.avimg{width:1.3em;height:1.3em;border-radius:50%;object-fit:cover;vertical-align:middle;display:inline-block;border:2px solid rgba(255,255,255,.8);box-sizing:border-box}
+.cropv{border-radius:50%;overflow:hidden;margin:6px auto 12px;box-shadow:0 0 0 4px #fff,0 6px 20px rgba(0,0,0,.4);touch-action:none}
+.cropv canvas{display:block;touch-action:none}
+.crop input[type=range]{width:80%;margin:0 0 10px}
+.edrow .phb{font-size:15px;font-weight:900;padding:8px 10px;border-radius:12px;background:rgba(255,255,255,.14);flex:none;line-height:1.2}
+.pill.gag{background:linear-gradient(180deg,#ff5a66,#c8202f);color:#fff;border-color:rgba(255,255,255,.4);box-shadow:inset 0 -3px 0 rgba(0,0,0,.25)}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:rgba(20,10,40,.92);color:#fff;font-weight:900;font-size:22px;padding:14px 24px;border-radius:20px;z-index:10000;box-shadow:0 8px 24px rgba(0,0,0,.4);animation:pop .3s;transition:opacity .4s}
+.toast.out{opacity:0}
+.brk .bsay{display:flex;align-items:center;gap:14px;text-align:left;margin:6px 0 4px}
+.brk .bsay img{width:96px;height:96px;border-radius:50%;object-fit:cover;flex:none;border:4px solid #fff;box-shadow:0 4px 14px rgba(0,0,0,.3)}
+.brk .bub{position:relative;background:#fff;border-radius:18px;padding:12px 14px;box-shadow:0 3px 10px rgba(0,0,0,.15)}
+.brk .bub:before{content:"";position:absolute;left:-12px;top:30px;border:8px solid transparent;border-right:12px solid #fff;border-left:0}
+.brk .bub p{margin:0;font-size:18px}.brk .bub small{display:block;font-weight:900;color:#c8202f;margin-bottom:4px;font-size:14px}
 </style>
 
 <canvas id="snow"></canvas>
@@ -596,6 +609,7 @@ body{margin:0}
       <div class="mdate" id="mdate"></div>
     </div>
     <div class="sp"></div>
+    <button class="pill gag" id="gag2" aria-label="Don't press">🔴 Don't press</button>
     <button class="pill" id="mute2" aria-label="Sound on or off">🔊</button>
     <button class="pill" id="edit2">⭐ Stars &amp; names</button>
   </div>
@@ -683,7 +697,31 @@ var players=LS.get("cg-players",null)||[
   {name:"Player 2",age:10,av:"🐍",stars:0},
   {name:"Player 3",age:8,av:"🦄",stars:0}];
 if(!LS.get("cg-age2",false)){if(players[0].age===10&&players[1].age===8&&players[2].age===6){players[0].age=11;players[1].age=10;players[2].age=8;LS.set("cg-players",players);}LS.set("cg-age2",true);}
-var cur=LS.get("cg-cur",0); if(!(cur>=0&&cur<3))cur=0;
+var cur=LS.get("cg-cur",0);
+/* ================= profile photos: kept on this tablet only (cg-pics), never in the repo ================= */
+var PICS=LS.get("cg-pics",{})||{};
+function AVH(p){var i=players.indexOf(p),u=i>=0?PICS[i]:null;return u?"<img class='avimg' src='"+u+"' alt=''>":p.av;}
+function photoPicker(i,done){
+  var inp=document.createElement("input");inp.type="file";inp.accept="image/*";inp.style.display="none";document.body.appendChild(inp);
+  inp.addEventListener("change",function(){var f=inp.files&&inp.files[0];inp.remove();if(!f)return;var rd=new FileReader();
+    rd.onload=function(){var im=new Image();im.onload=function(){cropper(i,im,done);};im.src=rd.result;};rd.readAsDataURL(f);});
+  inp.click();}
+function cropper(i,im,done){
+  var V=Math.min(280,innerWidth-80,innerHeight-260),base=Math.max(V/im.width,V/im.height),z=1,ox=0,oy=0;
+  var o=h("div","brk crop","<div class='card'><h2>Your profile picture</h2><p>Drag to move. Slide to zoom.</p><div class='cropv' style='width:"+V+"px;height:"+V+"px'><canvas width='"+(V*2)+"' height='"+(V*2)+"' style='width:"+V+"px;height:"+V+"px'></canvas></div><input type='range' min='1' max='3' step='0.01' value='1' aria-label='Zoom'><div><button class='btn go'>Save</button><button class='btn'>Cancel</button></div></div>");
+  document.body.appendChild(o);var cv=o.querySelector("canvas"),cx=cv.getContext("2d"),rg=o.querySelector("input"),bs=o.querySelectorAll("button");
+  function lim(){var s=base*z,mx=Math.max(0,(im.width*s-V)/2),my=Math.max(0,(im.height*s-V)/2);ox=Math.max(-mx,Math.min(mx,ox));oy=Math.max(-my,Math.min(my,oy));}
+  function draw(c,S){var s=base*z*S/V;c.fillStyle="#fff";c.fillRect(0,0,S,S);c.drawImage(im,S/2-im.width*s/2+ox*S/V,S/2-im.height*s/2+oy*S/V,im.width*s,im.height*s);}
+  function rd(){lim();draw(cx,V*2);}rd();
+  rg.addEventListener("input",function(){z=+rg.value;rd();});
+  var last=null;function P(e){var t=e.touches?e.touches[0]:e;return {x:t.clientX,y:t.clientY};}
+  function dn(e){last=P(e);e.preventDefault();}function mv(e){if(!last)return;var p=P(e);ox+=p.x-last.x;oy+=p.y-last.y;last=p;rd();e.preventDefault();}function up(){last=null;}
+  if(window.PointerEvent){cv.addEventListener("pointerdown",dn);window.addEventListener("pointermove",mv);window.addEventListener("pointerup",up);}
+  else{cv.addEventListener("touchstart",dn,{passive:false});cv.addEventListener("touchmove",mv,{passive:false});cv.addEventListener("touchend",up);cv.addEventListener("mousedown",dn);window.addEventListener("mousemove",mv);window.addEventListener("mouseup",up);}
+  function close(){window.removeEventListener("pointermove",mv);window.removeEventListener("pointerup",up);window.removeEventListener("mousemove",mv);window.removeEventListener("mouseup",up);o.remove();}
+  bs[0].addEventListener("click",function(){var c=document.createElement("canvas");c.width=c.height=200;draw(c.getContext("2d"),200);PICS[i]=c.toDataURL("image/jpeg",0.82);LS.set("cg-pics",PICS);close();sfx.good();if(done)done();});
+  bs[1].addEventListener("click",close);}
+ if(!(cur>=0&&cur<3))cur=0;
 function save(){LS.set("cg-players",players);LS.set("cg-cur",cur);}
 function lvlFor(p){return p.age<=6?1:p.age<=9?2:3;}
 function baseD(p){var a=+p.age||8;return a<=5?1:a<=6?1.4:a<=7?1.8:a<=8?2.2:a<=9?2.5:a<=10?2.8:3.1;}
@@ -769,7 +807,7 @@ function pickPlayers(el,o,go){
   var sel=[];if(o.min<2)sel=[cur];else sel=[0,1,2];
   var box=h("div","ready","<div class='card'><h2>"+o.title+"</h2><p>Tap everyone who is playing.</p><div class='pick'></div><p style='font-size:15px'>"+o.text+"</p><button class='btn go'>Start!</button></div>");
   var pk=box.querySelector(".pick"),gb=box.querySelector(".go");
-  function draw(){pk.innerHTML="";players.forEach(function(p,i){var b=h("button",sel.indexOf(i)>=0?"on":"","<span>"+p.av+"</span>"+esc(p.name));b.style.setProperty("--pc",COLORS[i]);b.addEventListener("click",function(){var k=sel.indexOf(i);if(k>=0)sel.splice(k,1);else sel.push(i);sel.sort();sfx.tick();draw();});pk.appendChild(b);});gb.disabled=sel.length<(o.min||1);}
+  function draw(){pk.innerHTML="";players.forEach(function(p,i){var b=h("button",sel.indexOf(i)>=0?"on":"","<span>"+AVH(p)+"</span>"+esc(p.name));b.style.setProperty("--pc",COLORS[i]);b.addEventListener("click",function(){var k=sel.indexOf(i);if(k>=0)sel.splice(k,1);else sel.push(i);sel.sort();sfx.tick();draw();});pk.appendChild(b);});gb.disabled=sel.length<(o.min||1);}
   draw();el.appendChild(box);
   gb.addEventListener("click",function(){box.remove();sfx.pop();go(sel.slice());});
 }
@@ -846,7 +884,7 @@ var WORDS={
 2:[["SANTA","🎅"],["SLEIGH","🛷"],["COOKIE","🍪"],["CANDLE","🕯️"],["MITTEN","🧤"],["PRESENT","🎁"],["ANGEL","👼"],["CANDY","🍬"],["SCARF","🧣"],["SKATES","⛸️"],["COCOA","☕"],["WINTER","⛄"]],
 3:[["REINDEER","🦌"],["SNOWFLAKE","❄️"],["CHIMNEY","🏠"],["ORNAMENT","🎄"],["GINGERBREAD","🍪"],["MISTLETOE","🌿"],["SNOWBALL","⚪"],["STOCKING","🧦"],["WORKSHOP","🔨"],["FIREPLACE","🔥"],["HOLIDAY","🎉"],["ICICLE","🧊"]]
 };
-var CHALLENGES=["Waddle like a penguin across the room","Sing one line of Jingle Bells","Make your best reindeer face","Do 5 jumping jacks","Tell a joke","Freeze like a snowman for 10 seconds","Talk like Santa: Ho ho ho!","Spin around 3 times","Hop on one foot 10 times","Pretend to unwrap a giant present","Be a robot elf for 20 seconds","Say 'snowflake' 5 times fast","Give a cousin a high five","Do your silliest dance","Act like a cat who saw snow","Whisper a secret wish","Pretend to ice skate","Make an animal noise, others guess","Name 3 things that are green","Balance a pillow on your head","Do a dramatic weather report","Walk like you're in deep snow","Count backwards from 10","Make up a new holiday song title"];
+var CHALLENGES=["Waddle like a penguin across the room","Sing one line of Jingle Bells","Make your best reindeer face","Do 5 jumping jacks","Tell a joke","Freeze like a snowman for 10 seconds","Talk like Santa: Ho ho ho!","Spin around 3 times","Hop on one foot 10 times","Pretend to unwrap a giant present","Be a robot elf for 20 seconds","Say 'snowflake' 5 times fast","Give a sister a high five","Do your silliest dance","Act like a cat who saw snow","Whisper a secret wish","Pretend to ice skate","Make an animal noise, others guess","Name 3 things that are green","Balance a pillow on your head","Do a dramatic weather report","Walk like you're in deep snow","Count backwards from 10","Make up a new holiday song title"];
 
 /* ================= games ================= */
 var GAMES=[];
@@ -902,7 +940,7 @@ start:function(el,L){
     });grid.appendChild(b);});
 }});
 
-/* ---- Quiz engine: one or more cousins take turns, each gets questions for her age ---- */
+/* ---- Quiz engine: one or more players take turns, each gets questions for her age ---- */
 function pool(bank){var p={};return function(l){if(!p[l]||!p[l].length)p[l]=shuffle(bank[l]);return p[l].pop();};}
 function runQuiz(el,sel,per,makeQ){
   if(sel.length===1){cur=sel[0];save();}
@@ -913,7 +951,7 @@ function runQuiz(el,sel,per,makeQ){
   function next(){
     if(n>=turns.length)return end();
     var who=turns[n],q=makeQ(lvlFor(players[who])),opts=shuffle([q.a].concat(q.wrong));
-    w.innerHTML="<div class='qwho'>"+(sel.length>1?players[who].av+" <b>"+esc(players[who].name)+"</b>'s turn":"Question "+(n+1)+" of "+turns.length)+"</div><div class='qpic'>"+(q.pic||"")+"</div><div class='qtext'>"+esc(q.q)+"</div><div class='opts'></div>";
+    w.innerHTML="<div class='qwho'>"+(sel.length>1?AVH(players[who])+" <b>"+esc(players[who].name)+"</b>'s turn":"Question "+(n+1)+" of "+turns.length)+"</div><div class='qpic'>"+(q.pic||"")+"</div><div class='qtext'>"+esc(q.q)+"</div><div class='opts'></div>";
     var box=w.querySelector(".opts"),done=false;
     opts.forEach(function(o){var b=h("button","opt",esc(o));b.addEventListener("click",function(){if(done)return;done=true;
       if(o===q.a){b.classList.add("ok");pts[who]++;sfx.good();}else{b.classList.add("no");sfx.bad();[].forEach.call(box.children,function(x){if(x.textContent===q.a)x.classList.add("ok");});}
@@ -922,7 +960,7 @@ function runQuiz(el,sel,per,makeQ){
   function end(){
     if(sel.length===1){var p=pts[sel[0]],f=p/per;finish({stars:f>=0.85?3:f>=0.65?2:f>=0.4?1:0,msg:p+" out of "+per+" right."});return;}
     var best=Math.max.apply(null,sel.map(function(i){return pts[i];})),win=sel.filter(function(i){return pts[i]===best;});
-    finish({stars:3,award:sel.map(function(i){return [i,win.indexOf(i)>=0?3:1];}),party:true,title:win.length>1?"It's a tie!":players[win[0]].av+" "+esc(players[win[0]].name)+" wins!",msg:sel.map(function(i){return esc(players[i].name)+": "+pts[i];}).join(" · ")+"<br>Winners get 3 stars, everyone else gets 1."});
+    finish({stars:3,award:sel.map(function(i){return [i,win.indexOf(i)>=0?3:1];}),party:true,title:win.length>1?"It's a tie!":AVH(players[win[0]])+" "+esc(players[win[0]].name)+" wins!",msg:sel.map(function(i){return esc(players[i].name)+": "+pts[i];}).join(" · ")+"<br>Winners get 3 stars, everyone else gets 1."});
   }
   sb();next();
 }
@@ -931,7 +969,7 @@ function arrQ(bank){var p=pool(bank);return function(l){var q=p(l);return {q:q[0
 /* ---- Holiday Quiz (from the panel's Christmas Trivia, now takes turns) ---- */
 game({id:"quiz",name:"Holiday Quiz",em:"❓",bl:"Take turns. Everyone gets questions for her age.",tc:"#9fd8ff",both:true,
 start:function(el){
-  pickPlayers(el,{title:"Holiday Quiz",text:"Each cousin gets 4 questions picked for her age.",min:1},function(sel){runQuiz(el,sel,4,arrQ(QUIZ));});
+  pickPlayers(el,{title:"Holiday Quiz",text:"Each sister gets 4 questions picked for her age.",min:1},function(sel){runQuiz(el,sel,4,arrQ(QUIZ));});
 }});
 
 /* ---- Snake or Not? (new) ---- */
@@ -1214,7 +1252,7 @@ start:function(el,L){
 }});
 
 /* ---- Balloon Pop (new) ---- */
-game({id:"balloon",name:"Balloon Pop",em:"🎈",cats:["arcade"],bl:"Pop balloons. Older cousins follow a tricky rule.",tc:"#ffb3a7",levels:true,
+game({id:"balloon",name:"Balloon Pop",em:"🎈",cats:["arcade"],bl:"Pop balloons. Older sisters follow a tricky rule.",tc:"#ffb3a7",levels:true,
 start:function(el,L){
   var c=canvasIn(el),cx=c.cx,bl=[],t=40,sc=0,spawn=0,rule,ruleT=0,pops=[],NM=30;
   var COL=[["red","#e8424f"],["blue","#4b8cff"],["yellow","#ffc94a"],["green","#36b37e"]];
@@ -1321,15 +1359,15 @@ start:function(el){
 }});
 
 /* ---- Reindeer Tap Race (from the panel's Reindeer Race) ---- */
-game({id:"race",name:"Reindeer Race",em:"🏁",cats:["together","arcade"],bl:"Tap your button fast! Younger cousins get a head start.",tc:"#ffc94a",both:true,
+game({id:"race",name:"Reindeer Race",em:"🏁",cats:["together","arcade"],bl:"Tap your button fast! Younger sisters get a head start.",tc:"#ffc94a",both:true,
 start:function(el){
-  pickPlayers(el,{title:"Reindeer Race",text:"Fair start: younger cousins need fewer taps to win.",min:2},function(sel){
+  pickPlayers(el,{title:"Reindeer Race",text:"Fair start: younger sisters need fewer taps to win.",min:2},function(sel){
     var wrap=h("div","race");el.appendChild(wrap);var lanes=[],go=false,over=false;
-    sel.forEach(function(i){var need=[0,30,40,50][lvlFor(players[i])];var ln=h("div","lane","<div class='ln'>"+players[i].av+" "+esc(players[i].name)+"</div><div class='track'><div class='fin'></div><div class='rd'>🦌</div></div><div class='need'>"+need+" taps</div>");
+    sel.forEach(function(i){var need=[0,30,40,50][lvlFor(players[i])];var ln=h("div","lane","<div class='ln'>"+AVH(players[i])+" "+esc(players[i].name)+"</div><div class='track'><div class='fin'></div><div class='rd'>🦌</div></div><div class='need'>"+need+" taps</div>");
       var b=h("button","tapb","TAP!");b.style.background=COLORS[i];ln.appendChild(b);wrap.appendChild(ln);
       var o={i:i,need:need,n:0,rd:ln.querySelector(".rd"),nd:ln.querySelector(".need")};o.rd.style.bottom="0%";lanes.push(o);
       tap(b,function(){if(!go||over)return;o.n++;tone(300+o.n*6,0.05,"square",0.05);var pct=Math.min(1,o.n/o.need);o.rd.style.bottom="calc("+(pct*100)+"% - "+(pct*60)+"px)";o.nd.textContent=Math.max(0,o.need-o.n)+" to go";
-        if(o.n>=o.need){over=true;finish({stars:3,award:sel.map(function(j){return [j,j===o.i?3:1];}),party:true,title:players[o.i].av+" "+esc(players[o.i].name)+" wins!",msg:"Winner gets 3 stars, everyone else gets 1."});}});});
+        if(o.n>=o.need){over=true;finish({stars:3,award:sel.map(function(j){return [j,j===o.i?3:1];}),party:true,title:AVH(players[o.i])+" "+esc(players[o.i].name)+" wins!",msg:"Winner gets 3 stars, everyone else gets 1."});}});});
     var big=h("div","big321","");el.appendChild(big);var n=3;
     (function cnt(){if(n>0){big.textContent=n;sfx.tick();n--;later(cnt,800);}else{big.textContent="GO!";tone(880,0.4,"triangle",0.2);go=true;later(function(){big.textContent="";},600);}})();
     score("");
@@ -1436,8 +1474,8 @@ start:function(el){
         cx.fillStyle=col;cx.beginPath();cx.ellipse(p.x,p.y,S*0.24,S*0.2,0,0,6.3);cx.fill();cx.fillStyle="#fff";cx.beginPath();cx.arc(p.x-S*0.08,p.y-S*0.05,S*0.06,0,6.3);cx.arc(p.x+S*0.08,p.y-S*0.05,S*0.06,0,6.3);cx.fill();cx.fillStyle="#13213a";cx.beginPath();cx.arc(p.x-S*0.08,p.y-S*0.04,S*0.03,0,6.3);cx.arc(p.x+S*0.08,p.y-S*0.04,S*0.03,0,6.3);cx.fill();
         cx.strokeStyle="#e8424f";cx.lineWidth=2;cx.beginPath();cx.moveTo(p.x,p.y+S*0.15);cx.lineTo(p.x,p.y+S*0.28);cx.stroke();});
       sel.forEach(function(i,k){var p=vis[i]||xy(pos[i]),off=(k-(sel.length-1)/2)*S*0.26;cx.fillStyle=COLORS[i];cx.beginPath();cx.arc(p.x+off,p.y+S*0.1,S*0.3,0,6.3);cx.fill();cx.strokeStyle="#fff";cx.lineWidth=3;cx.stroke();emoji(cx,players[i].av,p.x+off,p.y+S*0.1,S*0.4);});}
-    function side2(){var i=sel[turnI];tn.innerHTML="<span>"+players[i].av+"</span>"+esc(players[i].name)+"'s turn";dice.style.background=COLORS[i];dice.style.color="#fff";
-      pl.innerHTML=sel.map(function(j){return players[j].av+" "+esc(players[j].name)+": square "+pos[j];}).join("<br>");}
+    function side2(){var i=sel[turnI];tn.innerHTML="<span>"+AVH(players[i])+"</span>"+esc(players[i].name)+"'s turn";dice.style.background=COLORS[i];dice.style.color="#fff";
+      pl.innerHTML=sel.map(function(j){return AVH(players[j])+" "+esc(players[j].name)+": square "+pos[j];}).join("<br>");}
     function glide(i,to,cb){var a=xy(pos[i]),b=xy(to),t=0;loop(function(dt){t+=dt/0.8;var e=t<1?t:1;vis[i]={x:a.x+(b.x-a.x)*e,y:a.y+(b.y-a.y)*e};draw();if(t>=1){vis[i]=null;pos[i]=to;draw();cb();return false;}});}
     function walk(i,left,cb){if(left<=0||pos[i]>=100)return cb();pos[i]++;sfx.tick();draw();later(function(){walk(i,left-1,cb);},230);}
     dice.addEventListener("click",function(){if(busy||G.done)return;busy=true;dice.classList.add("roll");var k=0,v;
@@ -1450,7 +1488,7 @@ start:function(el){
           later(function(){glide(i,to,function(){if(pos[i]>=100)return win(i);nextTurn();});},500);}
         else nextTurn();});}
     function nextTurn(){later(function(){turnI=(turnI+1)%sel.length;busy=false;side2();},500);}
-    function win(i){draw();finish({stars:3,award:sel.map(function(j){return [j,j===i?3:1];}),party:true,title:players[i].av+" "+esc(players[i].name)+" wins!",msg:"First to square 100! Winner gets 3 stars, everyone else gets 1."});}
+    function win(i){draw();finish({stars:3,award:sel.map(function(j){return [j,j===i?3:1];}),party:true,title:AVH(players[i])+" "+esc(players[i].name)+" wins!",msg:"First to square 100! Winner gets 3 stars, everyone else gets 1."});}
     draw();side2();score("");
   });
 }});
@@ -2630,8 +2668,8 @@ start:function(el,L){
 
 /* ---- Play Together, batch 2 ---- */
 function teamEnd(sel,pts,unit){var best=Math.max.apply(null,sel.map(function(i){return pts[i];})),win=sel.filter(function(i){return pts[i]===best;});
-  finish({stars:3,award:sel.map(function(i){return [i,win.indexOf(i)>=0?3:1];}),party:true,title:win.length>1?"It's a tie!":players[win[0]].av+" "+esc(players[win[0]].name)+" wins!",msg:sel.map(function(i){return esc(players[i].name)+": "+pts[i]+(unit||"");}).join(" · ")+"<br>Winners get 3 stars, everyone else gets 1."});}
-function turnBar(sel,turn,pts){return "<div class='tbar'>"+sel.map(function(i,k){return "<span class='"+(k===turn?"on":"")+"' style='--pc:"+COLORS[i]+"'>"+players[i].av+" "+esc(players[i].name)+(pts?" <b>"+pts[i]+"</b>":"")+"</span>";}).join("")+"</div>";}
+  finish({stars:3,award:sel.map(function(i){return [i,win.indexOf(i)>=0?3:1];}),party:true,title:win.length>1?"It's a tie!":AVH(players[win[0]])+" "+esc(players[win[0]].name)+" wins!",msg:sel.map(function(i){return esc(players[i].name)+": "+pts[i]+(unit||"");}).join(" · ")+"<br>Winners get 3 stars, everyone else gets 1."});}
+function turnBar(sel,turn,pts){return "<div class='tbar'>"+sel.map(function(i,k){return "<span class='"+(k===turn?"on":"")+"' style='--pc:"+COLORS[i]+"'>"+AVH(players[i])+" "+esc(players[i].name)+(pts?" <b>"+pts[i]+"</b>":"")+"</span>";}).join("")+"</div>";}
 
 game({id:"four",name:"Four in a Row",em:"🔴",bl:"Drop your pieces. First to line up four wins. Works for 3 too!",tc:"#ff9aa5",both:true,
 start:function(el){
@@ -2644,7 +2682,7 @@ start:function(el){
     function drawTop(){top.innerHTML=turnBar(sel,turn);}
     ptr(g,{down:function(p){if(over||G.done)return;var col=Math.max(0,Math.min(C-1,Math.floor(p.x/(g.getBoundingClientRect().width/C))));
       for(var r=R-1;r>=0;r--)if(b[r*C+col]<0){var i=r*C+col,who=sel[turn];b[i]=who;cells[i].innerHTML="<i style='background:"+COLORS[who]+"'></i>";tone(300+r*40,0.08,"triangle",0.15);
-        var line=win4(r,col,who);if(line){over=true;line.forEach(function(k){cells[k].classList.add("win");});sfx.win();later(function(){finish({stars:3,award:sel.map(function(j){return [j,j===who?3:1];}),party:true,title:players[who].av+" "+esc(players[who].name)+" wins!",msg:"Four in a row! Winner gets 3 stars, everyone else gets 1."});},1100);return;}
+        var line=win4(r,col,who);if(line){over=true;line.forEach(function(k){cells[k].classList.add("win");});sfx.win();later(function(){finish({stars:3,award:sel.map(function(j){return [j,j===who?3:1];}),party:true,title:AVH(players[who])+" "+esc(players[who].name)+" wins!",msg:"Four in a row! Winner gets 3 stars, everyone else gets 1."});},1100);return;}
         if(b.indexOf(-1)<0){over=true;later(function(){finish({stars:2,award:sel.map(function(j){return [j,2];}),title:"Board full. It's a tie!",msg:"Everyone gets 2 stars."});},700);return;}
         turn=(turn+1)%sel.length;drawTop();return;}
       sfx.bad();}});
@@ -2663,7 +2701,7 @@ start:function(el){
     function edge(kind,r,c){var e=h("button","dbe "+kind);if(kind==="h"){e.style.left=(c*cs+dot)+"px";e.style.top=(dot/2+r*cs-hw/2)+"px";e.style.width=(cs-dot)+"px";e.style.height=hw+"px";}else{e.style.left=(dot/2+c*cs-hw/2)+"px";e.style.top=(r*cs+dot)+"px";e.style.width=hw+"px";e.style.height=(cs-dot)+"px";}
       tap(e,function(){var m=kind==="h"?H:V,k=r+","+c;if(m[k]||G.done)return;var who=sel[turn];m[k]=who;e.classList.add("on");e.style.setProperty("--pc",COLORS[who]);tone(520,0.06,"triangle",0.15);
         var got=0;(kind==="h"?[[r-1,c],[r,c]]:[[r,c-1],[r,c]]).forEach(function(q){if(q[0]<0||q[1]<0||q[0]>=B||q[1]>=B)return;var y=q[0],x=q[1];
-          if(H[y+","+x]!=null&&H[(y+1)+","+x]!=null&&V[y+","+x]!=null&&V[y+","+(x+1)]!=null&&!own[y+","+x].dataset.o){own[y+","+x].dataset.o=1;own[y+","+x].style.background=COLORS[who];own[y+","+x].textContent=players[who].av;pts[who]++;got++;left--;}});
+          if(H[y+","+x]!=null&&H[(y+1)+","+x]!=null&&V[y+","+x]!=null&&V[y+","+(x+1)]!=null&&!own[y+","+x].dataset.o){own[y+","+x].dataset.o=1;own[y+","+x].style.background=COLORS[who];own[y+","+x].innerHTML=AVH(players[who]);pts[who]++;got++;left--;}});
         if(got)sfx.good();else turn=(turn+1)%sel.length;drawTop();if(!left)later(function(){teamEnd(sel,pts," boxes");},700);});bd.appendChild(e);}
     for(r=0;r<=B;r++)for(c=0;c<B;c++)edge("h",r,c);for(r=0;r<B;r++)for(c=0;c<=B;c++)edge("v",r,c);
     for(r=0;r<=B;r++)for(c=0;c<=B;c++){var d=h("div","dbd");d.style.left=(c*cs)+"px";d.style.top=(r*cs)+"px";d.style.width=d.style.height=dot+"px";bd.appendChild(d);}
@@ -2676,7 +2714,7 @@ start:function(el){
   pickPlayers(el,{title:"Draw & Guess",text:"The artist secretly sees a word and has 60 seconds to draw it. No letters or numbers! Everyone else shouts guesses. Each player draws twice.",min:2},function(sel){
     var turns=[],pts={},k=0,words=shuffle(DRAWW.slice());sel.forEach(function(i){pts[i]=0;});for(var r=0;r<2;r++)sel.forEach(function(i){turns.push(i);});
     function pass(){el.innerHTML="";if(k>=turns.length)return teamEnd(sel,pts," pts");var who=turns[k],word=words[k];
-      var box=h("div","ready","<div class='card'><div class='em'>"+players[who].av+"</div><h2>Pass to "+esc(players[who].name)+"</h2><p>Everyone else, no peeking! 🙈</p><button class='btn go'>Show my secret word</button></div>");el.appendChild(box);
+      var box=h("div","ready","<div class='card'><div class='em'>"+AVH(players[who])+"</div><h2>Pass to "+esc(players[who].name)+"</h2><p>Everyone else, no peeking! 🙈</p><button class='btn go'>Show my secret word</button></div>");el.appendChild(box);
       tap(box.querySelector(".go"),function(){box.querySelector(".card").innerHTML="<p>Your word is</p><h2 style='font-size:44px'>"+esc(word)+"</h2><p>Remember it, then start drawing!</p><button class='btn go'>Start drawing!</button>";
         tap(box.querySelector(".go"),function(){box.remove();draw(who,word);});});}
     function draw(who,word){var T=60,col="#13213a",sz=6,over=false;
@@ -2688,7 +2726,7 @@ start:function(el){
       sel.filter(function(i){return i!==who;}).forEach(function(i){var b=h("button","btn go","✋ "+esc(players[i].name)+" got it!");b.style.background=COLORS[i];tap(b,function(){if(over)return;over=true;pts[i]++;pts[who]++;sfx.win();confetti();top.innerHTML="<b>"+esc(players[i].name)+"</b> guessed <b>"+esc(word)+"</b>! +1 each";later(function(){k++;pass();},2200);});guess.appendChild(b);});
       var sk=h("button","btn","Nobody got it");tap(sk,function(){if(over)return;over=true;top.innerHTML="It was <b>"+esc(word)+"</b>!";later(function(){k++;pass();},2000);});guess.appendChild(sk);
       var last={};ptr(c.cv,{down:function(p){last[p.id]=p;cx.fillStyle=col;cx.beginPath();cx.arc(p.x,p.y,sz/2,0,6.3);cx.fill();},move:function(p){var l=last[p.id];if(!l)return;cx.strokeStyle=col;cx.lineWidth=sz;cx.lineCap="round";cx.beginPath();cx.moveTo(l.x,l.y);cx.lineTo(p.x,p.y);cx.stroke();last[p.id]=p;},up:function(p){delete last[p.id];}});
-      loop(function(dt){if(over)return false;T-=dt;top.innerHTML=players[who].av+" <b>"+esc(players[who].name)+"</b> is drawing · ⏱ "+Math.max(0,Math.ceil(T));if(T<=0){over=true;sfx.bad();top.innerHTML="Time's up! It was <b>"+esc(word)+"</b>.";later(function(){k++;pass();},2200);return false;}});
+      loop(function(dt){if(over)return false;T-=dt;top.innerHTML=AVH(players[who])+" <b>"+esc(players[who].name)+"</b> is drawing · ⏱ "+Math.max(0,Math.ceil(T));if(T<=0){over=true;sfx.bad();top.innerHTML="Time's up! It was <b>"+esc(word)+"</b>.";later(function(){k++;pass();},2200);return false;}});
       score(sel.map(function(i){return players[i].av+" "+pts[i];}).join("  "));}
     pass();});
 }});
@@ -2699,7 +2737,7 @@ start:function(el){
   pickPlayers(el,{title:"Buzzer Trivia",text:"Sit around the tablet. When a question shows up, slam your buzzer first, then pick the answer. Wrong answer? You're locked out and the others can buzz. 10 questions.",min:2},function(sel){
     var Q=shuffle(BUZZQ.slice()).slice(0,10),n=0,pts={},lock={},who=null,busy=false;sel.forEach(function(i){pts[i]=0;});
     var w=h("div","bzwrap");el.appendChild(w);var qa=h("div","bzq");w.appendChild(qa);var bz=h("div","bzrow");w.appendChild(bz);var btn={};
-    sel.forEach(function(i){var b=h("button","bzb",players[i].av+"<br>"+esc(players[i].name));b.style.background=COLORS[i];tap(b,function(){if(busy||who!=null||lock[i]||G.done)return;who=i;tone(700,0.2,"square",0.12);b.classList.add("on");showOpts();});bz.appendChild(b);btn[i]=b;});
+    sel.forEach(function(i){var b=h("button","bzb",AVH(players[i])+"<br>"+esc(players[i].name));b.style.background=COLORS[i];tap(b,function(){if(busy||who!=null||lock[i]||G.done)return;who=i;tone(700,0.2,"square",0.12);b.classList.add("on");showOpts();});bz.appendChild(b);btn[i]=b;});
     function sc(){score(sel.map(function(i){return players[i].av+" "+pts[i];}).join("  "));}
     function ask(){if(n>=Q.length)return teamEnd(sel,pts," pts");lock={};who=null;busy=false;sel.forEach(function(i){btn[i].classList.remove("on","off");});var q=Q[n];q.o=q.o||shuffle([q[1]].concat(q[2]));
       qa.innerHTML="<div class='n2small'>Question "+(n+1)+" of "+Q.length+"</div><div class='qtext'>"+esc(q[0])+"</div><div class='n2msg bzh'>🔔 Buzz in!</div><div class='opts' style='visibility:hidden'></div>";
@@ -2745,7 +2783,8 @@ start:function(el){
   function show(){var m=MSG[Math.min(k,MSG.length-1)],a=ACT[Math.floor(Math.random()*ACT.length)],b=ACT[Math.floor(Math.random()*ACT.length)];
     var txt=esc(m[1]).replace("{a}","<b>"+a[1]+"</b>");if(k>=MSG.length&&b!==a)txt+=" Or "+b[1]+". "+b[0];
     k++;var o=document.createElement("div");o.className="brk";
-    o.innerHTML="<div class='card'><div class='em'>"+emo(a[0],"🌞")+"</div><h2>"+esc(m[0])+"</h2><p>"+txt+"</p><button class='btn go'>Okay, I'm going! 🌞</button><button class='btn'>One more level, then I'll go</button></div>";
+    var fb=(typeof BADGES!=="undefined")?shuffle(BADGES.filter(function(b){return bsrc(b)!==BPH;}))[0]:null;
+    o.innerHTML="<div class='card'>"+(fb?"<h2>"+esc(m[0])+"</h2><div class='bsay'><img src='"+bsrc(fb)+"' alt=''><div class='bub'><small>"+esc(fb[2])+" says:</small><p>"+txt+" "+emo(a[0],"🌞")+"</p></div></div>":"<div class='em'>"+emo(a[0],"🌞")+"</div><h2>"+esc(m[0])+"</h2><p>"+txt+"</p>")+"<button class='btn go'>Okay, I'm going! 🌞</button><button class='btn'>One more level, then I'll go</button></div>";
     document.body.appendChild(o);try{sfx.good();}catch(e){}
     [].forEach.call(o.querySelectorAll("button"),function(x){x.addEventListener("click",function(){o.remove();});});}
   var due=false,n=0;
@@ -2755,6 +2794,27 @@ start:function(el){
   function later2(){setTimeout(show,G&&G.done?1800:300);}
   window.__brk=show;window.__brkDue=function(){due=true;};
 })();
+
+/* ================= Don't press button (from John's panel) ================= */
+function fart(){var a=ac();if(!a||muted)return 0;
+ var t=a.currentTime+0.03,dur=0.5+Math.random()*1.1;
+ var o=a.createOscillator();o.type="sawtooth";var f0=70+Math.random()*50;o.frequency.setValueAtTime(f0,t);o.frequency.linearRampToValueAtTime(f0*(0.55+Math.random()*0.3),t+dur);
+ var lfo=a.createOscillator();lfo.type="square";lfo.frequency.setValueAtTime(14+Math.random()*16,t);lfo.frequency.linearRampToValueAtTime(7+Math.random()*8,t+dur);
+ var depth=a.createGain();depth.gain.value=0.5;var amp=a.createGain();amp.gain.value=0.5;lfo.connect(depth);depth.connect(amp.gain);
+ var lp=a.createBiquadFilter();lp.type="lowpass";lp.frequency.value=380+Math.random()*260;lp.Q.value=4;
+ var env=a.createGain();env.gain.setValueAtTime(0,t);env.gain.linearRampToValueAtTime(1,t+0.03);env.gain.setValueAtTime(1,t+dur*0.7);env.gain.linearRampToValueAtTime(0,t+dur);
+ var len=Math.floor(a.sampleRate*dur),nb=a.createBuffer(1,len,a.sampleRate),ch=nb.getChannelData(0);for(var i=0;i<len;i++)ch[i]=Math.random()*2-1;
+ var ns=a.createBufferSource();ns.buffer=nb;var bp=a.createBiquadFilter();bp.type="bandpass";bp.frequency.value=180;bp.Q.value=1.2;var ng=a.createGain();ng.gain.value=0.35;
+ o.connect(amp);amp.connect(lp);ns.connect(bp);bp.connect(ng);ng.connect(lp);lp.connect(env);env.connect(a.destination);
+ o.start(t);lfo.start(t);ns.start(t);o.stop(t+dur+0.05);lfo.stop(t+dur+0.05);ns.stop(t+dur+0.05);return dur;}
+function speak(text){if(muted||!window.speechSynthesis||!window.SpeechSynthesisUtterance)return;var u=new SpeechSynthesisUtterance(text);u.lang="en-US";u.rate=0.95;u.pitch=0.75+Math.random()*0.7;try{speechSynthesis.cancel();speechSynthesis.speak(u);}catch(e){}}
+function toast(t){var d=h("div","toast",esc(t));document.body.appendChild(d);setTimeout(function(){d.classList.add("out");},1800);setTimeout(function(){d.remove();},2300);}
+var GAGS=[{f:1,show:"Pfffffft"},{f:1,show:"Brrrrap"},{s:"I don't care."},{s:"Not my problem."},{s:"Go ask your mother."},{s:"Nope."},{s:"Whatever."},
+ {s:"Talk to the hand."},{s:"That's a you problem."},{s:"Ask me later. I'm on break."},{s:"Who touched me?"},{s:"I said don't press it!"},{s:"Hey! That tickles."},
+ {f:1,s:"Excuse me!"},{f:1,s:"Wasn't me."},{f:1,s:"Did somebody step on a duck?"},{f:1,s:"Blame the dog."}],lastGag=-1;
+function gag(){var i;do{i=Math.floor(Math.random()*GAGS.length);}while(i===lastGag&&GAGS.length>1);lastGag=i;var g=GAGS[i],dur=0;
+ if(g.f)dur=fart()||0;if(g.s){if(dur)setTimeout(function(){speak(g.s);},dur*1000+150);else speak(g.s);}toast(g.s||g.show);}
+$("#gag2").addEventListener("click",gag);
 
 var WORLDS=[
   {id:"sparkle",name:"Sparkle Studio",em:"✨",pat:"✨💖",bg:"linear-gradient(135deg,#ff8fb1,#b07cff)",body:"linear-gradient(180deg,#3a1450 0%,#7a2f7a 55%,#c2559a 100%)",games:["nails","unicorn","cupcake","bracelet","snowman","draw","colormix","pattern","jewels","boutique","outfit"],bl:"nails, unicorns, cupcakes"},
@@ -2773,7 +2833,7 @@ function openWorld(w){world=w;LS.set("cg-world",w.id);$("#home").hidden=true;$("
   var box=$("#tiles");box.innerHTML="";
   w.games.forEach(function(id){var g=byId(id);if(!g)return;
     var b=h("button","tile","<span class='tag"+(g.both?" both":"")+"'>"+(g.both?"Together":g.id==="wildlife"?"NEW · Level up":g.levels?"Level up":"Free play")+"</span><span class='em'>"+g.em+"</span><span class='nm'>"+g.name+"</span><span class='bl'>"+g.bl+"</span>"+
-      (g.levels?"<span class='tlv'>"+players.map(function(p,i){return "<i style='background:"+COLORS[i]+"'>"+p.av+" "+lvOf(g.id,i)+"</i>";}).join("")+"</span>":""));
+      (g.levels?"<span class='tlv'>"+players.map(function(p,i){return "<i style='background:"+COLORS[i]+"'>"+AVH(p)+" "+lvOf(g.id,i)+"</i>";}).join("")+"</span>":""));
     b.style.setProperty("--tc",g.tc);b.addEventListener("click",function(){sfx.pop();openGame(g);});box.appendChild(b);});
   scrollTo(0,0);}
 function goHome(){world=null;LS.set("cg-world","");$("#wview").hidden=true;$("#home").hidden=false;document.body.classList.remove("inworld");}
@@ -2791,10 +2851,10 @@ function countdown(){var now=new Date(),y=now.getFullYear(),x=new Date(y,11,25);
 /* ================= open / close a game ================= */
 function setDiff(i){if(!G)return;G.lvl=lvOf(G.g.id,i);G.D=diffFor(i,G.lvl);G.level=Math.max(1,Math.min(3,Math.round(G.D)));}
 function stopGame(){if(!G)return;G.alive=false;G.timers.forEach(clearTimeout);G.off.forEach(function(f){f();});G=null;$("#stage").style.background="";}
-function setChips(){var who=$("#gWho"),lv=$("#gLvl");who.innerHTML=players[cur].av+" "+esc(players[cur].name);lv.textContent="Level "+(G.lvl||1);}
+function setChips(){var who=$("#gWho"),lv=$("#gLvl");who.innerHTML=AVH(players[cur])+" "+esc(players[cur].name);lv.textContent="Level "+(G.lvl||1);}
 function whoCard(el,go){
   var box=h("div","ready","<div class='card'><h2>Who's playing?</h2><div class='whob'></div></div>"),wb=box.querySelector(".whob");
-  players.forEach(function(p,i){var b=h("button","","<span>"+p.av+"</span>"+esc(p.name)+"<small>"+(G&&G.g&&G.g.levels?"Level "+lvOf(G.g.id,i)+" · ":"Age "+p.age+" · ")+"★ "+p.stars+"</small>");b.style.setProperty("--pc",COLORS[i]);
+  players.forEach(function(p,i){var b=h("button","","<span>"+AVH(p)+"</span>"+esc(p.name)+"<small>"+(G&&G.g&&G.g.levels?"Level "+lvOf(G.g.id,i)+" · ":"Age "+p.age+" · ")+"★ "+p.stars+"</small>");b.style.setProperty("--pc",COLORS[i]);
     b.addEventListener("click",function(){box.remove();sfx.pop();go(i);});wb.appendChild(b);});
   el.appendChild(box);}
 function openGame(g,level,skipWho){
@@ -2820,12 +2880,13 @@ $("#mute").textContent=muted?"🔇":"🔊";
 /* ================= stars & names sheet ================= */
 $("#edit").addEventListener("click",function(){var sh=$("#sheet");sh.hidden=false;var resetN=0;
   sh.innerHTML="<div class='card'><h2>⭐ Star board</h2><p style='margin:-4px 0 10px;font-size:15px'>Every 🏅 level-up counts toward the next photo badge.</p><div id='sb'></div><p style='margin-top:18px'>Change names, ages and pictures. Age sets how hard the games are.</p><div id='eds'></div><p style='margin-top:14px;font-size:15px'>Got a setup link? Paste it here to load names and badge photos.</p><input id='setupIn' aria-label='Setup link' placeholder='Paste setup link' style='width:100%;box-sizing:border-box'><button class='btn' id='rs'>Reset all stars</button><button class='btn go' id='ok'>Done</button></div>";
-  var sb=sh.querySelector("#sb");players.map(function(p,i){return [p,i];}).sort(function(a,b){return b[0].stars-a[0].stars;}).forEach(function(x){var r=h("div","starrow","<span class='av'>"+x[0].av+"</span><span class='nm'>"+esc(x[0].name)+"</span><span class='ct'>★ "+x[0].stars+" <small style='font-size:16px;opacity:.85'>🏅 "+totalLv(x[1])+"</small></span>");r.style.background=COLORS[x[1]];sb.appendChild(r);
+  var sb=sh.querySelector("#sb");players.map(function(p,i){return [p,i];}).sort(function(a,b){return b[0].stars-a[0].stars;}).forEach(function(x){var r=h("div","starrow","<span class='av'>"+AVH(x[0])+"</span><span class='nm'>"+esc(x[0].name)+"</span><span class='ct'>★ "+x[0].stars+" <small style='font-size:16px;opacity:.85'>🏅 "+totalLv(x[1])+"</small></span>");r.style.background=COLORS[x[1]];sb.appendChild(r);
     var t=totalLv(x[1]),sf=h("div","shelf",BADGES.map(function(b){return badgeHTML(b,t>=b[1]);}).join(""));sb.appendChild(sf);});
   var eds=sh.querySelector("#eds");
-  players.forEach(function(p,i){var r=h("div","edrow","<button class='avb'>"+p.av+"</button><input id='nm"+i+"' maxlength='16' value='"+esc(p.name)+"' aria-label='Name'><select id='ag"+i+"' aria-label='Age'>"+[4,5,6,7,8,9,10,11,12,13].map(function(a){return "<option"+(a===p.age?" selected":"")+">"+a+"</option>";}).join("")+"</select>");
-    r.querySelector(".avb").addEventListener("click",function(){p.av=AVATARS[(AVATARS.indexOf(p.av)+1)%AVATARS.length];this.textContent=p.av;});
-    r.querySelector("input").addEventListener("input",function(){p.name=this.value.trim()||("Cousin "+(i+1));});
+  players.forEach(function(p,i){var r=h("div","edrow","<button class='avb'>"+AVH(p)+"</button><button class='phb'>📷<br>Photo</button><input id='nm"+i+"' maxlength='16' value='"+esc(p.name)+"' aria-label='Name'><select id='ag"+i+"' aria-label='Age'>"+[4,5,6,7,8,9,10,11,12,13].map(function(a){return "<option"+(a===p.age?" selected":"")+">"+a+"</option>";}).join("")+"</select>");
+    var avb=r.querySelector(".avb");avb.addEventListener("click",function(){if(PICS[i]){delete PICS[i];LS.set("cg-pics",PICS);}else p.av=AVATARS[(AVATARS.indexOf(p.av)+1)%AVATARS.length];avb.innerHTML=AVH(p);});
+    r.querySelector(".phb").addEventListener("click",function(){photoPicker(i,function(){avb.innerHTML=AVH(p);});});
+    r.querySelector("input").addEventListener("input",function(){p.name=this.value.trim()||("Player "+(i+1));});
     r.querySelector("select").addEventListener("change",function(){p.age=+this.value;});eds.appendChild(r);});
   sh.querySelector("#setupIn").addEventListener("input",function(){var ok=applySetup(this.value.trim());if(ok){this.value="";this.placeholder="✅ Loaded! Tap Done.";players.forEach(function(p,i){var a=sh.querySelector("#nm"+i);if(a)a.value=p.name;var g=sh.querySelector("#ag"+i);if(g)g.value=p.age;});}});
   sh.querySelector("#rs").addEventListener("click",function(){resetN++;if(resetN<2){this.textContent="Tap again to reset";return;}players.forEach(function(p){p.stars=0;});this.textContent="Stars reset";});
@@ -2838,10 +2899,10 @@ function renderBadgeStrip(){var best=Math.max.apply(null,players.map(function(p,
   $("#bstrip").innerHTML=BADGES.map(function(b){return "<span class='bi"+(best>=b[1]?"":" lk")+"'><img src='"+bsrc(b)+"' alt=''>"+(best>=b[1]?"":"<i>🔒</i>")+"</span>";}).join("");}
 function openBadges(){var sh=$("#sheet2");sh.hidden=false;sh.className="";sh.id="sheet2";
   var top=players.map(function(p,i){var t=totalLv(i),nx=BADGES.filter(function(b){return t<b[1];})[0];
-    return "<div style='background:"+COLORS[i]+"'>"+p.av+" "+esc(p.name)+"<b>🏅 "+t+" level-ups</b>"+(nx?(nx[1]-t)+" more to "+nx[2]:"All badges! 🐐")+"</div>";}).join("");
+    return "<div style='background:"+COLORS[i]+"'>"+AVH(p)+" "+esc(p.name)+"<b>🏅 "+t+" level-ups</b>"+(nx?(nx[1]-t)+" more to "+nx[2]:"All badges! 🐐")+"</div>";}).join("");
   var rows=BADGES.map(function(b,k){var got=players.map(function(p,i){return totalLv(i)>=b[1];}),any=got.indexOf(true)>=0;
     return "<div class='bbrow'><span class='bi"+(any?"":" lk")+"'><img src='"+bsrc(b)+"' alt=''>"+(any?"":"<i>🔒</i>")+"</span><span class='bt'><b>"+(k+1)+". "+b[2]+"</b><small>Reach "+b[1]+" level-up"+(b[1]>1?"s":"")+"</small></span><span class='bbg'>"+
-      players.map(function(p,i){var t=totalLv(i);return "<span class='"+(got[i]?"":"no")+"' style='background:"+COLORS[i]+"'>"+p.av+" "+(got[i]?"✓":Math.min(t,b[1])+"/"+b[1])+"</span>";}).join("")+"</span></div>";}).join("");
+      players.map(function(p,i){var t=totalLv(i);return "<span class='"+(got[i]?"":"no")+"' style='background:"+COLORS[i]+"'>"+AVH(p)+" "+(got[i]?"✓":Math.min(t,b[1])+"/"+b[1])+"</span>";}).join("")+"</span></div>";}).join("");
   sh.innerHTML="<div class='card' id='bboard'><h2>🏆 Badge Board</h2><p style='text-align:center;margin:-4px 0 10px'>Get 2 or more stars in a game to level up. Every level-up counts!</p><div class='bbtop'>"+top+"</div>"+rows+"<p style='text-align:center'><button class='btn go' id='bbok'>Done</button></p></div>";
   sh.querySelector("#bbok").addEventListener("click",function(){sh.hidden=true;sh.innerHTML="";});}
 $("#badgesTile").addEventListener("click",function(){sfx.pop();openBadges();});
@@ -2866,7 +2927,7 @@ function tickClock(){var n=new Date(),hh=n.getHours()%12||12,mm=("0"+n.getMinute
 function mainCount(){var now=new Date(),y=now.getFullYear(),x=new Date(y,11,25);if(now.getMonth()===11&&now.getDate()>25)x=new Date(y+1,11,25);
   var ev=nextEvents(2),e=ev[0],nx=ev[1];$("#cdK").textContent=e.em+" "+e.name.replace(/&#39;/g,"'");$("#cdN").textContent=e.d===0?e.em:e.d;
   $("#cdS").innerHTML=(e.d===0?e.happy:e.d===1?"sleep to go!":"sleeps to go")+(nx?"<small class='cdnx'>Then "+nx.em+" "+nx.name+" in "+nx.d+"</small>":"");}
-function renderStars(){if($("#bstrip"))renderBadgeStrip();var r=$("#srow");r.innerHTML="";players.forEach(function(p,i){var s=h("span","","<span class='av' style='background:"+COLORS[i]+"'>"+p.av+"</span><span><b>"+esc(p.name)+"</b><small>★ "+p.stars+" · 🏅 "+totalLv(i)+" · 🎖️ "+badgesFor(i)+"/"+BADGES.length+"</small></span>");r.appendChild(s);});}
+function renderStars(){if($("#bstrip"))renderBadgeStrip();var r=$("#srow");r.innerHTML="";players.forEach(function(p,i){var s=h("span","","<span class='av' style='background:"+COLORS[i]+"'>"+AVH(p)+"</span><span><b>"+esc(p.name)+"</b><small>★ "+p.stars+" · 🏅 "+totalLv(i)+" · 🎖️ "+badgesFor(i)+"/"+BADGES.length+"</small></span>");r.appendChild(s);});}
 var jk=JOKES[((dayNo()%JOKES.length)+JOKES.length)%JOKES.length];
 function renderJoke(){$("#jokeQ").textContent=jk[0];$("#jokeA").textContent="Tap for the answer";$("#joke").classList.remove("open");}
 $("#joke").addEventListener("click",function(){var o=$("#joke").classList.toggle("open");$("#jokeA").textContent=o?jk[1]:"Tap for the answer";if(o)sfx.good();});
