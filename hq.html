@@ -923,6 +923,17 @@ body.bedOn>*:not(#bedFrame){visibility:hidden}
 <div id="frame"></div>
 
 <script>
+/* Ghost-tap guard. Games react on touch-down, so a button can move or a new screen can appear under the finger.
+   iPad Safari then sends the tap's click to whatever is under the finger now (that's how No turned into Yes).
+   Drop any click that lands on a different element from the one the finger went down on. */
+(function(){var dn=null,dt=0;
+  function down(e){dn=e.target;dt=Date.now();}
+  if(window.PointerEvent)document.addEventListener("pointerdown",down,true);else document.addEventListener("touchstart",down,true);
+  document.addEventListener("click",function(e){if(!e.isTrusted||!dn||Date.now()-dt>800)return;var t=e.target;if(dn.closest&&dn.closest("label"))return;
+    if(t===dn||(t.contains&&t.contains(dn))||(dn.contains&&dn.contains(t)))return;
+    e.stopPropagation();e.preventDefault();},true);})();
+</script>
+<script>
 //---------------------------------------------------------------------
 //
 // QR Code Generator for JavaScript
