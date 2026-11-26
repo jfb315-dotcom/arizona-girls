@@ -371,6 +371,42 @@ body{margin:0}
   #main .bstrip .bi{width:40px;height:40px}
   #main .gt-badges .s{display:none}
 }
+/* small tablets (Kindle Fire 7 / HD 8): compact so the home still fits one screen */
+@media (orientation:landscape) and (max-height:640px),(orientation:portrait) and (max-width:700px){
+  .mleft{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .mleft .logo{align-self:center}
+  .logo .lt{font-size:20px}
+  .clock{font-size:34px;margin-top:0}
+  .mdate{margin-top:0;font-size:14px}
+  #main{padding-block:8px 10px}
+  #main .mgrid2{gap:8px;margin-top:8px}
+  #main .gt{padding:10px 14px;border-radius:20px}
+  #main .gt .s{display:none}
+  #main .gt-joke .s{display:block;font-size:13px;padding-top:4px}
+  #main .gt .k{font-size:11px}
+  #main .gt .em{font-size:42px;right:12px;top:8px}
+  #main .gt .h{font-size:24px;padding-top:4px}
+  #main .gt-games .h{font-size:30px}
+  #main .gt-games .s{display:block;font-size:12px;margin-top:2px}
+  #main .wm{grid-template-columns:repeat(6,1fr);gap:6px;margin-top:8px}
+  #main .wm span{padding:5px 2px;font-size:11px;border-radius:10px}
+  #main .wm i{font-size:20px}
+  #main .gt-cd .big{font-size:40px}
+  #main .gt-joke .q{font-size:16px;margin-top:4px}
+  #main .bstrip{margin:6px 0 0;gap:6px}
+  #main .bstrip .bi{width:34px;height:34px}
+  #main .bi i{font-size:13px}
+  #main .srow2{gap:8px;margin-top:4px}
+  #main .srow2 > span{padding:4px 8px;min-width:0}
+  #main .srow2 .av{width:30px;height:30px;font-size:20px}
+  #main .srow2 b{font-size:15px}
+  #main .srow2 small{font-size:11px}
+  #main .gt-spy .h{font-size:22px;letter-spacing:2px}
+  #main .gt-wild .h{font-size:20px}
+  #main .newtag{font-size:10px;padding:3px 8px;bottom:8px;right:8px}
+  #main .radar{transform:scale(.6);transform-origin:top right}
+  #main .gt-cd .s{display:block;font-size:12px}
+}
 .a2hs{text-align:left;margin:10px auto 16px;max-width:420px;padding-left:24px;display:flex;flex-direction:column;gap:8px;font-weight:700;line-height:1.4}
 .a2tip{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;align-items:center;gap:10px;background:#fff7ee;color:#2b1d55;border-radius:999px;padding:8px 8px 8px 18px;font-weight:700;font-size:15px;box-shadow:0 8px 30px rgba(0,0,0,.4);max-width:calc(100% - 32px)}
 .a2tip button{font:inherit;font-weight:900;border:0;border-radius:999px;padding:8px 14px;background:#ffb35c;color:#2b1d55}
@@ -474,7 +510,7 @@ body{margin:0}
     <button class="pill" id="edit">⭐ Stars &amp; names</button>
   </div>
   <div id="worlds"></div>
-  <div class="foot">Games ask who's playing, then get easier or harder by age. Stars are saved on this iPad only.</div>
+  <div class="foot">Games ask who's playing, then get easier or harder by age. Stars are saved on this tablet only.</div>
 </div>
 
 <div id="wview" hidden>
@@ -508,6 +544,11 @@ function $(s){return document.querySelector(s);}
 function h(tag,cls,html){var e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e;}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
 function rnd(a,b){return a+Math.floor(Math.random()*(b-a+1));}
+/* emoji check: older tablets (Kindle Fire) can't draw the newest emoji, so swap in a fallback */
+var EMOK={};
+function emo(e,fb){if(EMOK[e]===undefined){var ok=true;try{var c=document.createElement("canvas");c.width=c.height=40;var x=c.getContext("2d");x.font="32px "+EMO;x.textBaseline="top";
+  if(x.measureText(e).width>48)ok=false;else{x.fillText(e,0,0);var d=x.getImageData(0,0,40,40).data,col=0;for(var i=0;i<d.length;i+=4){if(d[i+3]>100&&(Math.abs(d[i]-d[i+1])>30||Math.abs(d[i+1]-d[i+2])>30))col++;}ok=col>20;}}catch(er){ok=true;}EMOK[e]=ok;}
+  return EMOK[e]?e:fb;}
 function pick(a){return a[Math.floor(Math.random()*a.length)];}
 function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
 var LS={get:function(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}},set:function(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}};
@@ -529,7 +570,7 @@ var LV=LS.get("cg-lv",{}),MAXLV=20;if(!LV||typeof LV!=="object")LV={};
 function lvOf(id,i){var o=LV[id];return o&&o[i]>0?o[i]:1;}
 function setLv(id,i,v){if(!LV[id])LV[id]={};LV[id][i]=v;LS.set("cg-lv",LV);}
 function diffFor(i,lv){return Math.min(4.2,lvlFor(players[i])+(lv-1)*0.35);}
-/* photo badges: unlocked by total level-ups. Photos come from the private setup link (saved on this iPad), or from badges/ in the private copy. */
+/* photo badges: unlocked by total level-ups. Photos come from the private setup link (saved on this tablet), or from badges/ in the private copy. */
 var BADGE_FILES=false,FACES=LS.get("cg-faces",{})||{};
 var BPH="data:image/svg+xml,"+encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='#c9b8f0'/><circle cx='50' cy='40' r='18' fill='#fff'/><path d='M18 96c4-22 18-32 32-32s28 10 32 32z' fill='#fff'/></svg>").replace(/'/g,"%27");
 function bsrc(b){return FACES[b[0]]||(BADGE_FILES?"badges/"+b[0]+".png":BPH);}
@@ -696,11 +737,11 @@ start:function(el,L){
   score("🎁 0");
   function draw(){cx.clearRect(0,0,c.W,c.H);
     cx.fillStyle="rgba(255,255,255,.9)";cx.beginPath();cx.ellipse(c.W/2,c.H+40,c.W*0.7,70,0,0,6.3);cx.fill();
-    items.forEach(function(it){emoji(cx,{gift:"🎁",star:"⭐",coal:"🪨"}[it.k],it.x,it.y,it.k==="star"?44:50);});
+    items.forEach(function(it){emoji(cx,{gift:"🎁",star:"⭐",coal:emo("🪨","⚫")}[it.k],it.x,it.y,it.k==="star"?44:50);});
     pops.forEach(function(p){cx.globalAlpha=Math.max(0,p.l);cx.fillStyle=p.c;cx.font="900 30px Nunito,sans-serif";cx.textAlign="center";cx.fillText(p.t,p.x,p.y);cx.globalAlpha=1;});
     emoji(cx,"🧺",x,c.H-60,wide+10);}
   draw();
-  ready(el,{em:"🎁",title:"Present Catch",text:"Move your finger to slide the basket. Catch 🎁 for 1 point and ⭐ for 3."+(L>1?" Dodge the 🪨 coal, it takes 2 away!":"")+" You have 40 seconds."},function(){
+  ready(el,{em:"🎁",title:"Present Catch",text:"Move your finger to slide the basket. Catch 🎁 for 1 point and ⭐ for 3."+(L>1?" Dodge the "+emo("🪨","⚫")+" coal, it takes 2 away!":"")+" You have 40 seconds."},function(){
     loop(function(dt){
       t-=dt;if(t<=0){finish({stars:starsFor(sc,thr),msg:"You scored "+sc+" points. "+(sc<thr[2]?"Get "+thr[starsFor(sc,thr)]+" for the next star.":"Top score!")});return false;}
       spawn-=dt;if(spawn<=0){spawn=P([0.85,0.65,0.5])*(0.6+Math.random()*0.8);var r=Math.random(),k=r<0.08?"star":(L>1&&r<0.08+0.1*L)?"coal":"gift";
@@ -1418,7 +1459,7 @@ start:function(el){
   var S={body:0,mane:0,horn:0,wings:1,acc:0,sky:0,sparkle:true,eyes:0};
   var OPT={body:["#ffffff","#ffd6e8","#e5d4ff","#d4f1ff","#fff1b8","#c9c9d6"],mane:[["#ff8fb1","#ffc94a","#41c9a0","#7aa7ff","#b07cff"],["#ff4f8b","#ff8fb1","#ffd6e8"],["#7c4dff","#b07cff","#e5d4ff"],["#2fb3c9","#7aa7ff","#d4f1ff"],["#ffb700","#ffd86b","#fff1b8"],["#13213a","#4b4b6b","#9b9bbb"]],
     horn:[["#ffd86b","#ffb700"],["#e8eef7","#a9b6c9"],["#ff8fb1","#7aa7ff"]],wings:["none","white","rainbow","butterfly"],acc:["","👑","🎀","🌸","⭐","🎄"],sky:[["#ffd6e8","#b07cff"],["#7cc4ff","#e8f6ff"],["#0e1f3d","#4b2a7a"],["#fff1b8","#ff9fb8"]],eyes:["lashes","happy","star"]};
-  var NAMES={body:["🎨","Body"],mane:["💇","Mane"],horn:["🦄","Horn"],wings:["🪽","Wings"],acc:["👑","Crown"],eyes:["👀","Eyes"],sky:["🌈","Sky"]};
+  var NAMES={body:["🎨","Body"],mane:["💇","Mane"],horn:["🦄","Horn"],wings:[emo("🪽","🕊️"),"Wings"],acc:["👑","Crown"],eyes:["👀","Eyes"],sky:["🌈","Sky"]};
   var wrap=h("div","snow");el.appendChild(wrap);var box=h("div");box.style.cssText="flex:1;min-width:0;min-height:0;display:flex";wrap.appendChild(box);var ctl=h("div","sctl");wrap.appendChild(ctl);
   var dots=[];for(var i=0;i<30;i++)dots.push([rnd(10,490),rnd(10,390),Math.random()]);
   function svg(){var b=OPT.body[S.body],m=OPT.mane[S.mane],hn=OPT.horn[S.horn],sk=OPT.sky[S.sky],w=OPT.wings[S.wings],o;
@@ -1715,7 +1756,7 @@ function wildGlobe(el,onPick){
     cx.fillStyle=sh;cx.beginPath();cx.arc(ox,oy,R,0,6.3);cx.fill();
     for(k in WLAND){q=prj(WLAND[k].lab[0],WLAND[k].lab[1]);if(q[2]<0.25)continue;var w=WILD[k==="na"?"sw":k];
       cx.font="900 "+Math.max(13,R*0.07)+"px Nunito,system-ui,sans-serif";cx.textAlign="center";cx.textBaseline="middle";
-      emoji(cx,k==="na"?"🇺🇸":w.em,q[0],q[1]-R*0.07,R*0.11);cx.lineWidth=4;cx.strokeStyle="rgba(0,0,0,.55)";cx.strokeText(WLAND[k].n,q[0],q[1]+R*0.03);cx.fillStyle="#fff";cx.fillText(WLAND[k].n,q[0],q[1]+R*0.03);}
+      emoji(cx,k==="na"?"🇺🇸":emo(w.em,"❄️"),q[0],q[1]-R*0.07,R*0.11);cx.lineWidth=4;cx.strokeStyle="rgba(0,0,0,.55)";cx.strokeText(WLAND[k].n,q[0],q[1]+R*0.03);cx.fillStyle="#fff";cx.fillText(WLAND[k].n,q[0],q[1]+R*0.03);}
   }
   ptr(c.cv,{down:function(p){drag={x:p.x,y:p.y,l:lam0,f:phi0,m:0};spin=false;},
     move:function(p){if(!drag){hover=hit(p.x,p.y);return;}var dx=p.x-drag.x,dy=p.y-drag.y;drag.m=Math.max(drag.m,Math.abs(dx)+Math.abs(dy));
@@ -1725,7 +1766,7 @@ function wildGlobe(el,onPick){
 }
 function wildRegions(el,go){
   var box=h("div","ready","<div class='card wreg'><h2>🇺🇸 Pick a part of North America</h2><div class='wrg'></div><button class='btn'>‹ Back to the globe</button></div>"),g=box.querySelector(".wrg");
-  NAPICK.forEach(function(k){var w=WILD[k],b=h("button",w.home?"home":"","<span>"+w.em+"</span>"+w.n+(w.home?"<small>Your home! 🌵</small>":w.us?"<small>United States</small>":""));
+  NAPICK.forEach(function(k){var w=WILD[k],b=h("button",w.home?"home":"","<span>"+emo(w.em,"📍")+"</span>"+w.n+(w.home?"<small>Your home! 🌵</small>":w.us?"<small>United States</small>":""));
     b.addEventListener("click",function(){box.remove();sfx.pop();go(k);});g.appendChild(b);});
   box.querySelector(".btn").addEventListener("click",function(){box.remove();sfx.tick();go(null);});el.appendChild(box);
 }
@@ -1734,7 +1775,7 @@ start:function(el,L){
   var D=G.D||L;
   function globe(){el.innerHTML="";wildGlobe(el,function(k){if(k==="na"){wildRegions(el,function(r){if(r)quiz(r);});}else quiz(k);});}
   function quiz(k){
-    el.innerHTML="";var W=WILD[k],N=Math.min(W.a.length,P([6,8,10])),nOpt=D<1.6?3:4,clueOnly=D>=2.6,qs=shuffle(W.a).slice(0,N),n=0,pts=0;
+    el.innerHTML="";var W=WILD[k],N=Math.min(W.a.length,P([6,8,10])),nOpt=D<1.6?3:4,clueOnly=D>=2.6,qs=shuffle(W.a).slice(0,N).map(function(x){return [x[0]?emo(x[0],""):"",x[1],x[2]];}),n=0,pts=0;
     var w=h("div","qwrap");el.appendChild(w);
     function others(a){var pool2=W.a.filter(function(x){return x[1]!==a[1]&&(!a[0]||x[0]!==a[0]);});
       if(D>=3.4){var far=[];for(var kk in WILD)if(kk!==k)far=far.concat(WILD[kk].a);pool2=pool2.concat(shuffle(far).slice(0,4));}
@@ -1870,11 +1911,12 @@ $("#edit2").addEventListener("click",function(){$("#edit").click();});
 $("#mute2").addEventListener("click",function(){$("#mute").click();this.textContent=muted?"🔇":"🔊";});
 $("#mute2").textContent=muted?"🔇":"🔊";
 tickClock();setInterval(tickClock,10000);mainCount();renderJoke();renderStars();
-if(!STANDALONE&&!window.SETUP_OK&&!LS.get("cg-tip-off",false)&&/iPad|iPhone|Macintosh/.test(navigator.userAgent)&&("ontouchend" in document)){(function(){var b=h("div","a2tip","<div><b>Make it an app:</b> tap Share, then Add to Home Screen.</div><button aria-label='Show how'>How?</button><button aria-label='Hide tip'>✕</button>");document.body.appendChild(b);var bs=b.querySelectorAll("button");
+if(!STANDALONE&&!window.SETUP_OK&&!LS.get("cg-tip-off",false)&&(ANDROID||/iPad|iPhone|Macintosh/.test(navigator.userAgent)&&("ontouchend" in document))){(function(){var b=h("div","a2tip","<div><b>Make it an app:</b> "+(ANDROID?"tap the menu, then Add to Home screen.":"tap Share, then Add to Home Screen.")+"</div><button aria-label='Show how'>How?</button><button aria-label='Hide tip'>✕</button>");document.body.appendChild(b);var bs=b.querySelectorAll("button");
   bs[0].addEventListener("click",function(){var t=h("div","ready","<div class='card'><div class='em'>📲</div><h2>Add to Home Screen</h2>"+A2HS+"<button class='btn go'>Got it</button></div>");t.style.position="fixed";t.style.zIndex="60";document.body.appendChild(t);t.querySelector(".go").addEventListener("click",function(){t.remove();});});
   bs[1].addEventListener("click",function(){LS.set("cg-tip-off",true);b.remove();});})();}
-var A2HS="<ol class='a2hs'><li>Tap the Share button "+"<svg viewBox='0 0 24 24' width='22' height='22' style='vertical-align:-4px'><path d='M12 3v12M7.5 7.5 12 3l4.5 4.5' fill='none' stroke='#2f7cf6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><path d='M8 10H6v10h12V10h-2' fill='none' stroke='#2f7cf6' stroke-width='2' stroke-linejoin='round'/></svg>"+" at the top of Safari.</li><li>Scroll down and tap <b>Add to Home Screen</b>.</li><li>Tap <b>Add</b>. Then open the new <b>AZ Girls</b> icon on the Home Screen.</li></ol>";
-if(window.SETUP_OK){(function(){var t=h("div","ready","<div class='card'><div class='em'>🎉</div><h2>All set!</h2><p>Names and badge photos are saved on this iPad.</p>"+(STANDALONE?"":"<p><b>Last step: put the game on the Home Screen</b> so it opens like an app.</p>"+A2HS)+"<button class='btn go'>"+(STANDALONE?"Let's play":"Got it")+"</button></div>");t.style.position="fixed";t.style.zIndex="60";document.body.appendChild(t);t.querySelector(".go").addEventListener("click",function(){t.remove();renderStars();});})();}
+var ANDROID=/Android|Silk|Kindle|KF[A-Z]{2,4}/.test(navigator.userAgent);
+var A2HS=ANDROID?"<ol class='a2hs'><li>Tap the menu button (<b>⋮</b> or <b>☰</b>) at the top right of the browser.</li><li>Tap <b>Add to Home screen</b> (on a Kindle Fire it may say <b>Add to Home</b>).</li><li>Tap <b>Add</b>. Then open the new <b>Arizona Girls</b> icon on the Home screen.</li></ol>":"<ol class='a2hs'><li>Tap the Share button "+"<svg viewBox='0 0 24 24' width='22' height='22' style='vertical-align:-4px'><path d='M12 3v12M7.5 7.5 12 3l4.5 4.5' fill='none' stroke='#2f7cf6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><path d='M8 10H6v10h12V10h-2' fill='none' stroke='#2f7cf6' stroke-width='2' stroke-linejoin='round'/></svg>"+" at the top of Safari.</li><li>Scroll down and tap <b>Add to Home Screen</b>.</li><li>Tap <b>Add</b>. Then open the new <b>AZ Girls</b> icon on the Home Screen.</li></ol>";
+if(window.SETUP_OK){(function(){var t=h("div","ready","<div class='card'><div class='em'>🎉</div><h2>All set!</h2><p>Names and badge photos are saved on this tablet.</p>"+(STANDALONE?"":"<p><b>Last step: put the game on the Home screen</b> so it opens like an app.</p>"+A2HS)+"<button class='btn go'>"+(STANDALONE?"Let's play":"Got it")+"</button></div>");t.style.position="fixed";t.style.zIndex="60";document.body.appendChild(t);t.querySelector(".go").addEventListener("click",function(){t.remove();renderStars();});})();}
 
 renderHome();countdown();
 if(location.hostname==="localhost")window.__cg={GAMES:GAMES,openGame:openGame,get G(){return G;}};
