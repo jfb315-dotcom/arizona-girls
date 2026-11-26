@@ -460,6 +460,122 @@ body{margin:0}
   .snow{flex-direction:column}.sctl{width:auto;grid-template-columns:repeat(4,1fr)}.sctl .wide{grid-column:span 4}.sctl button{min-height:58px;font-size:15px}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.n2wrap{position:absolute;left:0;top:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:10px 16px 18px;box-sizing:border-box}
+.n2grid{display:grid;gap:4px;justify-content:center}
+.n2c{border-radius:8px;background:rgba(255,255,255,.85);border:0;padding:0;font-size:28px;line-height:1;display:flex;align-items:center;justify-content:center;color:var(--ink);font-weight:900}
+.n2row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;align-items:center}
+.n2msg{font-family:var(--display);font-size:clamp(20px,3vw,30px);text-align:center;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.4)}
+.n2small{font-weight:800;font-size:15px;opacity:.85;text-align:center;color:#fff}
+.n2pal button{width:52px;height:52px;border-radius:50%;border:4px solid rgba(255,255,255,.6);box-shadow:0 3px 8px rgba(0,0,0,.3)}
+.n2pal button.on{border-color:#fff;transform:scale(1.12)}
+.n2chip{background:rgba(255,255,255,.9);color:var(--ink);border-radius:16px;padding:10px 14px;font-weight:900;font-size:18px;min-width:56px;min-height:56px;border:0;box-shadow:inset 0 -4px 0 rgba(0,0,0,.12)}
+.n2chip.on{background:var(--gold)}.n2chip.ok{background:var(--mint);color:#fff}.n2chip.no{background:var(--candy);color:#fff}
+.n2big{font-size:clamp(48px,9vh,84px);line-height:1}
+.cmrow{gap:28px}.cmcol{display:flex;flex-direction:column;align-items:center;gap:6px;max-width:42vw}
+.cmblob{width:clamp(90px,20vh,170px);height:clamp(90px,20vh,170px);border-radius:50%;border:5px solid rgba(255,255,255,.7);box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.cmpot{display:flex;flex-direction:column;align-items:center;gap:4px;font-weight:900;font-size:14px;color:#fff}
+.cmpot i{display:block;width:58px;height:58px;border-radius:50% 50% 46% 46%;border:4px solid rgba(255,255,255,.75);box-shadow:inset 0 -6px 0 rgba(0,0,0,.18)}
+.pptgt{position:relative}.ppcov{display:none;position:absolute;left:0;top:0;right:0;bottom:0;align-items:center;justify-content:center;background:rgba(40,20,70,.92);border-radius:10px;font-size:60px}
+.jwg{gap:3px;background:rgba(255,255,255,.12);padding:6px;border-radius:14px}
+.jw{display:flex;align-items:center;justify-content:center;border-radius:10px;background:rgba(255,255,255,.18);transition:transform .2s,opacity .2s;line-height:1}
+.jw.sel{background:rgba(255,255,255,.6);transform:scale(1.08)}.jw.pop{transform:scale(0);opacity:0}
+.btq{display:flex;align-items:center;gap:18px;background:rgba(255,255,255,.14);border-radius:22px;padding:12px 20px}
+.btc{font-size:clamp(50px,10vh,80px);line-height:1}
+.btq .n2chip{font-size:clamp(30px,6vh,42px);padding:4px 8px}
+.btbar{height:12px;width:min(320px,60vw);background:rgba(255,255,255,.2);border-radius:8px;overflow:hidden;margin:10px auto 0}
+.btbar i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#ff5fa2,#ffc94a);border-radius:8px}
+.btshelf{display:grid;grid-template-columns:repeat(auto-fit,minmax(clamp(64px,11vh,96px),1fr));gap:10px;width:min(760px,94%)}
+.btit{background:rgba(255,255,255,.9);border-radius:18px;font-size:clamp(34px,7vh,54px);height:clamp(64px,11vh,96px);display:flex;align-items:center;justify-content:center;box-shadow:inset 0 -5px 0 rgba(0,0,0,.12)}
+.ofit{gap:22px}.ofi{display:flex;flex-direction:column;align-items:center;color:#fff;font-weight:900}
+.ofrow{gap:8px}.ofrow b{color:#fff;width:64px;text-align:right;font-size:16px}
+.ofrow .n2chip{font-size:clamp(26px,5vh,38px);padding:4px 8px;min-width:clamp(48px,8vh,62px);min-height:clamp(48px,8vh,62px)}
+.ctmap{display:flex;flex-direction:column;align-items:center;gap:4px}.ctn{color:#fff;font-weight:900;font-size:18px}
+.ctc{background:rgba(236,220,170,.92);border-radius:4px}
+.ctside{max-width:340px;color:#fff}.ctins{font-size:clamp(17px,2.4vw,22px);font-weight:800;line-height:1.5;padding-left:28px;margin:8px 0}
+.spgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:10px;width:min(780px,96%)}
+.spit{background:rgba(255,255,255,.9);color:var(--ink);border-radius:16px;padding:8px 6px;display:flex;flex-direction:column;align-items:center;gap:2px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.12)}
+.spit span{font-size:clamp(28px,5.5vh,42px);line-height:1}.spit small{font-weight:800;font-size:13px;line-height:1.15}
+.spit.on{background:var(--gold)}.spit.ok{background:var(--mint);color:#fff}.spit.no{background:var(--candy);color:#fff}
+.brk{position:fixed;left:0;top:0;right:0;bottom:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:rgba(20,10,40,.72);padding:16px;box-sizing:border-box}
+.brk .card{background:linear-gradient(160deg,#fff7e8,#ffe0c2);color:var(--ink);border-radius:28px;padding:24px 26px;max-width:520px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:pop .5s}
+.brk .em{font-size:72px;line-height:1}.brk h2{font-family:var(--display);margin:8px 0}.brk p{font-size:19px;font-weight:700;line-height:1.4}
+.brk .btn{margin:6px}
+.smcv{position:relative;flex:none}
+.smpad{display:grid;grid-template-columns:repeat(3,64px);grid-template-rows:repeat(3,64px);gap:6px}
+.smpad button{background:rgba(255,255,255,.85);color:var(--ink);border-radius:16px;font-size:26px;font-weight:900}
+.smpad [data-d='0']{grid-column:2;grid-row:1}.smpad [data-d='3']{grid-column:1;grid-row:2}.smpad [data-d='1']{grid-column:3;grid-row:2}.smpad [data-d='2']{grid-column:2;grid-row:3}
+.vnb{min-width:200px}
+.swtrack{display:flex;align-items:center;gap:6px;font-size:34px}.swtrack .seg{width:26px;height:20px;border-radius:10px;background:#2fb36d}.swtrack .dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.4);margin:0 8px}
+.swtrack .hd{transform:scaleX(-1);display:inline-block}
+.swword{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}.swword i{display:flex;align-items:center;justify-content:center;width:clamp(28px,5.5vw,46px);height:clamp(40px,7vh,56px);border-bottom:4px solid #fff;color:#fff;font-style:normal;font-weight:900;font-size:clamp(24px,4.5vw,36px)}.swword i.sp{border:0;width:16px}
+.swword.lost i{color:#ff9aa5}
+.swkeys{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:6px;width:min(640px,96%)}
+.swk{background:rgba(255,255,255,.9);color:var(--ink);border-radius:12px;font-weight:900;font-size:clamp(18px,3vh,24px);height:clamp(40px,7vh,54px)}
+.swk.ok{background:var(--mint);color:#fff}.swk.no{background:rgba(255,255,255,.2);color:rgba(255,255,255,.5)}
+.lugrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;width:min(760px,96%)}
+.luit{background:rgba(255,255,255,.9);color:var(--ink);border-radius:18px;padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:16px}
+.luit span{font-size:34px;line-height:1;font-weight:900}.luit.ok{background:var(--mint);color:#fff}
+.lubars{width:min(680px,94%);display:flex;flex-direction:column;gap:8px;color:#fff}.lubars div{display:grid;grid-template-columns:150px 1fr 100px;align-items:center;gap:8px;font-size:15px}
+.lubars i{display:block;height:16px;border-radius:8px;background:linear-gradient(90deg,#2fb36d,#a8e6c9)}
+.ltg{background:linear-gradient(180deg,#1f6b3a,#0f4a26);padding:14px;border-radius:24px;gap:10px}
+.ltg .n2c{border-radius:50%;background:#253a2c;box-shadow:inset 0 -4px 0 rgba(0,0,0,.3);transition:background .15s,box-shadow .15s}
+.ltg .n2c.on{background:var(--bc);box-shadow:0 0 18px var(--bc),0 0 6px #fff inset}
+.wsg{background:rgba(255,255,255,.92);border-radius:12px;padding:6px;touch-action:none}
+.wsc{display:flex;align-items:center;justify-content:center;color:var(--ink);font-weight:900;border-radius:6px;user-select:none;-webkit-user-select:none}
+.wsc.sel{background:#ffe08a!important}
+.wslist{display:flex;flex-wrap:wrap;gap:6px 12px;max-width:260px;justify-content:center;color:#fff;font-weight:900;font-size:17px}
+.wslist .f{text-decoration:line-through;opacity:.5}
+.sdg{background:#fff;border:3px solid #13213a;border-radius:8px;overflow:hidden}
+.sdc{background:#fff;color:#2f5fd0;border-right:1px solid #b9c3d6;border-bottom:1px solid #b9c3d6;font-weight:900;border-radius:0}
+.sdc.giv{color:#13213a;background:#eef2fa}.sdc.sel{background:#ffe08a}.sdc.no{color:#e8424f;background:#ffe1e4}
+.sdpad{display:grid;grid-template-columns:repeat(4,58px);gap:8px;justify-content:center}.sdpad .n2chip{font-size:26px}
+.mgg .n2c{background:rgba(255,255,255,.2);transition:background .15s}.mgg .n2c.on{background:#7aa7ff;box-shadow:0 0 14px #7aa7ff}.mgg .n2c.no{background:var(--candy)}
+.pxt{display:grid;background:#fff;border-radius:10px;padding:6px;touch-action:none}
+.pxc{color:#13213a;font-weight:900;display:flex;line-height:1.05;padding:2px}.pxc.col{align-items:flex-end;justify-content:center;text-align:center}.pxc.row{align-items:center;justify-content:flex-end;padding-right:6px;white-space:nowrap}
+.pxc.ok{color:#a9b4c8}
+.pxs{border-right:1px solid #c3cadb;border-bottom:1px solid #c3cadb;background:#fff}.pxs.f{background:#13213a}.pxs.x{background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M2 2L8 8M8 2L2 8' stroke='%23e8424f' stroke-width='1.4'/%3E%3C/svg%3E") center/70% no-repeat}
+.n2row .btn.on{background:var(--gold);color:var(--ink)}
+.clk{display:block}
+.mnrow{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;max-width:min(760px,96%);min-height:50px}
+.coin{display:inline-flex;align-items:center;justify-content:center;border-radius:50%;color:#2b2b2b;font-weight:900;font-size:14px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.2),0 2px 4px rgba(0,0,0,.3);border:2px solid rgba(0,0,0,.15)}
+.bill{display:inline-flex;align-items:center;justify-content:center;width:96px;height:46px;border-radius:6px;color:#14361a;font-weight:900;font-size:18px;border:3px solid rgba(255,255,255,.6);box-shadow:0 2px 4px rgba(0,0,0,.3)}
+.coin.sm{transform:scale(.8)}.bill.sm{transform:scale(.8)}.mnb{background:none;padding:0}
+.tray{background:rgba(255,255,255,.12);border-radius:16px;padding:8px;min-width:260px;min-height:70px}
+.tbar{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}.tbar span{padding:6px 14px;border-radius:20px;background:rgba(255,255,255,.15);color:#fff;font-weight:900;font-size:17px;border:3px solid transparent}
+.tbar span.on{background:var(--pc);border-color:#fff;transform:scale(1.08)}
+.c4g{background:#2f5fd0;padding:8px;border-radius:18px;gap:6px}.c4c{background:#0e1f3d;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.c4c i{display:block;width:88%;height:88%;border-radius:50%;animation:c4drop .3s ease-in;box-shadow:inset 0 -5px 0 rgba(0,0,0,.2)}.c4c.win i{box-shadow:0 0 0 4px #fff,0 0 18px #fff}
+@keyframes c4drop{from{transform:translateY(-300%)}to{transform:none}}
+.dbx{position:relative;background:rgba(255,255,255,.95);border-radius:16px;box-sizing:content-box;padding:10px}
+.dbx>*{position:absolute;margin:10px 0 0 10px}
+.dbd{background:#13213a;border-radius:50%;z-index:3;pointer-events:none}
+.dbe{z-index:2;padding:0;background:none}.dbe:after{content:"";position:absolute;left:0;right:0;top:50%;height:6px;margin-top:-3px;border-radius:3px;background:rgba(19,33,58,.12)}
+.dbe.v:after{left:50%;right:auto;top:0;bottom:0;height:auto;width:6px;margin:0 0 0 -3px}
+.dbe.on:after{background:var(--pc);height:8px;margin-top:-4px}.dbe.v.on:after{width:8px;height:auto;margin:0 0 0 -4px}
+.dbb{display:flex;align-items:center;justify-content:center;border-radius:6px;z-index:1}
+.dgtop{position:absolute;left:0;right:0;top:6px;text-align:center;color:#fff;font-size:20px;z-index:2}
+.dgarea{position:absolute;left:12px;right:12px;top:40px;bottom:120px;border-radius:16px;overflow:hidden}
+.dgbot{position:absolute;left:0;right:0;bottom:6px;display:flex;flex-wrap:wrap;gap:6px;justify-content:center;align-items:center;padding:0 8px}
+.dgc{width:40px;height:40px;border-radius:50%;border:3px solid #fff}.dgg{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;width:100%}.dgg .btn{padding:8px 14px;font-size:16px;margin:0}
+.bzwrap{position:absolute;left:0;top:0;right:0;bottom:0;display:flex;flex-direction:column;padding:10px 16px 14px;box-sizing:border-box;gap:10px}
+.bzq{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;min-height:0}
+.bzrow{display:flex;gap:12px;justify-content:center}.bzb{flex:1;max-width:280px;min-height:clamp(70px,14vh,110px);border-radius:24px;color:#fff;font-weight:900;font-size:20px;box-shadow:inset 0 -8px 0 rgba(0,0,0,.2);border:4px solid transparent}
+.bzb.on{border-color:#fff;transform:scale(1.06)}.bzb.off{opacity:.3}
+
+/* short screens (Kindle Fire 7 landscape, Silk toolbar) */
+.dtools{align-content:flex-start}
+@media (orientation:landscape) and (max-height:640px){
+  .qwrap{gap:8px;padding:6px 16px 10px}
+  .opt{min-height:58px;padding:10px;border-radius:18px}
+  .qtext{font-size:clamp(22px,3.4vw,34px)}
+  .qpic img.cam{width:min(70vw,calc(30vh * 1.6))}
+  .wpic{font-size:clamp(56px,11vh,90px)}
+  .dtools{gap:5px;padding:4px 0 6px 8px}.dtools button{width:40px;height:40px;font-size:20px;border-radius:12px}
+  .nailwrap{top:46px;padding-bottom:8px}.nailctl{gap:6px;justify-content:flex-start;overflow-y:auto}
+  .nailctl .row2{gap:5px}.nailctl .row2 button{max-width:38px;max-height:38px}
+  .n2wrap{gap:8px;padding:6px 12px 10px}
+  .card{padding:16px 18px}.card h2{font-size:26px}.card p{font-size:16px;margin:6px 0 10px}.card .em{font-size:48px}
+}
 </style>
 
 <canvas id="snow"></canvas>
@@ -486,7 +602,7 @@ body{margin:0}
   <div class="mgrid2">
     <button class="gt gt-games" id="toGames" style="--g:#ff8fb1">
       <span class="k">Play</span><span class="em">🎮</span>
-      <span class="h">Games</span><span class="s">31 games in 6 worlds</span>
+      <span class="h">Games</span><span class="s">61 games in 6 worlds</span>
       <span class="wm"><span><i>✨</i>Sparkle</span><span><i>🌲</i>Woods</span><span><i>🐍</i>Snakes</span><span><i>🎄</i>Christmas</span><span><i>🧠</i>Brain</span><span><i>👯</i>Together</span></span>
     </button>
     <a class="gt gt-spy" href="hq.html#spy" style="--g:#4fffa0">
@@ -669,7 +785,7 @@ function finish(o){
     else up="<div class='lvup dim'>Get 2 stars to reach Level "+(lv+1)+"</div>";}
   var title=o.title||(s>=3?"Amazing!":s===2?"Great job!":s===1?"Nice one!":"Good try!");
   var st=o.noStars?"":"<div class='stars'>"+[1,2,3].map(function(i){return "<span class='"+(i<=s?"on":"")+"' style='animation-delay:"+(i*0.25)+"s'>★</span>";}).join("")+"</div>";
-  var box=h("div","done","<div class='card'><h2>"+title+"</h2>"+st+"<p>"+(o.msg||"")+"</p>"+up+"<button class='btn go'>"+(lvUp?"Next level ›":"Try again")+"</button><button class='btn'>More games</button></div>");
+  var box=h("div","done","<div class='card'><h2>"+title+"</h2>"+st+"<p>"+(o.msg||"")+"</p>"+up+"<button class='btn go'>"+(lvUp?"Next level ›":(s>=2||o.award||!G.g.levels)?"Play again":"Try again")+"</button><button class='btn'>More games</button></div>");
   var bs=box.querySelectorAll("button");
   bs[0].addEventListener("click",function(){openGame(G.g,null,true);});
   bs[1].addEventListener("click",closeGame);
@@ -1207,7 +1323,7 @@ start:function(el){
 /* ---- Reindeer Tap Race (from the panel's Reindeer Race) ---- */
 game({id:"race",name:"Reindeer Race",em:"🏁",cats:["together","arcade"],bl:"Tap your button fast! Younger cousins get a head start.",tc:"#ffc94a",both:true,
 start:function(el){
-  pickPlayers(el,{title:"Reindeer Race",text:"Fair start: the 6 year old needs 30 taps, the 8 year old 40, the 10 year old 50.",min:2},function(sel){
+  pickPlayers(el,{title:"Reindeer Race",text:"Fair start: younger cousins need fewer taps to win.",min:2},function(sel){
     var wrap=h("div","race");el.appendChild(wrap);var lanes=[],go=false,over=false;
     sel.forEach(function(i){var need=[0,30,40,50][lvlFor(players[i])];var ln=h("div","lane","<div class='ln'>"+players[i].av+" "+esc(players[i].name)+"</div><div class='track'><div class='fin'></div><div class='rd'>🦌</div></div><div class='need'>"+need+" taps</div>");
       var b=h("button","tapb","TAP!");b.style.background=COLORS[i];ln.appendChild(b);wrap.appendChild(ln);
@@ -1223,7 +1339,7 @@ start:function(el){
 /* ---- Silly Spinner (new) ---- */
 game({id:"spin",name:"Silly Spinner",em:"🎡",cats:["together"],bl:"Spin the wheel and do the silly challenge.",tc:"#ffb0d9",both:true,
 start:function(el){
-  var wrap=h("div","center");el.appendChild(wrap);var holder=h("div");holder.style.cssText="position:relative;width:min(56vh,80vw);height:min(56vh,80vw)";wrap.appendChild(holder);
+  var wrap=h("div","center");el.appendChild(wrap);var holder=h("div");holder.style.cssText="position:relative;width:min(56vh,80vw,calc(100vh - 300px));height:min(56vh,80vw,calc(100vh - 300px))";wrap.appendChild(holder);
   var ch=h("div","chal","Tap Spin!");wrap.appendChild(ch);var sb=h("button","btn go","Spin!");wrap.appendChild(sb);
   var cv=h("canvas");cv.style.cssText="width:100%;height:100%";holder.appendChild(cv);var cx=cv.getContext("2d"),list,ang=0,spinning=false;
   var CL=["#e8424f","#ffc94a","#41c9a0","#7aa7ff","#ff8fb1","#b07cff","#ff9f43","#2fb3c9"];
@@ -1806,17 +1922,851 @@ start:function(el,L){
   ready(el,{em:"🌎",title:"Name That Wildlife",text:D<1.6?"Spin the globe and tap a place. Then pick the right name for each animal!":D<2.6?"Pick a place on the globe. Name each animal from 4 choices.":"Pick a place. You only get a clue, no picture, so read carefully!"+(D>=3.4?" Watch out: some answers are animals from other places.":"")},globe);
 }});
 
+
+/* ================= new games, batch 2 (harder) ================= */
+/* shared: a quiz with a learn card after every answer. items = [emoji, answer, clue, fact] */
+function learnQuiz(el,o){
+  var D=G.D||G.level,N=Math.min(o.items.length,P(o.n||[6,8,10])),nOpt=D<1.6?3:4,clueOnly=o.clueOnly&&D>=2.6,qs=shuffle(o.items).slice(0,N),n=0,pts=0;
+  var w=h("div","qwrap");el.appendChild(w);
+  function opts(a){var pool=shuffle(o.items.filter(function(x){return x[1]!==a[1];}));var r=[a[1]];pool.forEach(function(x){if(r.length<nOpt&&r.indexOf(x[1])<0)r.push(x[1]);});return shuffle(r);}
+  function next(){if(n>=qs.length)return end();var a=qs[n],pic=emo(a[0]||"❓","❓"),show=!clueOnly;
+    w.innerHTML="<div class='qwho'>"+o.em+" "+(n+1)+" of "+qs.length+"</div><div class='wpic'>"+(show?pic:"🔍")+"</div><div class='qtext wclue'>"+esc(o.q?o.q(a,show):a[2])+"</div><div class='opts'></div>";
+    var box=w.querySelector(".opts"),done=false;
+    opts(a).forEach(function(op){var b=h("button","opt",esc(op));b.addEventListener("click",function(){if(done)return;done=true;var ok=op===a[1];
+      if(ok){b.classList.add("ok");pts++;sfx.good();}else{b.classList.add("no");sfx.bad();[].forEach.call(box.children,function(x){if(x.textContent===a[1])x.classList.add("ok");});}
+      score(o.em+" ✅ "+pts);n++;later(function(){learn(a,ok,op);},ok?450:700);});box.appendChild(b);});}
+  function learn(a,ok,picked){w.innerHTML="<div class='wlearn "+(ok?"ok":"no")+"'><div class='wlh'>"+(ok?"✅ You got it!":"❌ Not quite. You picked "+esc(picked)+".")+"</div><div class='wlpic'>"+emo(a[0]||"❓","❓")+"</div><div class='wlname'>"+esc(a[1])+"</div><div class='wlclue'>"+esc(a[2])+"</div>"+(a[3]?"<div class='wlfact'><b>💡 Fun fact:</b> "+esc(a[3])+"</div>":"")+"<button class='btn go wnext'>"+(n>=qs.length?"See my stars ›":"Next ›")+"</button></div>";
+    w.querySelector(".wnext").addEventListener("click",function(){sfx.tick();next();});}
+  function end(){var f=pts/qs.length;finish({stars:f>=0.85?3:f>=0.65?2:f>=0.4?1:0,msg:pts+" out of "+qs.length+" right."});}
+  score(o.em+" ✅ 0");
+  ready(el,{em:o.em,title:o.title,text:o.intro+(clueOnly?" At your level you only get the clue, no picture!":"")},next);
+}
+/* shared: a tappable grid of square cells that fits the play area */
+function cellGrid(el,cols,rows,cls){var g=h("div","n2grid "+(cls||""));var W=el.clientWidth-40,H=el.clientHeight-170,s=Math.floor(Math.min(W/cols,H/rows,90));
+  g.style.gridTemplateColumns="repeat("+cols+","+s+"px)";g.style.gridAutoRows=s+"px";var cells=[];for(var i=0;i<cols*rows;i++){var c=h("button","n2c");g.appendChild(c);cells.push(c);}return {g:g,cells:cells,s:s};}
+
+/* ---- Sparkle Studio, batch 2 ---- */
+var RYB={c:[[1,1,1],[1,0,0],[1,1,0],[1,.5,0],[.163,.373,.6],[.5,0,.5],[0,.66,.2],[.2,.094,0]]};
+function ryb2rgb(r,y,b){var c=RYB.c,o=[];for(var k=0;k<3;k++){
+  var c00=c[0][k]*(1-r)+c[1][k]*r,c01=c[4][k]*(1-r)+c[5][k]*r,c10=c[2][k]*(1-r)+c[3][k]*r,c11=c[6][k]*(1-r)+c[7][k]*r;
+  var c0=c00*(1-y)+c10*y,c1=c01*(1-y)+c11*y;o.push(c0*(1-b)+c1*b);}return o;}
+function paintMix(n){var p=n[0]+n[1]+n[2],tot=p+n[3]+n[4];if(!tot)return null;var rgb=[0,0,0];
+  if(p){var m=Math.max(n[0],n[1],n[2]);rgb=ryb2rgb(n[0]/m,n[1]/m,n[2]/m);}var a=p/tot,w=n[3]/tot;
+  return rgb.map(function(v){return Math.round(255*Math.max(0,Math.min(1,v*a+w)));});}
+function rgbS(c){return c?"rgb("+c.join(",")+")":"transparent";}
+game({id:"colormix",name:"Color Mixer",em:"🎨",bl:"Mix paint drops to match the secret color.",tc:"#ffc2e0",levels:true,
+start:function(el,L){
+  var D=curD(),PAINTS=[["Red","#e3262f"],["Yellow","#ffd21f"],["Blue","#2a5fd6"],["White","#ffffff"],["Black","#1d1d24"]];
+  var np=D>=3.2?5:D>=2.4?4:3,R=5,r=0,pts=0,fails=0,tgt,mine;
+  var w=h("div","n2wrap");el.appendChild(w);
+  w.innerHTML="<div class='n2msg' id='cmMsg'>Match the color!</div><div class='n2row cmrow'><div class='cmcol'><div class='cmblob' id='cmT'></div><div class='n2small'>Secret color</div></div><div class='cmcol'><div class='cmblob' id='cmM'></div><div class='n2small' id='cmD'>Your mix</div></div></div><div class='n2row' id='cmPots'></div><div class='n2row'><button class='btn' id='cmU'>↩ Undo</button><button class='btn' id='cmC'>Clear</button><button class='btn go' id='cmK'>Check</button></div>";
+  var hist=[];
+  PAINTS.slice(0,np).forEach(function(pt,i){var b=h("button","cmpot","<i style='background:"+pt[1]+"'></i><span>"+pt[0]+"</span>");tap(b,function(){if(G.done)return;if(sum(mine)>=16){sfx.bad();return;}mine[i]++;hist.push(i);sfx.tick();draw();});w.querySelector("#cmPots").appendChild(b);});
+  function sum(a){return a.reduce(function(x,y){return x+y;},0);}
+  function same(a,b){var sa=sum(a),sb=sum(b);if(!sa)return false;for(var i=0;i<5;i++)if(a[i]*sb!==b[i]*sa)return false;return true;}
+  function newT(){tgt=[0,0,0,0,0];var nc=D<1.8?2:rnd(2,3);shuffle([0,1,2]).slice(0,nc).forEach(function(c){tgt[c]=rnd(1,D<2?2:3);});
+    if(np>=4&&Math.random()<0.6)tgt[3]=rnd(1,2);if(np>=5&&Math.random()<0.45)tgt[4]=1;
+    var g=tgt.reduce(function(a,b){function gc(x,y){return y?gc(y,x%y):x;}return b?gc(a,b):a;},0);if(g>1)tgt=tgt.map(function(v){return v/g;});
+    mine=[0,0,0,0,0];hist=[];fails=0;w.querySelector("#cmT").style.background=rgbS(paintMix(tgt));draw();
+    w.querySelector("#cmMsg").textContent="Color "+(r+1)+" of "+R+": match it!";}
+  function draw(){var c=paintMix(mine);w.querySelector("#cmM").style.background=c?rgbS(c):"rgba(255,255,255,.12)";
+    w.querySelector("#cmD").textContent=sum(mine)?mine.map(function(v,i){return v?v+" "+PAINTS[i][0].toLowerCase():"";}).filter(Boolean).join(" + "):"Your mix";score("🎨 "+pts);}
+  function dist(a,b){return Math.sqrt(a.reduce(function(s,v,i){return s+(v-b[i])*(v-b[i]);},0));}
+  tap(w.querySelector("#cmU"),function(){var i=hist.pop();if(i!=null){mine[i]--;draw();}});
+  tap(w.querySelector("#cmC"),function(){mine=[0,0,0,0,0];hist=[];draw();});
+  tap(w.querySelector("#cmK"),function(){if(G.done||!sum(mine))return;var m=w.querySelector("#cmMsg");
+    if(same(mine,tgt)){var got=Math.max(1,3-fails);pts+=got;sfx.good();m.textContent="Perfect match! +"+got;next();}
+    else{fails++;sfx.bad();var pc=Math.max(0,Math.round(100-dist(paintMix(mine),paintMix(tgt))/4.4));
+      if(fails>=3){m.innerHTML="The recipe was "+tgt.map(function(v,i){return v?v+" "+PAINTS[i][0].toLowerCase():"";}).filter(Boolean).join(" + ");next(1800);}
+      else m.textContent=pc+"% close. "+(3-fails)+" tr"+(3-fails===1?"y":"ies")+" left.";}});
+  function next(ms){r++;later(function(){if(r>=R){finish({stars:pts>=13?3:pts>=10?2:pts>=6?1:0,msg:"You scored "+pts+" of "+(R*3)+" paint points."});}else newT();},ms||900);}
+  ready(el,{em:"🎨",title:"Color Mixer",text:"Tap the paint pots to add drops. Red and yellow make orange, blue and yellow make green. Match the secret color, then press Check. 3 tries per color."+(np>3?" Use white to make colors lighter"+(np>4?" and black to make them darker":"")+".":"")},newT);
+}});
+
+game({id:"pattern",name:"Pattern Painter",em:"🖼️",bl:"Copy the pixel picture. Big kids paint it from memory.",tc:"#e5d4ff",levels:true,
+start:function(el,L){
+  var D=curD(),n=Math.min(8,P([4,5,6])),nc=Math.min(6,P([2,3,4]))+1,mem=D>=3,showT=Math.max(4,12-(D-3)*4.5),PIC=3,pic=0,bad=0,peeks=0;
+  var COL=["#ffffff","#ff5fa2","#7b5cff","#ffc94a","#2fb3c9","#36b37e","#ff8f3d"];
+  var w=h("div","n2wrap");el.appendChild(w);var tgt,mine,sel=1;
+  function gen(){tgt=[];var half=Math.ceil(n/2);for(var r=0;r<n;r++){var row=[];for(var c=0;c<half;c++)row.push(Math.random()<0.35?0:rnd(1,nc-1));for(c=half;c<n;c++)row.push(row[n-1-c]);tgt=tgt.concat(row);}mine=tgt.map(function(){return 0;});}
+  function grid(cls,arr,cb){var r=el.getBoundingClientRect(),land=r.width>r.height,av=land?Math.min((r.width-90)/2,r.height-200):Math.min(r.width-40,(r.height-230)/2);
+    var s=Math.max(18,Math.floor((av-(n-1)*3)/n));var g=h("div","n2grid "+cls);g.style.gridTemplateColumns="repeat("+n+","+s+"px)";g.style.gridAutoRows=s+"px";g.style.gap="3px";
+    arr.forEach(function(v,i){var c=h("button","n2c");c.style.background=COL[v];c.style.borderRadius="4px";if(cb)tap(c,function(){cb(i,c);});g.appendChild(c);});return g;}
+  function build(){w.innerHTML="";var msg=h("div","n2msg",mem?"Remember this picture!":"Copy the picture "+(pic+1)+" of "+PIC);w.appendChild(msg);
+    var row=h("div","n2row");row.style.gap="24px";var tw=h("div","pptgt"),tg=grid("",tgt);tw.appendChild(tg);
+    var cover=h("div","ppcov","❔");tw.appendChild(cover);row.appendChild(tw);
+    var mg=grid("",mine,function(i,c){if(G.done||(mem&&!hidden))return;if(mine[i]===sel)return;mine[i]=sel;c.style.background=COL[sel];
+      if(sel!==tgt[i]){bad++;sfx.bad();c.classList.add("shake");setTimeout(function(){c.classList.remove("shake");},400);}else sfx.tick();
+      score("❌ "+bad);if(mine.every(function(v,j){return v===tgt[j];})){sfx.good();msg.textContent="Picture "+(pic+1)+" done! ✨";cover.style.display="none";pic++;later(function(){if(pic>=PIC)end();else{gen();build();}},1100);}});
+    row.appendChild(mg);w.appendChild(row);
+    var pal=h("div","n2row n2pal");for(var k=0;k<nc;k++)(function(k){var b=h("button",k===sel?"on":"");b.style.background=COL[k];if(k===0)b.textContent="🧽";tap(b,function(){sel=k;[].forEach.call(pal.children,function(x,j){x.classList.toggle("on",j===sel);});});pal.appendChild(b);})(k);
+    w.appendChild(pal);var hidden=!mem;
+    if(mem){mg.style.opacity=".35";var pk=h("button","btn","👀 Peek (costs 2)");pk.style.display="none";w.appendChild(pk);
+      later(function(){hidden=true;cover.style.display="flex";mg.style.opacity="1";pk.style.display="";msg.textContent="Now paint it from memory!";},showT*1000);
+      tap(pk,function(){if(!hidden||G.done)return;peeks++;cover.style.display="none";later(function(){cover.style.display="flex";},1600);});}
+  }
+  function end(){var m=bad+peeks*2;finish({stars:m<=2?3:m<=6?2:1,msg:PIC+" pictures with "+bad+" wrong tap"+(bad===1?"":"s")+(peeks?" and "+peeks+" peek"+(peeks>1?"s":""):"")+"."});}
+  ready(el,{em:"🖼️",title:"Pattern Painter",text:"Pick a color, then tap the squares to copy the picture. Wrong colors count against you. 3 pictures."+(mem?" At your level the picture hides after "+Math.round(showT)+" seconds, so study it first!":"")},function(){gen();build();score("❌ 0");});
+}});
+
+game({id:"jewels",name:"Jewel Match",em:"💎",bl:"Swap jewels to make rows of 3. Reach the goal in 20 moves.",tc:"#c9e6ff",levels:true,
+start:function(el,L){
+  var N=7,K=Math.min(6,P([5,5,6])),goal=P([35,45,60]),moves=20,got=0,busy=false,sel=-1,b=[];
+  var J=["💎","💖","⭐","🍀","🍊","🌙"];
+  var w=h("div","n2wrap");el.appendChild(w);var msg=h("div","n2msg","");w.appendChild(msg);
+  var r=el.getBoundingClientRect(),s=Math.floor(Math.min((r.width-40)/N,(r.height-110)/N,84)),g=h("div","n2grid jwg");g.style.gridTemplateColumns="repeat("+N+","+s+"px)";g.style.gridAutoRows=s+"px";w.appendChild(g);
+  var cells=[];for(var i=0;i<N*N;i++){var c=h("div","jw");c.style.fontSize=(s*0.62)+"px";g.appendChild(c);cells.push(c);}
+  function at(i){return b[i];}
+  function runs(){var m={};for(var r0=0;r0<N;r0++)for(var c0=0;c0<N;c0++){var i=r0*N+c0,v=b[i];if(v<0)continue;
+      if(c0<=N-3&&b[i+1]===v&&b[i+2]===v){m[i]=m[i+1]=m[i+2]=1;}
+      if(r0<=N-3&&b[i+N]===v&&b[i+2*N]===v){m[i]=m[i+N]=m[i+2*N]=1;}}return Object.keys(m).map(Number);}
+  function fill(){b=[];for(var i=0;i<N*N;i++){var v;do{v=rnd(0,K-1);}while((i%N>=2&&b[i-1]===v&&b[i-2]===v)||(i>=2*N&&b[i-N]===v&&b[i-2*N]===v));b.push(v);}if(!anyMove())fill();}
+  function sw(i,j){var t=b[i];b[i]=b[j];b[j]=t;}
+  function anyMove(){for(var i=0;i<N*N;i++){var nb=[];if(i%N<N-1)nb.push(i+1);if(i<N*N-N)nb.push(i+N);for(var k=0;k<nb.length;k++){sw(i,nb[k]);var ok=runs().length>0;sw(i,nb[k]);if(ok)return true;}}return false;}
+  function draw(){cells.forEach(function(c,i){c.textContent=b[i]>=0?J[b[i]]:"";c.classList.toggle("sel",i===sel);});msg.textContent="Goal "+Math.min(got,goal)+" / "+goal+"   ·   Moves "+moves;score("💎 "+got);}
+  function adj(i,j){return (Math.abs(i-j)===1&&Math.floor(i/N)===Math.floor(j/N))||Math.abs(i-j)===N;}
+  function tryS(i,j){if(busy||G.done)return;busy=true;sel=-1;sw(i,j);draw();
+    if(!runs().length){sfx.bad();later(function(){sw(i,j);draw();busy=false;},260);return;}
+    moves--;cascade(0);}
+  function cascade(depth){var m=runs();if(!m.length){if(!anyMove()){msg.textContent="No moves left. Shuffling!";later(function(){fill();draw();endCheck();},700);}else endCheck();return;}
+    got+=m.length+(depth>0?depth:0);tone(500+depth*120,0.12,"triangle",0.18);m.forEach(function(i){cells[i].classList.add("pop");b[i]=-1;});
+    later(function(){m.forEach(function(i){cells[i].classList.remove("pop");});
+      for(var c=0;c<N;c++){var col=[];for(var r1=N-1;r1>=0;r1--)if(b[r1*N+c]>=0)col.push(b[r1*N+c]);for(r1=N-1;r1>=0;r1--){var k=N-1-r1;b[r1*N+c]=k<col.length?col[k]:rnd(0,K-1);}}
+      draw();later(function(){cascade(depth+1);},200);},260);}
+  function endCheck(){busy=false;draw();if(got>=goal){finish({stars:3,msg:"Goal reached with "+moves+" move"+(moves===1?"":"s")+" to spare!"});return;}
+    if(moves<=0)finish({stars:got>=goal*0.75?2:got>=goal*0.5?1:0,msg:"You cleared "+got+" of "+goal+" jewels."});}
+  var d0=null;
+  function cellAt(p){var gr=g.getBoundingClientRect(),er=el.getBoundingClientRect(),x=p.x+er.left-gr.left,y=p.y+er.top-gr.top;if(x<0||y<0||x>=gr.width||y>=gr.height)return -1;return Math.min(N-1,Math.floor(y/(gr.height/N)))*N+Math.min(N-1,Math.floor(x/(gr.width/N)));}
+  ptr(el,{down:function(p){var i=cellAt(p);if(i<0||busy)return;d0={i:i,x:p.x,y:p.y};},
+    move:function(p){if(!d0)return;var dx=p.x-d0.x,dy=p.y-d0.y;if(Math.max(Math.abs(dx),Math.abs(dy))>s*0.45){var i=d0.i,j=Math.abs(dx)>Math.abs(dy)?(dx>0?i+1:i-1):(dy>0?i+N:i-N);d0=null;if(j>=0&&j<N*N&&adj(i,j))tryS(i,j);}},
+    up:function(p){if(!d0)return;var i=d0.i;d0=null;if(sel>=0&&sel!==i&&adj(sel,i))tryS(sel,i);else{sel=sel===i?-1:i;sfx.tick();draw();}}});
+  fill();draw();
+  ready(el,{em:"💎",title:"Jewel Match",text:"Swipe a jewel, or tap two jewels side by side, to swap them. Line up 3 or more of the same to clear them. Clear "+goal+" jewels in 20 moves for 3 stars."},function(){});
+}});
+
+game({id:"boutique",name:"Boutique Rush",em:"🛍️",bl:"Shoppers want things fast. Fill each order before they leave.",tc:"#ffd9c2",levels:true,
+start:function(el,L){
+  var D=curD(),ITEMS=["👗","👠","👜","🎀","💍","👒","🕶️","🧣","👛","💄","👑","👟"],shelf=shuffle(ITEMS).slice(0,Math.min(12,P([6,8,10])));
+  var maxO=Math.min(6,P([3,4,5])),pat=Math.max(5,P([14,11,8])),mem=D>=3.4,T=60,served=0,cust=null;
+  var thr=PT([[3,5,7],[4,6,8],[5,7,9]]);
+  var w=h("div","n2wrap");el.appendChild(w);
+  w.innerHTML="<div class='btq'><div class='btc' id='btC'></div><div><div class='n2row' id='btO'></div><div class='btbar'><i id='btP'></i></div></div></div><div class='btshelf' id='btS'></div>";
+  var sh=w.querySelector("#btS");
+  shelf.forEach(function(it){var b=h("button","btit",it);tap(b,function(){pickIt(it,b);});sh.appendChild(b);});
+  function newC(){var n=rnd(2,maxO),o=[];for(var i=0;i<n;i++)o.push(pick(shelf));cust={o:o,got:o.map(function(){return false;}),t:pat+n*0.8,max:pat+n*0.8,hide:mem?2.6:-1};
+    w.querySelector("#btC").textContent=pick(["👩","👧","👵","🧑","👸","👩‍🦰"]);drawO();}
+  function drawO(){var box=w.querySelector("#btO");box.innerHTML="";cust.o.forEach(function(it,i){var c=h("span","n2chip"+(cust.got[i]?" ok":""),cust.got[i]||cust.hide>0||!mem?it:"❔");box.appendChild(c);});}
+  function pickIt(it,b){if(!cust||G.done||!go)return;for(var i=0;i<cust.o.length;i++)if(!cust.got[i]&&cust.o[i]===it){cust.got[i]=true;sfx.pop();drawO();
+      if(cust.got.every(Boolean)){served++;sfx.good();score("🛍️ "+served);newC();}return;}
+    cust.t-=2;sfx.bad();b.classList.add("shake");setTimeout(function(){b.classList.remove("shake");},400);}
+  var go=false;newC();score("🛍️ 0");
+  ready(el,{em:"🛍️",title:"Boutique Rush",text:"Each shopper shows what she wants. Tap those things on the shelf before her timer runs out. Wrong things cost time. You have 60 seconds."+(mem?" At your level the order hides after a moment, so remember it!":"")},function(){go=true;
+    loop(function(dt){T-=dt;cust.t-=dt;if(cust.hide>0){cust.hide-=dt;if(cust.hide<=0)drawO();}
+      if(cust.t<=0){sfx.bad();newC();}
+      w.querySelector("#btP").style.width=Math.max(0,cust.t/cust.max*100)+"%";score("🛍️ "+served+"   ⏱ "+Math.max(0,Math.ceil(T)));
+      if(T<=0){finish({stars:starsFor(served,thr),msg:"You helped "+served+" shopper"+(served===1?"":"s")+". "+(served<thr[2]?"Help "+thr[starsFor(served,thr)]+" for the next star.":"Top seller!")});return false;}});});
+}});
+
+game({id:"outfit",name:"Outfit Memory",em:"👚",bl:"Study the outfit, then build it again from memory.",tc:"#f3c6ff",levels:true,
+start:function(el,L){
+  var CATS=[["Hat",["👒","🎩","🧢","👑","🎓"]],["Top",["👗","👚","👕","👘","🧥"]],["Shoes",["👠","👟","🥾","👞","👢"]],["Bag",["👜","👛","🎒","💼","🧺"]],["Extra",["🕶️","💍","📿","🧣","🎀"]]];
+  var k=Math.min(5,P([3,4,5])),showT=Math.max(2.5,P([6,5,4])),nOpt=Math.min(5,P([3,4,5])),R=4,r=0,right=0,total=0;
+  var w=h("div","n2wrap");el.appendChild(w);
+  function round(){var cats=shuffle(CATS.slice()).slice(0,k),fit=cats.map(function(c){return pick(c[1]);});
+    w.innerHTML="<div class='n2msg'>Outfit "+(r+1)+" of "+R+": remember it!</div><div class='n2row ofit'>"+fit.map(function(e,i){return "<div class='ofi'><span class='n2big'>"+emo(e,"❔")+"</span><small>"+cats[i][0]+"</small></div>";}).join("")+"</div><div class='btbar'><i id='ofT' style='transition:width "+showT+"s linear'></i></div>";
+    var bar=w.querySelector("#ofT");bar.style.width="100%";requestAnimationFrame(function(){requestAnimationFrame(function(){bar.style.width="0%";});});
+    later(function(){ask(cats,fit);},showT*1000);}
+  function ask(cats,fit){var pickd=cats.map(function(){return null;});w.innerHTML="<div class='n2msg'>What was she wearing?</div>";
+    cats.forEach(function(c,i){var opts=shuffle([fit[i]].concat(shuffle(c[1].filter(function(x){return x!==fit[i];})).slice(0,nOpt-1)));
+      var row=h("div","n2row ofrow","<b>"+c[0]+"</b>");opts.forEach(function(o){var b=h("button","n2chip",emo(o,"❔"));b.dataset.v=o;tap(b,function(){pickd[i]=o;[].forEach.call(row.querySelectorAll(".n2chip"),function(x){x.classList.toggle("on",x===b);});sfx.tick();ok.disabled=pickd.indexOf(null)>=0;});row.appendChild(b);});w.appendChild(row);});
+    var ok=h("button","btn go","Check");ok.disabled=true;w.appendChild(ok);
+    tap(ok,function(){if(ok.disabled)return;ok.disabled=true;var n=0;w.querySelectorAll(".ofrow").forEach(function(row,i){[].forEach.call(row.querySelectorAll(".n2chip"),function(x){if(x.dataset.v===fit[i])x.classList.add("ok");else if(x.dataset.v===pickd[i])x.classList.add("no");});if(pickd[i]===fit[i])n++;});
+      right+=n;total+=k;score("👚 "+right+"/"+total);if(n===k)sfx.good();else sfx.bad();r++;
+      later(function(){if(r>=R){var f=right/total;finish({stars:f>=0.85?3:f>=0.65?2:f>=0.4?1:0,msg:right+" of "+total+" pieces right."});}else round();},1500);});}
+  score("👚 0");
+  ready(el,{em:"👚",title:"Outfit Memory",text:"You'll see an outfit with "+k+" pieces for "+Math.round(showT)+" seconds. Then pick each piece from memory. 4 outfits."},round);
+}});
+
+/* ---- Wild Woods, batch 2 ---- */
+game({id:"fishing",name:"Fishing Derby",em:"🎣",bl:"Cast, wait for the bite, then reel without snapping the line.",tc:"#9fd8ff",levels:true,
+start:function(el,L){
+  var c=canvasIn(el),cx=c.cx,D=curD(),T=60,pts=0,st="idle",bx=0,by=0,wait=0,win=Math.max(0.35,P([0.9,0.7,0.5])),zw=Math.max(0.07,P([0.2,0.15,0.11])),hold=false,ten=0.5,prog=0,slack=0,jerk=1,fish=null,msg="Tap the water to cast!",msgT=99,clock=0,pops=[],caught=0;
+  var FISH=[["Bluegill",1,0.6],["Rainbow Trout",2,0.85],["Largemouth Bass",3,1.05],["Channel Catfish",4,1.2],["Big Carp",5,1.35]];
+  var thr=PT([[5,9,13],[7,12,17],[9,14,20]]);
+  function say(t,s){msg=t;msgT=s||2;}
+  ptr(c.cv,{down:function(p){hold=true;
+      if(st==="idle"&&p.y>c.H*0.36){st="wait";bx=p.x;by=p.y;wait=1.2+Math.random()*2.8;sfx.tick();say("Wait for the bite…",9);}
+      else if(st==="wait"){st="idle";sfx.bad();say("Too soon! The fish swam off. Cast again.");}
+      else if(st==="bite"){st="reel";var w=Math.random()*(D/4.4);fish=FISH[Math.min(4,Math.floor(w*5+Math.random()*1.5))];ten=0.5;prog=0.15;slack=0;jerk=0.8;say("Hold to reel, let go to ease off!",3);sfx.good();}},
+    up:function(){hold=false;}});
+  function draw(){var W=c.W,H=c.H,hz=H*0.36;cx.clearRect(0,0,W,H);
+    var sky=cx.createLinearGradient(0,0,0,hz);sky.addColorStop(0,"#ffb37a");sky.addColorStop(1,"#ffe2a8");cx.fillStyle=sky;cx.fillRect(0,0,W,hz);
+    cx.fillStyle="#3e5c2a";cx.beginPath();cx.moveTo(0,hz);for(var x=0;x<=W;x+=40)cx.lineTo(x,hz-12-14*Math.sin(x/90));cx.lineTo(W,hz);cx.fill();
+    var wt=cx.createLinearGradient(0,hz,0,H);wt.addColorStop(0,"#3c8fc7");wt.addColorStop(1,"#174a75");cx.fillStyle=wt;cx.fillRect(0,hz,W,H-hz);
+    cx.strokeStyle="rgba(255,255,255,.18)";cx.lineWidth=2;for(var i=0;i<9;i++){var yy=hz+20+i*(H-hz)/9,o=(clock*20+i*50)%80;cx.beginPath();cx.moveTo(o,yy);cx.lineTo(o+40,yy);cx.moveTo(o+W*0.5,yy+8);cx.lineTo(o+W*0.5+50,yy+8);cx.stroke();}
+    cx.fillStyle="#8a5a33";cx.fillRect(0,H-70,170,70);emoji(cx,"🎣",120,H-100,64);
+    if(st!=="idle"){var bob=st==="bite"?Math.sin(clock*30)*6+10:Math.sin(clock*3)*3;cx.strokeStyle="rgba(255,255,255,.7)";cx.lineWidth=1.5;cx.beginPath();cx.moveTo(150,H-135);cx.quadraticCurveTo((150+bx)/2,Math.min(by,H-135)-60,bx,by+bob);cx.stroke();
+      cx.fillStyle="#e8424f";cx.beginPath();cx.arc(bx,by+bob,9,Math.PI,0);cx.fill();cx.fillStyle="#fff";cx.beginPath();cx.arc(bx,by+bob,9,0,Math.PI);cx.fill();
+      if(st==="bite"){cx.fillStyle="#ffc94a";cx.font="900 46px Nunito,sans-serif";cx.textAlign="center";cx.fillText("!",bx,by-24);}}
+    if(st==="reel"){var bxw=46,bh=H*0.55,x0=W-bxw-24,y0=(H-bh)/2;cx.fillStyle="rgba(0,0,0,.4)";cx.fillRect(x0-6,y0-6,bxw+12,bh+12);
+      var zc=0.5+0.2*Math.sin(clock*jerk*1.3);fish.zc=zc;cx.fillStyle="#41c9a0";cx.fillRect(x0,y0+(1-zc-zw)*bh,bxw,2*zw*bh);
+      cx.fillStyle="#fff";cx.fillRect(x0-8,y0+(1-ten)*bh-4,bxw+16,8);
+      cx.fillStyle="rgba(255,255,255,.25)";cx.fillRect(W*0.25,24,W*0.45,16);cx.fillStyle="#ffc94a";cx.fillRect(W*0.25,24,W*0.45*Math.max(0,prog),16);
+      cx.fillStyle="#fff";cx.font="800 15px Nunito,sans-serif";cx.textAlign="left";cx.fillText("Reel in",W*0.25,58);cx.textAlign="center";cx.fillText("Line",x0+bxw/2,y0-14);}
+    pops.forEach(function(p){cx.globalAlpha=Math.max(0,p.l);cx.fillStyle="#ffc94a";cx.font="900 28px Nunito,sans-serif";cx.textAlign="center";cx.fillText(p.t,p.x,p.y);cx.globalAlpha=1;});
+    if(msgT>0){cx.fillStyle="rgba(5,12,28,.55)";cx.fillRect(0,c.H*0.36-46,W,40);cx.fillStyle="#fff";cx.font="800 22px Fredoka,Nunito,sans-serif";cx.textAlign="center";cx.fillText(msg,W/2,c.H*0.36-19);}}
+  draw();
+  ready(el,{em:"🎣",title:"Fishing Derby",text:"Tap the water to cast. When the bobber jumps and you see !, tap fast. Then hold your finger down to reel and let go to ease off. Keep the white line in the green zone. Too tight and it snaps! Bigger fish are worth more. 60 seconds."},function(){
+    loop(function(dt){clock+=dt;T-=dt;msgT-=dt;
+      if(st==="wait"){wait-=dt;if(wait<=0){st="bite";wait=win;tone(880,0.08,"square",0.12);say("Bite! Tap!",win);}}
+      else if(st==="bite"){wait-=dt;if(wait<=0){st="idle";sfx.bad();say("Too slow, it got away. Cast again!");}}
+      else if(st==="reel"){ten+=(hold?0.75:-0.65)*dt;jerk-=dt;if(jerk<=0){jerk=0.5+Math.random()*(1.4-D*0.15);ten+=fish[2]*0.17*(0.5+Math.random());}
+        var inZ=Math.abs(ten-fish.zc)<=zw;if(inZ)prog+=dt/(2.2+fish[2]*1.6);else prog-=dt*0.06;
+        if(ten>=1){st="idle";sfx.bad();say("Snap! The line broke. Cast again!");}
+        else if(ten<=0){slack+=dt;ten=0;if(slack>1.1){st="idle";sfx.bad();say("Too loose. It slipped off!");}}
+        else slack=0;
+        if(prog>=1){st="idle";pts+=fish[1];caught++;sfx.win();pops.push({x:bx,y:by-30,t:"+"+fish[1]+" "+fish[0]+"!",l:1.6});say("You caught a "+fish[0]+"! 🐟");}}
+      pops=pops.filter(function(p){p.y-=40*dt;p.l-=dt*0.7;return p.l>0;});
+      score("🐟 "+pts+"   ⏱ "+Math.max(0,Math.ceil(T)));draw();
+      if(T<=0){finish({stars:starsFor(pts,thr),msg:"You caught "+caught+" fish for "+pts+" points. "+(pts<thr[2]?"Get "+thr[starsFor(pts,thr)]+" for the next star.":"Derby champ!")});return false;}});});
+}});
+
+game({id:"archery",name:"Archery Range",em:"🏹",bl:"Pull back, aim for the bullseye. Watch the wind!",tc:"#ffb3a7",levels:true,
+start:function(el,L){
+  var c=canvasIn(el),cx=c.cx,D=curD(),N=8,shot=0,tot=0,R=Math.max(26,P([60,48,38])),pv=Math.max(0.12,P([0.9,0.45,0.22])),WMAX=Math.max(0,P([0,60,110])),mov=D>=3.4;
+  var tx,ty0,ty,wind,drag=null,arrow=null,stuck=[],pops=[],clock=0,G0=520,bx=70,by;
+  function setT(){tx=c.W-80-Math.random()*c.W*0.22*Math.min(1,D/3);ty0=c.H*0.3+Math.random()*c.H*0.35;ty=ty0;wind=Math.round((Math.random()*2-1)*WMAX);}
+  function vel(p){var dx=drag.x-p.x,dy=drag.y-p.y,l=Math.min(240,Math.hypot(dx,dy)),a=Math.atan2(dy,dx),v=200+l/240*780;return {vx:Math.cos(a)*v,vy:Math.sin(a)*v,l:l};}
+  ptr(c.cv,{down:function(p){if(arrow||G.done||shot>=N||!go)return;drag={x:p.x,y:p.y,p:p};},move:function(p){if(drag)drag.p=p;},
+    up:function(p){if(!drag)return;var v=vel(drag.p);drag=null;if(v.l<20)return;arrow={x:bx,y:by,vx:v.vx,vy:v.vy};tone(300,0.15,"triangle",0.15);}});
+  function sim(o,dt){o.vx+=wind*dt;o.vy+=G0*dt;o.x+=o.vx*dt;o.y+=o.vy*dt;}
+  function draw(){var W=c.W,H=c.H;cx.clearRect(0,0,W,H);cx.fillStyle="#5c7f34";cx.fillRect(0,H-60,W,60);
+    cx.fillStyle="#c9a15a";cx.fillRect(tx-6,ty+R*0.4,22,H-60-(ty+R*0.4));
+    var rc=["#ffffff","#222","#2f7fe0","#e8424f","#ffc94a"];for(var i=0;i<5;i++){cx.fillStyle=rc[i];cx.beginPath();cx.arc(tx,ty,R*(1-i/5),0,6.3);cx.fill();}
+    stuck.forEach(function(s){cx.strokeStyle="#5a3a1a";cx.lineWidth=3;cx.beginPath();cx.moveTo(tx-40,ty+s.dy-6);cx.lineTo(tx-4,ty+s.dy);cx.stroke();});
+    emoji(cx,"🏹",bx,by,58);
+    if(drag&&drag.p){var v=vel(drag.p),o={x:bx,y:by,vx:v.vx,vy:v.vy};cx.fillStyle="rgba(255,255,255,.85)";for(var t=0;t<pv;t+=0.04){sim(o,0.04);cx.beginPath();cx.arc(o.x,o.y,3,0,6.3);cx.fill();}}
+    if(arrow){var a=Math.atan2(arrow.vy,arrow.vx);cx.save();cx.translate(arrow.x,arrow.y);cx.rotate(a);cx.strokeStyle="#5a3a1a";cx.lineWidth=3;cx.beginPath();cx.moveTo(-34,0);cx.lineTo(0,0);cx.stroke();cx.fillStyle="#888";cx.beginPath();cx.moveTo(4,0);cx.lineTo(-6,-5);cx.lineTo(-6,5);cx.fill();cx.restore();}
+    if(WMAX){cx.fillStyle="rgba(5,12,28,.55)";cx.fillRect(W/2-90,14,180,40);cx.fillStyle="#fff";cx.font="800 20px Fredoka,Nunito,sans-serif";cx.textAlign="center";
+      cx.fillText(wind===0?"No wind":"Wind "+(wind<0?"← ":"")+Math.max(1,Math.round(Math.abs(wind)/11))+(wind>0?" →":""),W/2,41);}
+    pops.forEach(function(p){cx.globalAlpha=Math.max(0,p.l);cx.fillStyle="#ffc94a";cx.font="900 34px Nunito,sans-serif";cx.textAlign="center";cx.fillText(p.t,p.x,p.y);cx.globalAlpha=1;});}
+  function done1(v){shot++;tot+=v;arrow=null;score("🎯 "+tot+"   🏹 "+(N-shot)+" left");
+    if(shot>=N){later(function(){finish({stars:tot>=64?3:tot>=50?2:tot>=34?1:0,msg:"You scored "+tot+" out of 80."});},700);}else later(function(){setT();stuck=[];},800);}
+  by=c.H-120;setT();draw();var go=false;score("🎯 0   🏹 8 left");
+  ready(el,{em:"🏹",title:"Archery Range",text:"Put your finger anywhere, pull back like a bowstring, and let go to shoot. Pull farther for more power. Bullseye is 10 points. 8 arrows."+(WMAX?" The wind pushes your arrow, so aim against it!":"")+(mov?" The target moves!":"")},function(){go=true;
+    loop(function(dt){clock+=dt;if(mov)ty=ty0+Math.sin(clock*1.2)*45;by=c.H-120;
+      if(arrow){for(var k=0;k<4;k++){var px=arrow.x;sim(arrow,dt/4);
+          if(px<tx&&arrow.x>=tx){var dy=arrow.y-ty;if(Math.abs(dy)<=R){var ring=Math.min(4,Math.floor(Math.abs(dy)/(R/5))),v=10-ring*2;stuck.push({dy:dy});pops.push({x:tx-20,y:ty-R-10,t:v===10?"Bullseye! 10":"+"+v,l:1.2});if(v===10)sfx.win();else sfx.good();done1(v);break;}}
+          if(arrow.y>c.H-60||arrow.x>c.W+40||arrow.x<-40||arrow.y<-600){pops.push({x:c.W/2,y:c.H/2,t:"Miss",l:1});sfx.bad();done1(0);break;}}}
+      pops=pops.filter(function(p){p.y-=30*dt;p.l-=dt;return p.l>0;});draw();if(G.done)return false;});});
+}});
+
+var BIRDS=[["🦅","Bald Eagle","White head, dark brown body and a huge yellow beak. America's national bird.","Its nest can weigh more than a ton!"],
+["🦉","Great Horned Owl","Big ear tufts, yellow eyes, and a deep hoo-hoo at night.","It can turn its head about 270 degrees."],
+["🐦","Cactus Wren","Arizona's state bird. Brown with white spots, builds nests in cholla cactus.","It builds extra fake nests to fool predators."],
+["🐦","Greater Roadrunner","A desert bird that would rather run than fly. Long tail and a shaggy crest.","It runs about 20 miles per hour and can even eat rattlesnakes!"],
+["🐦","Gambel's Quail","A plump desert bird with a curly black topknot that bobs when it runs.","A family running in a line is called a covey."],
+["🐦","Hummingbird","A tiny bird whose wings hum. It can fly backwards.","Its heart can beat more than 1,000 times a minute."],
+["🦃","Wild Turkey","A big bird with a fan tail. Males gobble loudly in spring.","Wild turkeys can fly in short bursts up to 55 miles per hour."],
+["🦆","Mallard","A duck. The male has a shiny green head.","Only the females make the classic loud quack."],
+["🐦","Northern Cardinal","Bright red with a pointy crest and a black mask.","Both the males and the females sing."],
+["🐦","Blue Jay","Blue, white and black, loud and bossy.","It can copy the scream of a hawk."],
+["🐦","Common Raven","All black, bigger than a crow, with a wedge-shaped tail.","Ravens can solve puzzles and even play games."],
+["🦅","Red-tailed Hawk","Rusty red tail. Often seen soaring over highways hunting mice.","Its scream is used in movies whenever an eagle appears."],
+["🦉","Burrowing Owl","A small owl with long legs that lives in holes in the ground.","It can copy a rattlesnake's rattle to scare enemies away!"],
+["🐦","Gila Woodpecker","Zebra-striped back. Drills holes in saguaro cactus.","Its old holes become homes for owls and other birds."],
+["🦢","Trumpeter Swan","A huge white bird with a long neck and a call like a horn.","It's the heaviest flying bird that's native to North America."],
+["🦩","Flamingo","A pink wading bird that often stands on one leg.","It's pink because of the shrimp and algae it eats."],
+["🦜","Thick-billed Parrot","A green parrot with a red forehead that once lived in Arizona's pine forests.","It cracks open pine cones with its strong beak."],
+["🕊️","Mourning Dove","Soft gray-brown with a sad-sounding coo-OO-oo song.","Its wings make a whistling sound when it takes off."],
+["🐧","Emperor Penguin","The biggest penguin. Can't fly, but swims in icy Antarctic water.","Dads keep the egg warm on their feet for about two months."],
+["🦚","Peacock","The male has a giant tail covered in eye-spot feathers.","Only the males have the fancy tail. The females are called peahens."],
+["🦅","Golden Eagle","Dark brown with golden feathers on the back of its neck. Hunts jackrabbits.","It can dive at over 150 miles per hour."],
+["🐦","Western Tanager","Bright yellow body with a red-orange head. Lives in mountain forests.","Its red color comes from the insects it eats."]];
+game({id:"birds",name:"Bird ID",em:"🐦",bl:"Read the clue and name the bird. Learn a fun fact each time.",tc:"#c8f2a0",levels:true,
+start:function(el,L){learnQuiz(el,{title:"Bird ID",em:"🐦",intro:"Read the clue and pick the bird. After each answer you'll learn something cool about it.",items:BIRDS,n:[6,8,10],clueOnly:true});}});
+
+game({id:"compass",name:"Compass Trek",em:"🧭",bl:"Follow the directions on the map. Where do you end up?",tc:"#e6cf9e",levels:true,
+start:function(el,L){
+  var D=curD(),n=Math.min(9,P([6,7,8])),steps=Math.min(8,P([3,4,6])),diag=D>=2.6,mem=D>=3.4,TRIPS=5,trip=0,right=0;
+  var DIRS=[["North",-1,0],["East",0,1],["South",1,0],["West",0,-1]];if(diag)DIRS=DIRS.concat([["North-East",-1,1],["South-East",1,1],["South-West",1,-1],["North-West",-1,-1]]);
+  var w=h("div","n2wrap");el.appendChild(w);
+  function plan(){var r,c,path,tries=0;do{tries++;r=rnd(0,n-1);c=rnd(0,n-1);path=[[r,c]];var ins=[],ok=true,pr=r,pc=c;
+      for(var i=0;i<steps;i++){var opts=[];DIRS.forEach(function(d){for(var k=1;k<=(d[0].length>5?2:3);k++){var nr=pr+d[1]*k,nc=pc+d[2]*k;if(nr>=0&&nr<n&&nc>=0&&nc<n)opts.push([d,k]);}});
+        if(!opts.length){ok=false;break;}var o=pick(opts);ins.push(o);for(var k=1;k<=o[1];k++)path.push([pr+o[0][1]*k,pc+o[0][2]*k]);pr+=o[0][1]*o[1];pc+=o[0][2]*o[1];}
+      if(ok&&(pr!==r||pc!==c))return {s:[r,c],e:[pr,pc],ins:ins,path:path};}while(tries<200);return plan();}
+  function round(){var p=plan(),deco={};for(var i=0;i<n;i++)deco[rnd(0,n*n-1)]=pick(["🌵","🪨","🌲","🌵"]);
+    var rr=el.getBoundingClientRect(),land=rr.width>rr.height,s=Math.floor(Math.min(land?(rr.width*0.55)/n:(rr.width-40)/n,land?(rr.height-60)/n:(rr.height*0.55)/n,80));
+    w.innerHTML="";var row=h("div","n2row");row.style.gap="20px";row.style.flexWrap=land?"nowrap":"wrap";w.appendChild(row);
+    var mapw=h("div","ctmap");var g=h("div","n2grid");g.style.gridTemplateColumns="repeat("+n+","+s+"px)";g.style.gridAutoRows=s+"px";g.style.gap="2px";mapw.innerHTML="<div class='ctn'>N ↑</div>";mapw.appendChild(g);row.appendChild(mapw);
+    var side=h("div","ctside");side.innerHTML="<div class='n2msg'>Trip "+(trip+1)+" of "+TRIPS+"</div><ol class='ctins'>"+p.ins.map(function(o){return "<li>Go <b>"+o[1]+"</b> "+o[0][0]+"</li>";}).join("")+"</ol><div class='n2small' id='ctTip'>Start at 🥾. Tap the square where you finish.</div>";row.appendChild(side);
+    var cells=[];for(i=0;i<n*n;i++){(function(i){var cc=h("button","n2c ctc",deco[i]&&i!==p.s[0]*n+p.s[1]?emo(deco[i],"🌲"):"");cc.style.fontSize=(s*0.55)+"px";if(i===p.s[0]*n+p.s[1])cc.textContent="🥾";tap(cc,function(){answer(i);});g.appendChild(cc);cells.push(cc);})(i);}
+    var locked=false;
+    if(mem){locked=true;var tip=side.querySelector("#ctTip");var secs=Math.round(steps*2.2);tip.textContent="Memorize the directions! "+secs+" seconds.";
+      later(function(){side.querySelector(".ctins").innerHTML="<li>🙈 Directions hidden. Trace it in your head!</li>";tip.textContent="Tap where you finish.";locked=false;},secs*1000);}
+    function answer(i){if(locked||G.done)return;locked=true;var ok=i===p.e[0]*n+p.e[1];
+      p.path.forEach(function(q,k){if(k>0){var c2=cells[q[0]*n+q[1]];c2.style.background="#ffe08a";}});cells[p.e[0]*n+p.e[1]].style.background="#41c9a0";cells[p.e[0]*n+p.e[1]].textContent="🏁";
+      if(ok){right++;sfx.good();}else{sfx.bad();cells[i].style.background="#e8424f";}
+      side.querySelector(".ctins").innerHTML=p.ins.map(function(o){return "<li>Go <b>"+o[1]+"</b> "+o[0][0]+"</li>";}).join("");
+      side.querySelector("#ctTip").textContent=ok?"✅ Right on target!":"❌ The yellow trail shows the way.";score("🧭 "+right);trip++;
+      later(function(){if(trip>=TRIPS){var f=right/TRIPS;finish({stars:f>=0.8?3:f>=0.6?2:f>=0.4?1:0,msg:right+" of "+TRIPS+" trips right."});}else round();},ok?1300:2600);}
+  }
+  score("🧭 0");
+  ready(el,{em:"🧭",title:"Compass Trek",text:"North is up, South is down, East is right, West is left."+(diag?" North-East means up and right at the same time, one square per step.":"")+" Start at the boot, follow the directions, and tap where you end up. 5 trips."},round);
+}});
+
+var PACKS=[["Summer desert hike","☀️🌵",[["💧","Lots of water"],["🧢","Sun hat"],["🧴","Sunscreen"],["🗺️","Trail map"],["🍎","Salty snacks"],["📱","Charged phone"]],[["🧥","Heavy winter coat"],["🎈","Balloons"],["🎮","Video game"],["🛷","Sled"],["🍦","Ice cream cone"],["🧸","Teddy bear"]],"Water is the most important thing in the desert. In summer you can need about a liter every hour. Hike early before it gets hot."],
+["Snowy winter campout","❄️⛺",[["🧤","Warm gloves"],["🧣","Scarf and wool hat"],["🔦","Flashlight"],["🛌","Warm sleeping bag"],["🔥","Fire starter"],["🍫","Energy snacks"]],[["👡","Sandals"],["⛱️","Beach umbrella"],["🍉","Watermelon"],["🎸","Guitar"],["🩳","Shorts"],["🏓","Ping pong paddle"]],"Wet cotton makes you cold. Wool or fleece layers keep you warm even if they get damp, and most of your heat escapes from your head."],
+["Hunting trip at dawn","🌄🎯",[["🦺","Blaze-orange vest"],["🔭","Binoculars"],["🎧","Ear protection"],["🥽","Safety glasses"],["💧","Water bottle"],["🔦","Headlamp"]],[["🔔","Jingle bells"],["🎺","Trumpet"],["🧸","Teddy bear"],["🌂","Umbrella"],["🎈","Balloons"],["🍿","Popcorn bag"]],"Blaze orange lets other hunters see you from far away. Ear and eye protection keep you safe whenever there's shooting, even at the range."],
+["Fishing day at the lake","🎣🛶",[["🎣","Fishing rod"],["🦺","Life jacket"],["🧴","Sunscreen"],["💧","Water"],["🧢","Hat"],["🍞","Bread for bait"]],[["🛷","Sled"],["🎳","Bowling ball"],["📺","TV"],["🧤","Snow gloves"],["🎻","Violin"],["🪁","Kite"]],"Always wear a life jacket on a boat or dock. Most people who fall in didn't plan on swimming that day."],
+["Rainy forest hike","🌧️🌲",[["🧥","Rain jacket"],["🥾","Hiking boots"],["🗺️","Map"],["🧭","Compass"],["🔦","Flashlight"],["📯","Loud whistle"]],[["👡","Sandals"],["🏐","Beach ball"],["🎂","Birthday cake"],["🛹","Skateboard"],["🕶️","Sunglasses"],["🎮","Video game"]],"If you ever get lost: stop, stay where you are, and blow your whistle three times. Hug a tree so searchers can find you."],
+["Snake country trail","🐍🏜️",[["🥾","Tall boots"],["👖","Long pants"],["🔦","Flashlight"],["💧","Water"],["📱","Charged phone"],["🧢","Hat"]],[["👡","Sandals"],["🩳","Short shorts"],["🎧","Loud headphones"],["🎈","Balloons"],["🧸","Teddy bear"],["🍦","Ice cream"]],"Watch where you put your hands and feet. If you hear a rattle, freeze, find the snake, then slowly back away. Never touch a wild snake, and keep your ears open."]];
+game({id:"survival",name:"Survival Pack",em:"🎒",bl:"Pack the right gear for each adventure.",tc:"#ffe7a3",levels:true,
+start:function(el,L){
+  var D=curD(),need=Math.min(6,P([4,5,5])),nBad=Math.min(6,P([3,4,6])),list=shuffle(PACKS.slice()).slice(0,4),k=0,pts=0,max=0;
+  var w=h("div","n2wrap");el.appendChild(w);
+  function round(){var sc=list[k],items=shuffle(sc[2].slice().map(function(x){return x.concat([1]);}).concat(shuffle(sc[3].slice()).slice(0,nBad).map(function(x){return x.concat([0]);}))),sel=[];
+    w.innerHTML="<div class='n2msg'>"+sc[1]+" "+sc[0]+"</div><div class='n2small'>Pick the "+need+" best things to bring. ("+(k+1)+" of "+list.length+")</div><div class='spgrid'></div><button class='btn go' disabled>Pack it! 0/"+need+"</button>";
+    var gbox=w.querySelector(".spgrid"),ok=w.querySelector(".btn.go");
+    items.forEach(function(it){var b=h("button","spit","<span>"+emo(it[0],"🎒")+"</span><small>"+it[1]+"</small>");tap(b,function(){if(ok.dataset.done)return;var i=sel.indexOf(it);if(i>=0){sel.splice(i,1);b.classList.remove("on");}else if(sel.length<need){sel.push(it);b.classList.add("on");}sfx.tick();ok.textContent="Pack it! "+sel.length+"/"+need;ok.disabled=sel.length<need;});it.b=b;gbox.appendChild(b);});
+    tap(ok,function(){if(ok.disabled||ok.dataset.done)return;ok.dataset.done=1;var g=0,b=0;sel.forEach(function(it){if(it[2]){g++;it.b.classList.add("ok");}else{b++;it.b.classList.add("no");}});
+      var p=Math.max(0,g-b);pts+=p;max+=need;score("🎒 "+pts);if(b===0)sfx.good();else sfx.bad();
+      later(function(){w.innerHTML="<div class='wlearn "+(b===0?"ok":"no")+"'><div class='wlh'>"+(b===0?"✅ Perfect pack!":"You packed "+g+" good thing"+(g===1?"":"s")+" and "+b+" you won't need.")+"</div><div class='wlpic'>"+sc[1]+"</div><div class='wlfact'><b>💡 Survival tip:</b> "+sc[4]+"</div><button class='btn go wnext'>"+(k+1>=list.length?"See my stars ›":"Next trip ›")+"</button></div>";
+        tap(w.querySelector(".wnext"),function(){k++;if(k>=list.length){var f=pts/max;finish({stars:f>=0.85?3:f>=0.65?2:f>=0.4?1:0,msg:pts+" of "+max+" packing points."});}else round();});},900);});}
+  score("🎒 0");
+  ready(el,{em:"🎒",title:"Survival Pack",text:"Each trip needs different gear. Pick the "+need+" best things to bring. Wrong things take a point away. 4 trips."},round);
+}});
+
+/* ---- Snake Zone, batch 2 ---- */
+game({id:"smaze",name:"Snake Maze",em:"🌀",bl:"Slither through the maze to the mouse. Big kids play in the dark.",tc:"#a8e6c9",levels:true,
+start:function(el,L){
+  var D=curD(),n=Math.min(15,P([7,9,11])),fog=D>=3,T=Math.round(n*n*0.75),t=0,wall=[],seen={},pos=0,trail=[0],dir=null,stepT=0;
+  for(var i=0;i<n*n;i++)wall.push([1,1,1,1]);/* N E S W */
+  var st=[0],vis={0:1};while(st.length){var cu=st[st.length-1],r=Math.floor(cu/n),c=cu%n,nb=[];
+    if(r>0&&!vis[cu-n])nb.push([cu-n,0,2]);if(c<n-1&&!vis[cu+1])nb.push([cu+1,1,3]);if(r<n-1&&!vis[cu+n])nb.push([cu+n,2,0]);if(c>0&&!vis[cu-1])nb.push([cu-1,3,1]);
+    if(!nb.length){st.pop();continue;}var o=pick(nb);wall[cu][o[1]]=0;wall[o[0]][o[2]]=0;vis[o[0]]=1;st.push(o[0]);}
+  var goal=n*n-1,MV=[-n,1,n,-1];
+  var wrap=h("div","n2wrap");el.appendChild(wrap);var cvh=h("div","smcv");wrap.appendChild(cvh);
+  var r0=el.getBoundingClientRect(),land=r0.width>r0.height,S=Math.floor(Math.min(land?r0.width-260:r0.width-30,land?r0.height-30:r0.height-230)/n);
+  cvh.style.width=cvh.style.height=(S*n+8)+"px";var c=canvasIn(cvh),cx=c.cx;
+  var pad=h("div","smpad","<button data-d='0'>▲</button><button data-d='3'>◀</button><button data-d='1'>▶</button><button data-d='2'>▼</button>");
+  wrap.style.flexDirection=land?"row":"column";wrap.appendChild(pad);
+  [].forEach.call(pad.children,function(b){tap(b,function(){go(+b.dataset.d);});});
+  var sw=null;ptr(c.cv,{down:function(p){sw=p;},move:function(p){if(!sw)return;var dx=p.x-sw.x,dy=p.y-sw.y;if(Math.max(Math.abs(dx),Math.abs(dy))>24){go(Math.abs(dx)>Math.abs(dy)?(dx>0?1:3):(dy>0?2:0));sw=p;}},up:function(){sw=null;}});
+  function go(d){if(G.done||!started)return;dir=d;stepT=0;}
+  function open(p,d){return !wall[p][d];}
+  function exits(p){var k=0;for(var d=0;d<4;d++)if(open(p,d))k++;return k;}
+  function look(){var r=Math.floor(pos/n),cc=pos%n;for(var dr=-2;dr<=2;dr++)for(var dc=-2;dc<=2;dc++){var rr=r+dr,c2=cc+dc;if(rr>=0&&rr<n&&c2>=0&&c2<n)seen[rr*n+c2]=1;}}
+  function draw(){cx.clearRect(0,0,c.W,c.H);cx.fillStyle="#123826";cx.fillRect(0,0,c.W,c.H);var o=4;
+    var hr=Math.floor(pos/n),hc=pos%n;
+    for(var i=0;i<n*n;i++){var r=Math.floor(i/n),cc=i%n,x=o+cc*S,y=o+r*S;
+      var dist=Math.max(Math.abs(r-hr),Math.abs(cc-hc));if(fog&&dist>2&&!seen[i])continue;
+      cx.globalAlpha=fog&&dist>2?0.45:1;cx.fillStyle="#e9d8a6";cx.fillRect(x,y,S,S);cx.strokeStyle="#3b2a14";cx.lineWidth=Math.max(2,S*0.12);cx.beginPath();
+      if(wall[i][0]){cx.moveTo(x,y);cx.lineTo(x+S,y);}if(wall[i][1]){cx.moveTo(x+S,y);cx.lineTo(x+S,y+S);}if(wall[i][2]){cx.moveTo(x,y+S);cx.lineTo(x+S,y+S);}if(wall[i][3]){cx.moveTo(x,y);cx.lineTo(x,y+S);}cx.stroke();cx.globalAlpha=1;}
+    if(!fog||seen[goal])emoji(cx,"🐭",o+(n-1)*S+S/2,o+(n-1)*S+S/2,S*0.75);
+    cx.strokeStyle="#2fb36d";cx.lineWidth=S*0.42;cx.lineCap="round";cx.lineJoin="round";cx.beginPath();trail.slice(-8).forEach(function(p,k){var x=o+(p%n)*S+S/2,y=o+Math.floor(p/n)*S+S/2;if(k)cx.lineTo(x,y);else cx.moveTo(x,y);});cx.stroke();
+    cx.fillStyle="#1d7a48";cx.beginPath();cx.arc(o+hc*S+S/2,o+hr*S+S/2,S*0.3,0,6.3);cx.fill();cx.fillStyle="#fff";cx.beginPath();cx.arc(o+hc*S+S/2-S*0.1,o+hr*S+S/2-S*0.08,S*0.07,0,6.3);cx.arc(o+hc*S+S/2+S*0.1,o+hr*S+S/2-S*0.08,S*0.07,0,6.3);cx.fill();}
+  var started=false;look();draw();score("⏱ 0");
+  ready(el,{em:"🌀",title:"Snake Maze",text:"Swipe on the maze or use the arrows. The snake keeps slithering until it reaches a turn. Get to the mouse 🐭 in "+T+" seconds for 3 stars."+(fog?" It's dark in here! You can only see close to the snake.":"")},function(){started=true;
+    loop(function(dt){t+=dt;score("⏱ "+Math.floor(t));
+      if(dir!=null){stepT-=dt;if(stepT<=0){stepT=0.075;if(open(pos,dir)){pos+=MV[dir];trail.push(pos);if(trail.length>40)trail.shift();look();tone(300+Math.random()*40,0.03,"sine",0.05);
+            if(pos===goal){draw();sfx.win();finish({stars:t<=T?3:t<=T*1.6?2:1,msg:"You reached the mouse in "+Math.round(t)+" seconds."});return false;}
+            if(exits(pos)!==2)dir=null;else if(!open(pos,dir)){for(var d=0;d<4;d++)if(open(pos,d)&&d!==(dir+2)%4){dir=d;break;}}}else dir=null;}}
+      draw();});});
+}});
+
+var VSNAKES=[["Western Diamondback Rattlesnake",1,"Diamond pattern, black and white striped tail, and a rattle.","It's Arizona's most common rattlesnake and can strike about half its body length."],
+["Mojave Rattlesnake",1,"Greenish with thin white tail rings and a rattle.","Its venom is one of the strongest of any rattlesnake."],
+["Sidewinder",1,"Small, with little horns over its eyes. Moves sideways across sand.","It leaves J-shaped tracks in the sand."],
+["Arizona Coral Snake",1,"Red, yellow and black bands, with a small black nose.","It's tiny and shy, but its venom is strong. Red touching yellow means stay away."],
+["Tiger Rattlesnake",1,"Gray with dark crossbands like tiger stripes, tiny head, rattle.","It has the smallest head of any rattlesnake."],
+["Black-tailed Rattlesnake",1,"Greenish-yellow with a solid black tail and a rattle.","It's one of the calmer rattlesnakes, but still dangerous."],
+["Copperhead",1,"Copper-colored head and hourglass bands.","Baby copperheads wiggle bright yellow tail tips to lure frogs."],
+["Cottonmouth",1,"Dark water snake that opens its mouth to show white inside.","It shows the white 'cotton' inside its mouth as a warning."],
+["King Cobra",1,"Very long and spreads a hood. Lives in Asia.","It's the longest venomous snake in the world, up to 18 feet."],
+["Black Mamba",1,"Long, gray African snake with an inky black mouth.","It's one of the fastest snakes, up to about 12 miles per hour."],
+["Gopher Snake",0,"Looks like a rattlesnake and hisses loudly, but has no rattle.","It shakes its tail in dry leaves to sound like a rattler!"],
+["California Kingsnake",0,"Shiny black and white bands.","It eats rattlesnakes and isn't hurt by their venom."],
+["Rosy Boa",0,"Slow and gentle with rose or orange stripes.","It rolls into a ball when it's scared."],
+["Sonoran Mountain Kingsnake",0,"Red, black and white bands. Red touches black.","It copies the coral snake's colors to scare predators away."],
+["Garter Snake",0,"Long stripes down its back, often near water.","It gives off a stinky smell if picked up."],
+["Corn Snake",0,"Orange and red blotches with a checkerboard belly.","Its belly looks like Indian corn, which gave it its name."],
+["Ball Python",0,"Brown and tan pattern. Curls into a ball. A popular pet.","It comes from Africa and can live 30 years."],
+["Western Hognose Snake",0,"Upturned snout like a tiny shovel.","It plays dead, flops over and sticks its tongue out!"],
+["Glossy Snake",0,"Pale and shiny desert snake that hunts at night.","It hunts lizards in the dark."],
+["Patch-nosed Snake",0,"Stripes and a big scale like a patch on its nose.","It uses its nose patch to dig up lizard eggs."]];
+game({id:"venom",name:"Venom or Not?",em:"☠️",bl:"Quick! Is this snake venomous or harmless? Learn as you go.",tc:"#c8f2a0",levels:true,
+start:function(el,L){
+  var D=curD(),N=Math.min(VSNAKES.length,P([8,10,12])),clue=D<3,lim=D>=3?Math.max(4,P([8,7,6])):0,list=shuffle(VSNAKES.slice()).slice(0,N),k=0,pts=0,tl=0,busy=false;
+  var w=h("div","n2wrap");el.appendChild(w);
+  function card(){var s=list[k];busy=false;tl=lim;
+    w.innerHTML="<div class='n2small'>Snake "+(k+1)+" of "+N+"</div><div class='n2big'>🐍</div><div class='n2msg'>"+esc(s[0])+"</div>"+(clue?"<div class='n2small' style='max-width:520px'>"+esc(s[2])+"</div>":"")+(lim?"<div class='btbar'><i id='vnT'></i></div>":"")+"<div class='n2row'><button class='opt vnb' data-v='1'>☠️ Venomous</button><button class='opt vnb' data-v='0'>🙂 Harmless</button></div><div class='n2small' id='vnF'></div>";
+    [].forEach.call(w.querySelectorAll(".vnb"),function(b){tap(b,function(){answer(+b.dataset.v,b);});});}
+  function answer(v,b){if(busy||G.done)return;busy=true;var s=list[k],ok=v===s[1];
+    if(ok){pts++;sfx.good();if(b)b.classList.add("ok");w.querySelector("#vnF").innerHTML="✅ "+esc(s[3]);score("☠️ "+pts);later(nxt,1900);}
+    else{sfx.bad();learn(s,v);}}
+  function learn(s,v){w.innerHTML="<div class='wlearn no'><div class='wlh'>"+(v==null?"⏰ Time's up!":"❌ Not quite!")+"</div><div class='wlpic'>"+(s[1]?"☠️🐍":"🙂🐍")+"</div><div class='wlname'>"+esc(s[0])+" is "+(s[1]?"VENOMOUS":"harmless")+"</div><div class='wlclue'>"+esc(s[2])+"</div><div class='wlfact'><b>💡 Fun fact:</b> "+esc(s[3])+"</div><button class='btn go wnext'>"+(k+1>=N?"See my stars ›":"Next ›")+"</button></div>";
+    tap(w.querySelector(".wnext"),nxt);}
+  function nxt(){k++;if(k>=N){var f=pts/N;finish({stars:f>=0.85?3:f>=0.65?2:f>=0.4?1:0,msg:pts+" out of "+N+" right. Remember: never touch any wild snake!"});}else card();}
+  score("☠️ 0");
+  ready(el,{em:"☠️",title:"Venom or Not?",text:"Decide if each snake is venomous or harmless."+(lim?" You only get "+lim+" seconds per snake!":"")+" Safety rule: even harmless snakes bite, so never touch a wild snake. Back away and tell a grown-up."},function(){card();
+    if(lim)loop(function(dt){if(G.done)return false;if(!busy&&w.querySelector("#vnT")){tl-=dt;w.querySelector("#vnT").style.width=Math.max(0,tl/lim*100)+"%";if(tl<=0){busy=true;sfx.bad();learn(list[k],null);}}});});
+}});
+
+game({id:"rattle",name:"Rattle Rhythm",em:"🎵",bl:"Tap the lanes in time as the snakes slide down.",tc:"#ffd99a",levels:true,
+start:function(el,L){
+  var c=canvasIn(el),cx=c.cx,D=curD(),bpm=P([90,110,130]),spd=P([260,330,400]),dens=Math.min(0.95,P([0.55,0.7,0.8])),eighth=D>=3,chord=D>=3.4,T=40,t=0,beat=0,notes=[],pts=0,total=0,combo=0,best=0,fx=[];
+  var LC=["#e8424f","#ffc94a","#41c9a0"],FR=[392,494,587];
+  function hy(){return c.H-110;}
+  ptr(c.cv,{down:function(p){if(!go)return;var ln=Math.max(0,Math.min(2,Math.floor(p.x/(c.W/3)))),best1=null,bd=999;
+    notes.forEach(function(nn){if(nn.ln===ln&&!nn.done){var d=Math.abs(nn.y-hy());if(d<bd){bd=d;best1=nn;}}});
+    if(best1&&bd<=60){best1.done=true;var g=bd<=26?2:1;pts+=g;combo++;best=Math.max(best,combo);tone(FR[ln],0.12,"triangle",0.2);fx.push({ln:ln,t:g===2?"Perfect!":"Good",l:0.6});}
+    else{combo=0;tone(150,0.06,"square",0.05);}}});
+  function draw(){var W=c.W,H=c.H,lw=W/3;cx.clearRect(0,0,W,H);
+    for(var i=0;i<3;i++){cx.fillStyle=i%2?"rgba(255,255,255,.05)":"rgba(255,255,255,.1)";cx.fillRect(i*lw,0,lw,H);}
+    cx.fillStyle="rgba(255,255,255,.85)";cx.fillRect(0,hy()-3,W,6);
+    for(i=0;i<3;i++){cx.fillStyle=LC[i];cx.globalAlpha=.35;cx.beginPath();cx.arc(i*lw+lw/2,hy(),34,0,6.3);cx.fill();cx.globalAlpha=1;}
+    notes.forEach(function(nn){if(nn.done)return;cx.fillStyle=LC[nn.ln];cx.beginPath();cx.arc(nn.ln*lw+lw/2,nn.y,28,0,6.3);cx.fill();emoji(cx,"🐍",nn.ln*lw+lw/2,nn.y,34);});
+    fx.forEach(function(f){cx.globalAlpha=Math.max(0,f.l/0.6);cx.fillStyle="#fff";cx.font="900 26px Fredoka,Nunito,sans-serif";cx.textAlign="center";cx.fillText(f.t,f.ln*lw+lw/2,hy()-50-(0.6-f.l)*60);cx.globalAlpha=1;});
+    cx.fillStyle="#fff";cx.font="800 20px Fredoka,Nunito,sans-serif";cx.textAlign="center";cx.fillText(combo>2?"Combo x"+combo:"",W/2,40);}
+  draw();var go=false;
+  ready(el,{em:"🎵",title:"Rattle Rhythm",text:"Snakes slide down three lanes. Tap the lane right when a snake reaches the white line. Perfect timing is worth 2. 40 seconds of music!"},function(){go=true;
+    var spb=60/bpm,next=1.2,lead=hy()/spd;
+    loop(function(dt){t+=dt;
+      while(next<=t+lead&&next<T){var sub=eighth&&Math.random()<0.35;
+        if(Math.random()<dens){var ln=rnd(0,2);notes.push({ln:ln,at:next,y:-40});total++;if(chord&&Math.random()<0.2){var l2=(ln+rnd(1,2))%3;notes.push({ln:l2,at:next,y:-40});total++;}}
+        if(Math.floor(next/spb)%4===0)tone(110,0.05,"sine",0.06,Math.max(0,next-t-lead+hy()/spd));
+        next+=sub?spb/2:spb;}
+      notes.forEach(function(nn){nn.y=hy()-(nn.at-t)*spd;if(!nn.done&&nn.y>hy()+60){nn.done=true;combo=0;}});
+      notes=notes.filter(function(nn){return nn.y<c.H+40;});fx=fx.filter(function(f){f.l-=dt;return f.l>0;});
+      score("🎵 "+pts+(combo>2?"  🔥"+combo:""));draw();
+      if(t>=T+lead+0.5){var f=total?pts/(2*total):0;finish({stars:f>=0.8?3:f>=0.6?2:f>=0.4?1:0,msg:"You scored "+pts+" of "+(2*total)+". Best combo: "+best+"."});return false;}});});
+}});
+
+var SWORDS=[["RATTLESNAKE","Snake"],["SIDEWINDER","Snake"],["PYTHON","Snake"],["ANACONDA","Snake"],["COBRA","Snake"],["VIPER","Snake"],["KINGSNAKE","Snake"],["SAGUARO","Desert plant"],["JAVELINA","Arizona animal"],["ROADRUNNER","Arizona bird"],["SCORPION","Desert critter"],["TARANTULA","Desert critter"],["COYOTE","Arizona animal"],["BOBCAT","Arizona animal"],["PRONGHORN","Arizona animal"],["ELK","Big animal"],["CANYON","Place"],["MESA","Place"],["VENOM","Snake word"],["FANGS","Snake word"],["SCALES","Snake word"],["HIBERNATE","Animal word"],["CAMOUFLAGE","Animal word"],["PREDATOR","Animal word"],["CHAMELEON","Reptile"],["IGUANA","Reptile"],["TORTOISE","Reptile"],["GILA MONSTER","Desert lizard"],["CACTUS WREN","Arizona bird"],["MOUNTAIN LION","Arizona animal"],["RATTLE","Snake word"],["SKIN","Snake word"],["CONSTRICTOR","Snake word"],["HABITAT","Animal word"]];
+game({id:"sword",name:"Snake Word",em:"🔠",bl:"Guess the word one letter at a time before the snake reaches the egg.",tc:"#c9b5ff",levels:true,
+start:function(el,L){
+  var D=curD(),maxW=Math.max(5,P([8,7,6])),hint=D<3.4,pool=SWORDS.filter(function(x){return D<2.6?x[0].length<=7:D>=3.4?x[0].length>=6:true;}),list=shuffle(pool).slice(0,3),k=0,solved=0,wrongT=0;
+  var w=h("div","n2wrap");el.appendChild(w);
+  function round(){var word=list[k][0],got={},wrong=0;
+    w.innerHTML="<div class='n2small'>Word "+(k+1)+" of 3"+(hint?" · Hint: "+list[k][1]:"")+"</div><div class='swtrack' id='swT'></div><div class='swword' id='swW'></div><div class='swkeys' id='swK'></div>";
+    function draw(){w.querySelector("#swW").innerHTML=word.split("").map(function(ch){return ch===" "?"<i class='sp'></i>":"<i>"+(got[ch]?ch:"")+"</i>";}).join("");
+      var tr="";for(var i=0;i<maxW;i++)tr+=i<wrong?"<b class='seg'></b>":"<b class='dot'></b>";w.querySelector("#swT").innerHTML="<span class='hd'>🐍</span>"+tr+"<span>🥚</span>";}
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").forEach(function(ch){var b=h("button","swk",ch);tap(b,function(){if(b.disabled||G.done||over)return;b.disabled=true;
+      if(word.indexOf(ch)>=0){got[ch]=1;b.classList.add("ok");sfx.pop();draw();if(word.split("").every(function(x){return x===" "||got[x];})){over=true;solved++;sfx.good();score("🔠 "+solved);later(nxt,1300);}}
+      else{wrong++;wrongT++;b.classList.add("no");sfx.bad();draw();if(wrong>=maxW){over=true;word.split("").forEach(function(x){got[x]=1;});draw();w.querySelector("#swW").classList.add("lost");later(nxt,2200);}}});w.querySelector("#swK").appendChild(b);});
+    var over=false;draw();}
+  function nxt(){k++;if(k>=3)finish({stars:solved===3&&wrongT<=maxW?3:solved>=2?2:solved>=1?1:0,msg:"You solved "+solved+" of 3 words with "+wrongT+" wrong letter"+(wrongT===1?"":"s")+"."});else round();}
+  score("🔠 0");
+  ready(el,{em:"🔠",title:"Snake Word",text:"Tap letters to guess the hidden word. Every wrong letter, the snake slides closer to the egg. "+maxW+" wrong letters and it gets the egg! 3 words."+(hint?"":" No hints at your level!")},round);
+}});
+
+var SLEN=[["Thread snake",5],["Ringneck snake",14],["Sidewinder",24],["Garter snake",30],["Corn snake",48],["Western Diamondback",60],["Gopher snake",72],["Black mamba",100],["Boa constrictor",120],["King cobra",156],["Burmese python",216],["Green anaconda",240],["Reticulated python",276]];
+function ftin(i){var f=Math.floor(i/12),r=i%12;return f?f+" ft"+(r?" "+r+" in":""):i+" in";}
+game({id:"lineup",name:"Snake Line-Up",em:"📏",bl:"Put the snakes in order from shortest to longest.",tc:"#b9f0a8",levels:true,
+start:function(el,L){
+  var D=curD(),k=Math.min(7,P([4,5,6])),R=5,r=0,miss=0;
+  var w=h("div","n2wrap");el.appendChild(w);
+  function round(){var set=shuffle(SLEN.slice()).slice(0,k),rev=D>=3&&Math.random()<0.5,order=set.slice().sort(function(a,b){return rev?b[1]-a[1]:a[1]-b[1];}),n=0,m0=miss;
+    w.innerHTML="<div class='n2msg'>"+(rev?"Longest to shortest!":"Shortest to longest!")+"</div><div class='n2small'>Round "+(r+1)+" of "+R+". Tap them in order.</div><div class='lugrid'></div>";
+    var g=w.querySelector(".lugrid");
+    shuffle(set).forEach(function(s){var b=h("button","luit","<span>🐍</span><b>"+s[0]+"</b>");tap(b,function(){if(b.classList.contains("ok")||G.done)return;
+      if(s===order[n]){n++;b.classList.add("ok");b.querySelector("span").textContent=n;sfx.pop();if(n===k)reveal();}
+      else{miss++;sfx.bad();b.classList.add("shake");setTimeout(function(){b.classList.remove("shake");},400);score("❌ "+miss);}});g.appendChild(b);});
+    function reveal(){var mx=Math.max.apply(null,set.map(function(s){return s[1];}));if(miss===m0)sfx.good();
+      w.innerHTML="<div class='n2msg'>"+(miss===m0?"✅ Perfect line-up!":"Done! Here's how long they get:")+"</div><div class='lubars'>"+order.map(function(s){return "<div><b>"+s[0]+"</b><i style='width:"+Math.max(3,s[1]/mx*100)+"%'></i><small>about "+ftin(s[1])+"</small></div>";}).join("")+"</div><button class='btn go wnext'>"+(r+1>=R?"See my stars ›":"Next ›")+"</button>";
+      tap(w.querySelector(".wnext"),function(){r++;if(r>=R)finish({stars:miss<=1?3:miss<=4?2:1,msg:R+" line-ups with "+miss+" mistake"+(miss===1?"":"s")+"."});else round();});}}
+  score("❌ 0");
+  ready(el,{em:"📏",title:"Snake Line-Up",text:"Some snakes are as short as a pencil, some are longer than a car! Tap the snakes in order of how long they grow."+(D>=3?" Read the sign, sometimes it's longest first!":"")+" 5 rounds."},round);
+}});
+
+/* ---- Christmas, batch 2 ---- */
+game({id:"stack",name:"Present Stack",em:"🎁",bl:"Drop each present right on top. Stack them sky high!",tc:"#ffd36e",levels:true,
+start:function(el,L){
+  var c=canvasIn(el),cx=c.cx,D=curD(),bh=34,stack=[],mv,cam=0,camT=0,falling=[],v0=P([170,230,290]),perf=0,over=false;
+  var COL=["#e8424f","#41c9a0","#7aa7ff","#ffc94a","#b07cff","#ff8fb1"],thr=PT([[8,14,20],[10,16,22],[12,18,25]]);
+  function base(){var w=Math.min(c.W*0.5,260);stack=[{x:(c.W-w)/2,w:w,c:"#8a5a33"}];newMv();}
+  function newMv(){var top=stack[stack.length-1],side=stack.length%2;mv={x:side?-top.w:c.W,w:top.w,d:side?1:-1,c:COL[stack.length%COL.length],v:v0+stack.length*6};}
+  function yOf(i){return c.H-80-(i+1)*bh+cam;}
+  ptr(c.cv,{down:function(){if(!go||over||G.done)return;var top=stack[stack.length-1],l=Math.max(mv.x,top.x),r=Math.min(mv.x+mv.w,top.x+top.w);
+    if(Math.abs(mv.x-top.x)<=5){mv.x=top.x;l=top.x;r=top.x+top.w;perf++;tone(880,0.1,"triangle",0.2);}
+    if(r-l<=2){over=true;falling.push({x:mv.x,w:mv.w,y:yOf(stack.length),c:mv.c,vy:0});sfx.bad();later(end,900);return;}
+    if(mv.x<l)falling.push({x:mv.x,w:l-mv.x,y:yOf(stack.length),c:mv.c,vy:0});if(mv.x+mv.w>r)falling.push({x:r,w:mv.x+mv.w-r,y:yOf(stack.length),c:mv.c,vy:0});
+    stack.push({x:l,w:r-l,c:mv.c});sfx.pop();score("🎁 "+(stack.length-1));if(stack.length-1>=30){over=true;later(end,500);return;}
+    if(yOf(stack.length)<c.H*0.4)camT+=bh;newMv();}});
+  function end(){var n=stack.length-1;finish({stars:starsFor(n,thr),msg:"You stacked "+n+" presents"+(perf?" with "+perf+" perfect drop"+(perf>1?"s":""):"")+". "+(n<thr[2]?"Stack "+thr[starsFor(n,thr)]+" for the next star.":"Tower champ!")});}
+  function box(x,y,w,col){cx.fillStyle=col;cx.fillRect(x,y,w,bh-2);cx.fillStyle="rgba(255,255,255,.75)";cx.fillRect(x+w/2-4,y,8,bh-2);cx.fillRect(x,y+bh/2-5,w,6);}
+  function draw(){cx.clearRect(0,0,c.W,c.H);cx.fillStyle="#f6f9ff";cx.fillRect(0,c.H-80+cam,c.W,80);
+    stack.forEach(function(s,i){if(i===0){cx.fillStyle=s.c;cx.fillRect(s.x,yOf(0),s.w,bh);}else box(s.x,yOf(i),s.w,s.c);});
+    if(!over)box(mv.x,yOf(stack.length),mv.w,mv.c);
+    falling.forEach(function(f){box(f.x,f.y,f.w,f.c);});}
+  base();draw();var go=false;score("🎁 0");
+  ready(el,{em:"🎁",title:"Present Stack",text:"A present slides across. Tap to drop it on the stack. Any part hanging off gets chopped, so your presents get skinnier. Drop it perfectly to keep it wide!"},function(){go=true;
+    loop(function(dt){if(!over){mv.x+=mv.d*mv.v*dt;if(mv.x<-mv.w*0.2&&mv.d<0)mv.d=1;if(mv.x+mv.w>c.W+mv.w*0.2&&mv.d>0)mv.d=-1;}
+      cam+=(camT-cam)*Math.min(1,dt*6);falling.forEach(function(f){f.vy+=1400*dt;f.y+=f.vy*dt;});falling=falling.filter(function(f){return f.y<c.H+60;});draw();if(G.done)return false;});});
+}});
+
+game({id:"rrun",name:"Reindeer Run",em:"🦌",bl:"Jump over trees and snowmen, grab the cookies.",tc:"#b8e986",levels:true,
+start:function(el,L){
+  var c=canvasIn(el),cx=c.cx,D=curD(),gy,y=0,vy=0,jumps=0,T=45,t=0,obs=[],ck=[],spd=P([300,360,420]),gap=1,hearts=3,inv=0,sc=0,clock=0;
+  var thr=PT([[12,22,32],[14,25,36],[16,28,40]]);
+  function jump(){if(!go||G.done)return;if(jumps<2){vy=-820+(jumps?120:0);jumps++;tone(520+jumps*120,0.08,"triangle",0.15);}}
+  ptr(c.cv,{down:jump});
+  function draw(){var W=c.W,H=c.H;gy=H-90;cx.clearRect(0,0,W,H);
+    cx.fillStyle="rgba(255,255,255,.25)";for(var i=0;i<5;i++){var hx=((i*260-clock*spd*0.25)%(W+300)+W+300)%(W+300)-150;cx.beginPath();cx.ellipse(hx,gy,160,70,0,Math.PI,0);cx.fill();}
+    cx.fillStyle="#f6f9ff";cx.fillRect(0,gy,W,H-gy);
+    obs.forEach(function(o){if(o.k==="t"){emoji(cx,"🎄",o.x,gy-26,56);if(o.big)emoji(cx,"🎄",o.x+34,gy-26,56);}else emoji(cx,"⛄",o.x,gy-34,70);});
+    ck.forEach(function(k){if(!k.got)emoji(cx,"🍪",k.x,k.y,34);});
+    if(!(inv>0&&Math.floor(clock*10)%2))emoji(cx,"🦌",110,gy-30+y,62,true);
+    cx.font="26px "+EMO;cx.textAlign="left";cx.fillText(new Array(hearts+1).join("❤️"),14,34);}
+  draw();var go=false;score("🍪 0");
+  ready(el,{em:"🦌",title:"Reindeer Run",text:"Tap to jump. Tap again in the air for a double jump. Hop over trees and snowmen and grab cookies. You have 3 hearts and 45 seconds."},function(){go=true;
+    loop(function(dt){clock+=dt;t+=dt;var s=spd+t*4;gy=c.H-90;
+      vy+=2300*dt;y+=vy*dt;if(y>=0){y=0;vy=0;jumps=0;}inv-=dt;
+      gap-=dt;if(gap<=0){var big=D>=3&&Math.random()<0.3;obs.push({x:c.W+60,k:Math.random()<0.6?"t":"s",big:big,w:big?80:46,h:Math.random()<0.6?50:64,passed:false});gap=(0.9+Math.random()*0.9)*(300/s)*(D>=3.4?0.85:1);
+        if(Math.random()<0.6)ck.push({x:c.W+60+rnd(120,260),y:gy-60-Math.random()*150});}
+      obs.forEach(function(o){o.x-=s*dt;if(!o.passed&&o.x+o.w<90){o.passed=true;sc++;}
+        if(inv<=0&&o.x-o.w/2<130&&o.x+o.w/2>90&&gy-30+y+24>gy-o.h){hearts--;inv=1.2;sfx.bad();el.classList.add("shake");setTimeout(function(){el.classList.remove("shake");},400);}});
+      ck.forEach(function(k){k.x-=s*dt;if(!k.got&&Math.abs(k.x-110)<40&&Math.abs(k.y-(gy-30+y))<44){k.got=true;sc+=1;sfx.pop();}});
+      obs=obs.filter(function(o){return o.x>-100;});ck=ck.filter(function(k){return k.x>-50&&!k.got;});
+      score("⭐ "+sc+"   ⏱ "+Math.max(0,Math.ceil(T-t)));draw();
+      if(hearts<=0||t>=T){finish({stars:starsFor(sc,thr),msg:(hearts<=0?"Out of hearts! ":"You made it! ")+"Score "+sc+". "+(sc<thr[2]?"Get "+thr[starsFor(sc,thr)]+" for the next star.":"Fastest reindeer!")});return false;}});});
+}});
+
+game({id:"sball",name:"Snowball Fight",em:"❄️",bl:"Throw snowballs at the sneaky elves. Lead the moving ones!",tc:"#d6ecff",levels:true,
+start:function(el,L){
+  var c=canvasIn(el),cx=c.cx,D=curD(),T=40,t=0,sc=0,tg=[],balls=[],spawn=0.5,pops=[],spd=Math.max(0,P([0,60,110])),stay=Math.max(1.1,P([2.6,2.1,1.7]));
+  var thr=PT([[6,10,14],[8,13,18],[10,15,21]]);
+  function rows(){return [c.H*0.3,c.H*0.48,c.H*0.66];}
+  ptr(c.cv,{down:function(p){if(!go||G.done||balls.length>=3)return;var f=0.25+0.5*(1-p.y/c.H);balls.push({x0:c.W/2,y0:c.H-20,x1:p.x,y1:p.y,t:0,f:f});tone(240,0.08,"sine",0.15);}});
+  function draw(){var W=c.W,H=c.H;cx.clearRect(0,0,W,H);cx.fillStyle="#eaf3ff";cx.fillRect(0,H*0.22,W,H);
+    var R=rows();R.forEach(function(ry,i){var s=0.6+i*0.25;tg.filter(function(o){return o.r===i;}).forEach(function(o){var dy=Math.min(1,o.up)*44*s;emoji(cx,o.k,o.x,ry-dy+10*s,48*s);});
+      cx.fillStyle="#ffffff";for(var x=0;x<W+80;x+=110*s){cx.beginPath();cx.ellipse(x+((i*40)%80),ry+18*s,62*s,26*s,0,Math.PI,0);cx.fill();}
+      cx.strokeStyle="rgba(120,150,190,.35)";cx.lineWidth=2;cx.beginPath();cx.moveTo(0,ry+18*s);cx.lineTo(W,ry+18*s);cx.stroke();});
+    balls.forEach(function(b){var k=b.t/b.f,x=b.x0+(b.x1-b.x0)*k,y=b.y0+(b.y1-b.y0)*k-Math.sin(k*Math.PI)*120*b.f,r=16-8*k;cx.fillStyle="#fff";cx.strokeStyle="#9bb5d6";cx.lineWidth=2;cx.beginPath();cx.arc(x,y,r,0,6.3);cx.fill();cx.stroke();});
+    pops.forEach(function(p){cx.globalAlpha=Math.max(0,p.l);cx.fillStyle=p.c;cx.font="900 28px Nunito,sans-serif";cx.textAlign="center";cx.fillText(p.t,p.x,p.y);cx.globalAlpha=1;});}
+  draw();var go=false;score("❄️ 0");
+  ready(el,{em:"❄️",title:"Snowball Fight",text:"Tap to throw a snowball. It takes a moment to fly, and farther throws take longer, so aim where the elf is going!"+(D>=2?" Don't hit Santa or the reindeer, that's -2.":"")+" 40 seconds."},function(){go=true;
+    loop(function(dt){t+=dt;spawn-=dt;var R=rows();
+      if(spawn<=0&&tg.length<5){spawn=0.6+Math.random()*0.8;var r=rnd(0,2),s=0.6+r*0.25,bad=D>=2&&Math.random()<0.2;tg.push({r:r,x:40+Math.random()*(c.W-80),vx:(Math.random()<0.5?-1:1)*spd*s*(0.6+Math.random()*0.8),up:0,life:stay,k:bad?pick(["🎅","🦌"]):"🧝",bad:bad,s:s});}
+      tg.forEach(function(o){o.life-=dt;o.up+=(o.life>0?4:-4)*dt;o.up=Math.min(1,o.up);o.x+=o.vx*dt;if(o.x<30||o.x>c.W-30)o.vx*=-1;});tg=tg.filter(function(o){return o.up>-0.1||o.life>0;});
+      balls.forEach(function(b){b.t+=dt;if(b.t>=b.f){b.done=true;var hit=null;tg.forEach(function(o){if(o.up>0.5&&Math.hypot(o.x-b.x1,R[o.r]-20*o.s-b.y1)<36*o.s+10)hit=o;});
+        if(hit){hit.life=0;hit.up=0.5;if(hit.bad){sc=Math.max(0,sc-2);sfx.bad();pops.push({x:b.x1,y:b.y1,t:"-2",c:"#e8424f",l:1});}else{sc++;sfx.pop();pops.push({x:b.x1,y:b.y1,t:"+1",c:"#2f7fe0",l:1});}}
+        else pops.push({x:b.x1,y:b.y1,t:"💨",c:"#9bb5d6",l:0.6});}});
+      balls=balls.filter(function(b){return !b.done;});pops=pops.filter(function(p){p.y-=40*dt;p.l-=dt*1.3;return p.l>0;});
+      score("❄️ "+sc+"   ⏱ "+Math.max(0,Math.ceil(T-t)));draw();
+      if(t>=T){finish({stars:starsFor(sc,thr),msg:"You hit "+sc+" elves. "+(sc<thr[2]?"Hit "+thr[starsFor(sc,thr)]+" for the next star.":"Snowball sharpshooter!")});return false;}});});
+}});
+
+game({id:"lights",name:"Light Up the Tree",em:"💡",bl:"Each bulb flips its neighbors too. Turn every light on.",tc:"#ffe08a",levels:true,
+start:function(el,L){
+  var D=curD(),n=Math.min(6,P([3,4,5])),k=Math.min(12,P([3,5,8])),PZ=3,pz=0,moves=0,par=0,b;
+  var COL=["#e8424f","#ffc94a","#41c9a0","#7aa7ff","#ff8fb1","#b07cff"];
+  var w=h("div","n2wrap");el.appendChild(w);
+  function flip(i){var r=Math.floor(i/n),c=i%n;[[0,0],[1,0],[-1,0],[0,1],[0,-1]].forEach(function(d){var rr=r+d[0],cc=c+d[1];if(rr>=0&&rr<n&&cc>=0&&cc<n)b[rr*n+cc]^=1;});}
+  function puzzle(){b=[];for(var i=0;i<n*n;i++)b.push(1);var ps=shuffle(Array.apply(null,{length:n*n}).map(function(_,i){return i;})).slice(0,k);ps.forEach(flip);if(b.every(Boolean))return puzzle();par+=k;var start=b.slice();
+    w.innerHTML="<div class='n2msg'>Tree "+(pz+1)+" of "+PZ+"</div>";var cg=cellGrid(el,n,n,"ltg");w.appendChild(cg.g);cg.cells.forEach(function(c,i){c.style.setProperty("--bc",COL[i%COL.length]);tap(c,function(){if(G.done||locked)return;flip(i);moves++;tone(600+(i%5)*80,0.06,"sine",0.12);draw();score("Moves "+moves);
+      if(b.every(Boolean)){locked=true;sfx.good();w.querySelector(".n2msg").textContent="✨ The tree is lit! ✨";pz++;later(function(){if(pz>=PZ)end();else puzzle();},1300);}});});
+    var rb=h("button","btn","↺ Start over");tap(rb,function(){if(locked)return;b=start.slice();draw();});w.appendChild(rb);var locked=false;
+    function draw(){cg.cells.forEach(function(c,i){c.classList.toggle("on",!!b[i]);});}draw();}
+  function end(){finish({stars:moves<=par+3?3:moves<=par*2+4?2:1,msg:"3 trees lit in "+moves+" moves. (Best possible: about "+par+".)"});}
+  score("Moves 0");
+  ready(el,{em:"💡",title:"Light Up the Tree",text:"Tapping a bulb flips it AND the bulbs above, below, left and right. Get every bulb glowing to light the tree. 3 trees. Fewer taps means more stars."},puzzle);
+}});
+
+var WSW=["SANTA","SLEIGH","REINDEER","COOKIE","STOCKING","CANDYCANE","MITTEN","SNOWMAN","ORNAMENT","WREATH","TINSEL","PRESENT","CHIMNEY","ELF","STAR","BELLS","FROSTY","NORTHPOLE","GINGERBREAD","HOLLY","SCARF","COCOA","JINGLE","ANGEL","CAROL","TOYS","GIFT","RIBBON","SNOWFLAKE","WINTER"];
+game({id:"wsearch",name:"Christmas Word Search",em:"🔎",bl:"Find the hidden holiday words. Drag across the letters.",tc:"#ff9aa5",levels:true,
+start:function(el,L){
+  var D=curD(),n=Math.min(12,P([8,10,12])),nw=Math.min(12,P([5,7,9])),dirs=[[0,1],[1,0]];if(D>=2.5)dirs=dirs.concat([[1,1],[-1,1]]);if(D>=3.4)dirs=dirs.concat([[0,-1],[-1,0],[-1,-1],[1,-1]]);
+  var g=[],words=[],t=0,found=0,per=P([30,25,20]);for(var i=0;i<n*n;i++)g.push("");
+  shuffle(WSW.filter(function(x){return x.length<=n;})).forEach(function(wd){if(words.length>=nw)return;for(var a=0;a<200;a++){var d=pick(dirs),r=rnd(0,n-1),c=rnd(0,n-1),er=r+d[0]*(wd.length-1),ec=c+d[1]*(wd.length-1);if(er<0||er>=n||ec<0||ec>=n)continue;
+      var ok=true;for(var k=0;k<wd.length;k++){var v=g[(r+d[0]*k)*n+c+d[1]*k];if(v&&v!==wd[k]){ok=false;break;}}if(!ok)continue;
+      var cells=[];for(k=0;k<wd.length;k++){var ii=(r+d[0]*k)*n+c+d[1]*k;g[ii]=wd[k];cells.push(ii);}words.push({w:wd,cells:cells,f:false});return;}});
+  for(i=0;i<n*n;i++)if(!g[i])g[i]="ABCDEFGHIJKLMNOPRSTUVWY"[rnd(0,22)];
+  var w=h("div","n2wrap");el.appendChild(w);var rr=el.getBoundingClientRect(),land=rr.width>rr.height,s=Math.floor(Math.min(land?rr.width-280:rr.width-30,land?rr.height-30:rr.height-200)/n);
+  var row=h("div","n2row");row.style.flexWrap=land?"nowrap":"wrap";row.style.gap="18px";w.appendChild(row);
+  var grid=h("div","n2grid wsg");grid.style.gridTemplateColumns="repeat("+n+","+s+"px)";grid.style.gridAutoRows=s+"px";grid.style.gap="0";row.appendChild(grid);
+  var cells=g.map(function(ch){var d=h("div","wsc",ch);d.style.fontSize=(s*0.58)+"px";grid.appendChild(d);return d;});
+  var lst=h("div","wslist");row.appendChild(lst);
+  function drawL(){lst.innerHTML=words.map(function(x){return "<span class='"+(x.f?"f":"")+"'>"+x.w+"</span>";}).join("");}
+  var a=null,cur=[],HC=["#ffc94a","#41c9a0","#7aa7ff","#ff8fb1","#b07cff","#ff8f3d"];
+  function at(p){var gr=grid.getBoundingClientRect(),er=el.getBoundingClientRect(),x=p.x+er.left-gr.left,y=p.y+er.top-gr.top;if(x<0||y<0||x>=gr.width||y>=gr.height)return null;return [Math.floor(y/s),Math.floor(x/s)];}
+  function line(b){var dr=b[0]-a[0],dc=b[1]-a[1],L2=Math.max(Math.abs(dr),Math.abs(dc));if(dr&&dc&&Math.abs(dr)!==Math.abs(dc))return null;var sr=L2?dr/L2:0,sc2=L2?dc/L2:0,o=[];for(var k=0;k<=L2;k++)o.push((a[0]+sr*k)*n+a[1]+sc2*k);return o;}
+  function hl(){cells.forEach(function(c,i){c.classList.toggle("sel",cur.indexOf(i)>=0);});}
+  ptr(el,{down:function(p){if(!go||G.done)return;a=at(p);cur=a?[a[0]*n+a[1]]:[];hl();},move:function(p){if(!a)return;var b2=at(p);if(!b2)return;var l=line(b2);if(l){cur=l;hl();}},
+    up:function(){if(!a)return;a=null;var str=cur.map(function(i){return g[i];}).join(""),rv=str.split("").reverse().join("");
+      words.forEach(function(x){if(!x.f&&(x.w===str||x.w===rv)&&cur.length===x.w.length){var same=x.cells.slice().sort().join()===cur.slice().sort().join();if(!same&&x.w!==str&&x.w!==rv)return;x.f=true;found++;var col=HC[found%HC.length];cur.forEach(function(i){cells[i].style.background=col;cells[i].classList.add("got");});sfx.good();drawL();}});
+      cur=[];hl();if(found===words.length){var T3=words.length*per;finish({stars:t<=T3?3:t<=T3*1.8?2:1,msg:"All "+words.length+" words in "+Math.round(t)+" seconds!"});}}});
+  drawL();var go=false;score("🔎 0:00");
+  ready(el,{em:"🔎",title:"Christmas Word Search",text:"Find all "+words.length+" words. Put your finger on the first letter and drag to the last one. Words go across and down"+(D>=2.5?", and on a slant":"")+(D>=3.4?". Some are even backwards!":".")},function(){go=true;
+    loop(function(dt){t+=dt;score("🔎 "+found+"/"+words.length+"   ⏱ "+Math.floor(t/60)+":"+("0"+Math.floor(t%60)).slice(-2));if(G.done)return false;});});
+}});
+
+/* ---- Brain Games, batch 2 ---- */
+game({id:"sudoku",name:"Sudoku",em:"🔢",bl:"Fill the grid so every row, column and box has each number once.",tc:"#a5f0d3",levels:true,
+start:function(el,L){
+  var D=curD(),n=D<2?4:6,br=2,bc=n===4?2:3,holes=n===4?Math.min(11,P([6,8,10])):Math.min(26,P([12,17,22])),show=D<3,sol=[],puz,sel=-1,mist=0,t=0;
+  function shufG(k,g){var o=[];shuffle(Array.apply(null,{length:k/g}).map(function(_,i){return i;})).forEach(function(b){shuffle(Array.apply(null,{length:g}).map(function(_,i){return i;})).forEach(function(x){o.push(b*g+x);});});return o;}
+  var rows=shufG(n,br),cols=shufG(n,bc),dig=shuffle(Array.apply(null,{length:n}).map(function(_,i){return i+1;}));
+  for(var r=0;r<n;r++)for(var c=0;c<n;c++){var R=rows[r],C=cols[c];sol.push(dig[(bc*(R%br)+Math.floor(R/br)+C)%n]);}
+  function okAt(a,i,v){var r=Math.floor(i/n),c=i%n;for(var k=0;k<n;k++){if(a[r*n+k]===v||a[k*n+c]===v)return false;}var r0=r-r%br,c0=c-c%bc;for(var x=0;x<br;x++)for(var y=0;y<bc;y++)if(a[(r0+x)*n+c0+y]===v)return false;return true;}
+  function count(a,lim){var i=a.indexOf(0);if(i<0)return 1;var s=0;for(var v=1;v<=n;v++)if(okAt(a,i,v)){a[i]=v;s+=count(a,lim);a[i]=0;if(s>=lim)break;}return s;}
+  puz=sol.slice();var removed=0;shuffle(Array.apply(null,{length:n*n}).map(function(_,i){return i;})).forEach(function(i){if(removed>=holes)return;var v=puz[i];puz[i]=0;if(count(puz.slice(),2)===1)removed++;else puz[i]=v;});
+  var giv=puz.map(function(v){return v>0;}),cur=puz.slice();
+  var w=h("div","n2wrap");el.appendChild(w);var rr=el.getBoundingClientRect(),land=rr.width>rr.height,s=Math.floor(Math.min(land?rr.width-300:rr.width-40,land?rr.height-40:rr.height-240,560)/n);
+  var row=h("div","n2row");row.style.gap="22px";row.style.flexWrap=land?"nowrap":"wrap";w.appendChild(row);
+  var g=h("div","n2grid sdg");g.style.gridTemplateColumns="repeat("+n+","+s+"px)";g.style.gridAutoRows=s+"px";g.style.gap="0";row.appendChild(g);
+  var cells=cur.map(function(v,i){var c=h("button","sdc"+(giv[i]?" giv":""),v||"");c.style.fontSize=(s*0.5)+"px";var r=Math.floor(i/n),cc=i%n;if(cc%bc===bc-1&&cc<n-1)c.style.borderRight="3px solid #13213a";if(r%br===br-1&&r<n-1)c.style.borderBottom="3px solid #13213a";
+    tap(c,function(){if(giv[i]||G.done)return;sel=i;drawSel();});g.appendChild(c);return c;});
+  var pad=h("div","sdpad");for(var v=1;v<=n;v++)(function(v){var b=h("button","n2chip",v);tap(b,function(){put(v);});pad.appendChild(b);})(v);var er=h("button","n2chip","⌫");tap(er,function(){put(0);});pad.appendChild(er);row.appendChild(pad);
+  function drawSel(){cells.forEach(function(c,i){c.classList.toggle("sel",i===sel);});}
+  function put(v){if(sel<0||G.done)return;cur[sel]=v;var c=cells[sel];c.textContent=v||"";c.classList.remove("no");
+    if(v&&v!==sol[sel]){if(show){mist++;c.classList.add("no");sfx.bad();}else sfx.tick();}else sfx.tick();score("❌ "+mist);
+    if(cur.indexOf(0)<0){var bad=cur.filter(function(x,i){return x!==sol[i];}).length;
+      if(!bad){finish({stars:mist<=1?3:mist<=3?2:1,msg:"Solved in "+Math.floor(t/60)+":"+("0"+Math.floor(t%60)).slice(-2)+" with "+mist+" mistake"+(mist===1?"":"s")+"."});}
+      else if(!show){mist+=bad;sfx.bad();cur.forEach(function(x,i){if(x!==sol[i])cells[i].classList.add("no");});score("❌ "+mist);}}}
+  score("❌ 0");
+  ready(el,{em:"🔢",title:"Sudoku "+n+"×"+n,text:"Tap an empty square, then tap a number. Every row, every column and every thick-lined box needs the numbers 1 to "+n+" exactly once."+(show?" Wrong numbers turn red.":" At your level wrong numbers don't show until the grid is full, and each one counts as a mistake!")},function(){loop(function(dt){t+=dt;return !G.done;});});
+}});
+
+game({id:"memgrid",name:"Memory Grid",em:"🟦",bl:"Squares light up. Tap the same ones. It gets bigger each round.",tc:"#c9b5ff",levels:true,
+start:function(el,L){
+  var n=Math.min(7,P([4,5,6])),k=P([3,4,5]),goal=P([6,8,10]),lives=3,best=0,lock=true,want=[],got=[];
+  var w=h("div","n2wrap");el.appendChild(w);var msg=h("div","n2msg","");w.appendChild(msg);var cg=cellGrid(el,n,n,"mgg");w.appendChild(cg.g);
+  cg.cells.forEach(function(c,i){tap(c,function(){if(lock||G.done||got.indexOf(i)>=0)return;
+    if(want.indexOf(i)>=0){got.push(i);c.classList.add("on");sfx.pop();if(got.length===want.length){lock=true;best=k;sfx.good();msg.textContent="✅ "+k+" in a row!";k++;later(round,900);}}
+    else{lives--;lock=true;sfx.bad();c.classList.add("no");want.forEach(function(j){cg.cells[j].classList.add("on");});msg.textContent=lives>0?"Oops! "+lives+" "+(lives===1?"life":"lives")+" left.":"Out of lives!";
+      later(function(){if(lives<=0)end();else round();},1400);}
+    score("🟦 best "+best+"   "+new Array(lives+1).join("❤️"));});});
+  function round(){if(k>goal+2)return end();cg.cells.forEach(function(c){c.classList.remove("on","no");});want=shuffle(Array.apply(null,{length:n*n}).map(function(_,i){return i;})).slice(0,k);got=[];
+    msg.textContent="Watch "+k+" squares…";want.forEach(function(i){cg.cells[i].classList.add("on");});
+    later(function(){cg.cells.forEach(function(c){c.classList.remove("on");});msg.textContent="Now tap them!";lock=false;},900+k*220);}
+  function end(){finish({stars:best>=goal?3:best>=goal-2?2:best>=goal-4?1:0,msg:"You remembered "+best+" squares. "+(best<goal?"Reach "+(best>=goal-2?goal:best>=goal-4?goal-2:goal-4)+" for the next star.":"Photographic memory!")});}
+  score("🟦 best 0   ❤️❤️❤️");
+  ready(el,{em:"🟦",title:"Memory Grid",text:"Some squares light up, then go dark. Tap the same squares. Every time you get it right, one more square lights up. 3 lives. Reach "+goal+" for 3 stars."},round);
+}});
+
+game({id:"picross",name:"Picture Logic",em:"🧩",bl:"Use the number clues to fill in the hidden picture.",tc:"#ffd1a1",levels:true,
+start:function(el,L){
+  var n=Math.min(10,P([5,6,8])),sol=[],cur=[],mode=1,t=0,TT=n*n*2.4;
+  for(var i=0;i<n*n;i++){sol.push(Math.random()<0.58?1:0);cur.push(0);}
+  function runs(a){var o=[],c=0;a.forEach(function(v){if(v===1)c++;else if(c){o.push(c);c=0;}});if(c)o.push(c);return o.length?o:[0];}
+  function rowA(a,r){return a.slice(r*n,r*n+n);}function colA(a,c){var o=[];for(var r=0;r<n;r++)o.push(a[r*n+c]);return o;}
+  var RC=[],CC=[];for(i=0;i<n;i++){RC.push(runs(rowA(sol,i)));CC.push(runs(colA(sol,i)));}
+  var w=h("div","n2wrap");el.appendChild(w);var rr=el.getBoundingClientRect(),cw=Math.max(2,Math.max.apply(null,RC.map(function(x){return x.length;}))),ch=Math.max(2,Math.max.apply(null,CC.map(function(x){return x.length;})));
+  var s=Math.floor(Math.min((rr.width-40)/(n+cw*0.6),(rr.height-130)/(n+ch*0.6),70));
+  var tbl=h("div","pxt");tbl.style.gridTemplateColumns=Math.round(cw*s*0.6)+"px repeat("+n+","+s+"px)";tbl.style.gridTemplateRows=Math.round(ch*s*0.6)+"px repeat("+n+","+s+"px)";w.appendChild(tbl);
+  tbl.appendChild(h("div",""));var ccl=[],rcl=[],cells=[];
+  for(i=0;i<n;i++){var d=h("div","pxc col",CC[i].join("<br>"));d.style.fontSize=Math.max(11,s*0.34)+"px";tbl.appendChild(d);ccl.push(d);}
+  for(var r=0;r<n;r++){var rd=h("div","pxc row",RC[r].join(" "));rd.style.fontSize=Math.max(11,s*0.34)+"px";tbl.appendChild(rd);rcl.push(rd);
+    for(var c=0;c<n;c++){var cell=h("div","pxs");cell.dataset.i=r*n+c;if(c%5===4&&c<n-1)cell.style.borderRight="3px solid #13213a";if(r%5===4&&r<n-1)cell.style.borderBottom="3px solid #13213a";tbl.appendChild(cell);cells.push(cell);}}
+  var bar=h("div","n2row","<button class='btn on' data-m='1'>⬛ Fill</button><button class='btn' data-m='2'>✕ Mark empty</button>");w.appendChild(bar);
+  [].forEach.call(bar.children,function(b){tap(b,function(){mode=+b.dataset.m;[].forEach.call(bar.children,function(x){x.classList.toggle("on",x===b);});});});
+  var paint=null;
+  function cellAt(p){var er=el.getBoundingClientRect(),e=document.elementFromPoint(p.x+er.left,p.y+er.top);return e&&e.classList&&e.classList.contains("pxs")?+e.dataset.i:-1;}
+  function set(i){if(i<0||cur[i]===paint)return;cur[i]=paint;cells[i].className="pxs"+(paint===1?" f":paint===2?" x":"");tone(paint===1?520:300,0.03,"sine",0.08);check();}
+  ptr(el,{down:function(p){if(!go||G.done)return;var i=cellAt(p);if(i<0)return;paint=cur[i]===mode?0:mode;set(i);},move:function(p){if(paint==null)return;set(cellAt(p));},up:function(){paint=null;}});
+  function check(){var fill=cur.map(function(v){return v===1?1:0;}),all=true;
+    for(var i=0;i<n;i++){var a=runs(rowA(fill,i)).join()===RC[i].join(),b=runs(colA(fill,i)).join()===CC[i].join();rcl[i].classList.toggle("ok",a);ccl[i].classList.toggle("ok",b);if(!a||!b)all=false;}
+    if(all){paint=null;sfx.win();finish({stars:t<=TT?3:t<=TT*2?2:1,msg:"Picture solved in "+Math.floor(t/60)+":"+("0"+Math.floor(t%60)).slice(-2)+"!"});}}
+  var go=false;
+  ready(el,{em:"🧩",title:"Picture Logic",text:"The numbers tell you how many filled squares are in a row, in order. \"3 1\" means 3 filled, a gap, then 1. Fill squares with ⬛ and mark ones you know are empty with ✕. You can drag to paint. Finish in "+Math.round(TT/60)+" minutes for 3 stars."},function(){go=true;loop(function(dt){t+=dt;score("⏱ "+Math.floor(t/60)+":"+("0"+Math.floor(t%60)).slice(-2));return !G.done;});});
+}});
+
+function tstr(h0,m){var hh=((h0%12)+12)%12||12;return hh+":"+("0"+m).slice(-2);}
+game({id:"clock",name:"Clock Reader",em:"🕰️",bl:"Read the clock. Big kids figure out what time it will be later.",tc:"#ffe08a",levels:true,
+start:function(el,L){
+  var D=curD(),N=10,n=0,right=0;
+  var w=h("div","n2wrap");el.appendChild(w);
+  function q(){var hh=rnd(1,12),mm=D<2?pick([0,30]):D<2.8?rnd(0,11)*5:rnd(0,59),ask=0,add=0,txt="What time is it?";
+    if(D>=3.4&&Math.random()<0.55){add=pick([15,20,25,35,40,45,50,70,85,95,110,125]);var back=D>=3.8&&Math.random()<0.4;if(back)add=-add;txt=back?"What time was it "+dur(-add)+" ago?":"What time will it be in "+dur(add)+"?";}
+    var tot=hh*60+mm+add,ah=Math.floor(((tot%720)+720)%720/60),am=((tot%60)+60)%60,ans=tstr(ah,am),o=[ans];
+    var cand=[tstr(ah,(am+5)%60),tstr(ah+1,am),tstr(ah-1,am),tstr(Math.floor(am/5)||12,Math.min(55,((ah%12)*5)%60)),tstr(ah,(am+55)%60),tstr(ah,(am+15)%60),tstr(ah,(am+30)%60)];
+    shuffle(cand).forEach(function(x){if(o.length<4&&o.indexOf(x)<0)o.push(x);});
+    return {hh:hh,mm:mm,txt:txt,ans:ans,o:shuffle(o)};}
+  function dur(m){var h1=Math.floor(m/60),r=m%60;return (h1?h1+" hour"+(h1>1?"s":"")+(r?" ":""):"")+(r?r+" minutes":"");}
+  function show(){if(n>=N){var f=right/N;finish({stars:f>=0.85?3:f>=0.65?2:f>=0.4?1:0,msg:right+" out of "+N+" right."});return;}
+    var Q=q(),done=false,rr=el.getBoundingClientRect(),S=Math.max(130,Math.min(rr.height-290,rr.width*0.5,300));
+    w.innerHTML="<div class='n2small'>Clock "+(n+1)+" of "+N+"</div><canvas class='clk' width='"+(S*2)+"' height='"+(S*2)+"' style='width:"+S+"px;height:"+S+"px'></canvas><div class='n2msg'>"+Q.txt+"</div><div class='opts'></div>";
+    var cv=w.querySelector("canvas"),x=cv.getContext("2d");x.scale(2,2);var R=S/2;x.translate(R,R);
+    x.fillStyle="#fffdf6";x.beginPath();x.arc(0,0,R-4,0,6.3);x.fill();x.lineWidth=6;x.strokeStyle="#c8743a";x.stroke();
+    for(var i=0;i<60;i++){var a=i*Math.PI/30;x.strokeStyle="#13213a";x.lineWidth=i%5?1:3;x.beginPath();x.moveTo(Math.sin(a)*(R-12),-Math.cos(a)*(R-12));x.lineTo(Math.sin(a)*(R-(i%5?18:24)),-Math.cos(a)*(R-(i%5?18:24)));x.stroke();}
+    x.fillStyle="#13213a";x.font="800 "+(R*0.17)+"px Nunito,sans-serif";x.textAlign="center";x.textBaseline="middle";for(i=1;i<=12;i++){var a2=i*Math.PI/6;x.fillText(i,Math.sin(a2)*(R*0.7),-Math.cos(a2)*(R*0.7));}
+    function hand(a,l,wd,c){x.strokeStyle=c;x.lineWidth=wd;x.lineCap="round";x.beginPath();x.moveTo(0,0);x.lineTo(Math.sin(a)*l,-Math.cos(a)*l);x.stroke();}
+    hand((Q.hh%12+Q.mm/60)*Math.PI/6,R*0.48,9,"#13213a");hand(Q.mm*Math.PI/30,R*0.75,5,"#e8424f");x.fillStyle="#13213a";x.beginPath();x.arc(0,0,8,0,6.3);x.fill();
+    var box=w.querySelector(".opts");Q.o.forEach(function(o){var b=h("button","opt",o);tap(b,function(){if(done)return;done=true;if(o===Q.ans){b.classList.add("ok");right++;sfx.good();}else{b.classList.add("no");sfx.bad();[].forEach.call(box.children,function(y){if(y.textContent===Q.ans)y.classList.add("ok");});}
+      score("✅ "+right);n++;later(show,o===Q.ans?900:2000);});box.appendChild(b);});}
+  score("✅ 0");
+  ready(el,{em:"🕰️",title:"Clock Reader",text:"The short dark hand points to the hour. The long red hand points to the minutes."+(D>=3.4?" Some questions ask what time it will be later, or was earlier. Count forward on the clock!":"")+" 10 clocks."},show);
+}});
+
+var MONEY=[[1,"1¢","#c77b45",34],[5,"5¢","#b9c1c9",40],[10,"10¢","#d4dae0",30],[25,"25¢","#c9d1d8",46],[100,"$1","#7fb77e",0],[500,"$5","#8fae7c",0],[1000,"$10","#d7b96a",0]];
+function mfmt(c){return c<100?c+"¢":"$"+(c/100).toFixed(2);}
+function mHTML(m,cls){return m[3]?"<span class='coin "+(cls||"")+"' style='width:"+(m[3]*1.3)+"px;height:"+(m[3]*1.3)+"px;background:"+m[2]+"'>"+m[1]+"</span>":"<span class='bill "+(cls||"")+"' style='background:"+m[2]+"'>"+m[1]+"</span>";}
+game({id:"money",name:"Money Counter",em:"💵",bl:"Count coins, pay the exact amount, figure out change.",tc:"#a5f0d3",levels:true,
+start:function(el,L){
+  var D=curD(),N=8,n=0,right=0,kinds=D<2.4?4:D<3.2?5:7;
+  var w=h("div","n2wrap");el.appendChild(w);
+  function count(){var k=rnd(3,Math.min(9,P([5,7,9]))),set=[];for(var i=0;i<k;i++)set.push(MONEY[rnd(0,kinds-1)]);set.sort(function(a,b){return b[0]-a[0];});var tot=set.reduce(function(s,m){return s+m[0];},0);
+    var o=[tot];[5,10,-5,-10,25,1,-1,100].forEach(function(d){if(o.length<4&&tot+d>0&&o.indexOf(tot+d)<0&&Math.random()<0.7)o.push(tot+d);});while(o.length<4){var z=tot+rnd(-30,30);if(z>0&&o.indexOf(z)<0)o.push(z);}
+    w.innerHTML="<div class='n2small'>Question "+(n+1)+" of "+N+"</div><div class='n2msg'>How much money is this?</div><div class='mnrow'>"+set.map(function(m){return mHTML(m);}).join("")+"</div><div class='opts'></div>";
+    mc(shuffle(o).map(mfmt),mfmt(tot));}
+  function change(){var price=rnd(105,980),paid=price<500?500:1000;if(D>=3.8)price=rnd(120,1880),paid=price<1000?1000:2000;var ans=paid-price,items=["🍦 ice cream","🎟️ movie ticket","🧁 cupcake","🎨 paint set","🐍 rubber snake","🎯 target pack","🧢 hat"];
+    var o=[ans];[10,-10,100,-100,5,-5].forEach(function(d){if(o.length<4&&ans+d>0&&o.indexOf(ans+d)<0)o.push(ans+d);});
+    w.innerHTML="<div class='n2small'>Question "+(n+1)+" of "+N+"</div><div class='n2msg'>Your "+pick(items).split(" ").slice(1).join(" ")+" costs <b>"+mfmt(price)+"</b>. You pay with <b>"+mfmt(paid)+"</b>.<br>How much change do you get back?</div><div class='opts'></div>";
+    mc(shuffle(o).map(mfmt),mfmt(ans));}
+  function pay(){var tgt=rnd(2,D>=3.4?60:20)*5+(D>=3?rnd(0,4):0),tray=[];if(D>=3.2)tgt+=rnd(1,4)*100;
+    w.innerHTML="<div class='n2small'>Question "+(n+1)+" of "+N+"</div><div class='n2msg'>Pay exactly <b>"+mfmt(tgt)+"</b></div><div class='mnrow tray'></div><div class='n2small' id='mnS'>Tap money below to add it. Tap the tray to take it back.</div><div class='mnrow bank'></div><button class='btn go'>Pay</button>";
+    var trayB=w.querySelector(".tray"),bank=w.querySelector(".bank"),ok=w.querySelector(".btn.go"),done=false;
+    MONEY.slice(0,Math.max(4,kinds)).forEach(function(m){var b=h("button","mnb",mHTML(m));tap(b,function(){if(done)return;tray.push(m);sfx.tick();dr();});bank.appendChild(b);});
+    function dr(){trayB.innerHTML="";tray.forEach(function(m,i){var b=h("button","mnb",mHTML(m,"sm"));tap(b,function(){if(done)return;tray.splice(i,1);dr();});trayB.appendChild(b);});w.querySelector("#mnS").textContent="In the tray: "+mfmt(tray.reduce(function(s,m){return s+m[0];},0));}
+    tap(ok,function(){if(done)return;done=true;var s=tray.reduce(function(a,m){return a+m[0];},0);if(s===tgt){right++;sfx.good();w.querySelector("#mnS").textContent="✅ Exactly "+mfmt(tgt)+"!";}else{sfx.bad();w.querySelector("#mnS").textContent="❌ That's "+mfmt(s)+", not "+mfmt(tgt)+".";}score("💵 "+right);n++;later(nextQ,s===tgt?1100:2200);});}
+  function mc(opts,ans){var box=w.querySelector(".opts"),done=false;opts.forEach(function(o){var b=h("button","opt",o);tap(b,function(){if(done)return;done=true;if(o===ans){b.classList.add("ok");right++;sfx.good();}else{b.classList.add("no");sfx.bad();[].forEach.call(box.children,function(y){if(y.textContent===ans)y.classList.add("ok");});}score("💵 "+right);n++;later(nextQ,o===ans?900:2000);});box.appendChild(b);});}
+  function nextQ(){if(n>=N){var f=right/N;finish({stars:f>=0.85?3:f>=0.65?2:f>=0.4?1:0,msg:right+" out of "+N+" right."});return;}
+    var r=Math.random();if(D>=3.4&&r<0.35)change();else if(D>=2.6&&r<0.7)pay();else count();}
+  score("💵 0");
+  ready(el,{em:"💵",title:"Money Counter",text:"A penny is 1¢, a nickel 5¢, a dime 10¢ and a quarter 25¢."+(D>=2.6?" Some questions ask you to pay an exact amount."+(D>=3.4?" Others ask how much change you get back.":""):"")+" 8 questions."},nextQ);
+}});
+
+/* ---- Play Together, batch 2 ---- */
+function teamEnd(sel,pts,unit){var best=Math.max.apply(null,sel.map(function(i){return pts[i];})),win=sel.filter(function(i){return pts[i]===best;});
+  finish({stars:3,award:sel.map(function(i){return [i,win.indexOf(i)>=0?3:1];}),party:true,title:win.length>1?"It's a tie!":players[win[0]].av+" "+esc(players[win[0]].name)+" wins!",msg:sel.map(function(i){return esc(players[i].name)+": "+pts[i]+(unit||"");}).join(" · ")+"<br>Winners get 3 stars, everyone else gets 1."});}
+function turnBar(sel,turn,pts){return "<div class='tbar'>"+sel.map(function(i,k){return "<span class='"+(k===turn?"on":"")+"' style='--pc:"+COLORS[i]+"'>"+players[i].av+" "+esc(players[i].name)+(pts?" <b>"+pts[i]+"</b>":"")+"</span>";}).join("")+"</div>";}
+
+game({id:"four",name:"Four in a Row",em:"🔴",bl:"Drop your pieces. First to line up four wins. Works for 3 too!",tc:"#ff9aa5",both:true,
+start:function(el){
+  pickPlayers(el,{title:"Four in a Row",text:"Take turns dropping a piece. Get 4 in a row across, up and down, or on a slant. With 3 players the board gets bigger.",min:2},function(sel){
+    var C=sel.length>2?8:7,R=sel.length>2?7:6,b=[],turn=0,over=false;for(var i=0;i<R*C;i++)b.push(-1);
+    var w=h("div","n2wrap");el.appendChild(w);var top=h("div","");w.appendChild(top);
+    var rr=el.getBoundingClientRect(),s=Math.floor(Math.min((rr.width-40)/C,(rr.height-110)/R,90));
+    var g=h("div","n2grid c4g");g.style.gridTemplateColumns="repeat("+C+","+s+"px)";g.style.gridAutoRows=s+"px";w.appendChild(g);
+    var cells=b.map(function(_,i){var c=h("div","c4c");g.appendChild(c);return c;});
+    function drawTop(){top.innerHTML=turnBar(sel,turn);}
+    ptr(g,{down:function(p){if(over||G.done)return;var col=Math.max(0,Math.min(C-1,Math.floor(p.x/(g.getBoundingClientRect().width/C))));
+      for(var r=R-1;r>=0;r--)if(b[r*C+col]<0){var i=r*C+col,who=sel[turn];b[i]=who;cells[i].innerHTML="<i style='background:"+COLORS[who]+"'></i>";tone(300+r*40,0.08,"triangle",0.15);
+        var line=win4(r,col,who);if(line){over=true;line.forEach(function(k){cells[k].classList.add("win");});sfx.win();later(function(){finish({stars:3,award:sel.map(function(j){return [j,j===who?3:1];}),party:true,title:players[who].av+" "+esc(players[who].name)+" wins!",msg:"Four in a row! Winner gets 3 stars, everyone else gets 1."});},1100);return;}
+        if(b.indexOf(-1)<0){over=true;later(function(){finish({stars:2,award:sel.map(function(j){return [j,2];}),title:"Board full. It's a tie!",msg:"Everyone gets 2 stars."});},700);return;}
+        turn=(turn+1)%sel.length;drawTop();return;}
+      sfx.bad();}});
+    function win4(r,c,who){var D4=[[0,1],[1,0],[1,1],[1,-1]];for(var d=0;d<4;d++){var line=[r*C+c];[1,-1].forEach(function(sg){var rr2=r+D4[d][0]*sg,cc=c+D4[d][1]*sg;while(rr2>=0&&rr2<R&&cc>=0&&cc<C&&b[rr2*C+cc]===who){line.push(rr2*C+cc);rr2+=D4[d][0]*sg;cc+=D4[d][1]*sg;}});if(line.length>=4)return line;}return null;}
+    drawTop();score("");});
+}});
+
+game({id:"dots",name:"Dots and Boxes",em:"⬛",bl:"Draw lines between dots. Close a box to claim it and go again.",tc:"#c9b5ff",both:true,
+start:function(el){
+  pickPlayers(el,{title:"Dots and Boxes",text:"Take turns drawing one line between two dots. If your line closes a box, it's yours and you go again. Most boxes wins!",min:2},function(sel){
+    var B=sel.length>2?5:4,turn=0,pts={},H={},V={},own={},left=B*B;sel.forEach(function(i){pts[i]=0;});
+    var w=h("div","n2wrap");el.appendChild(w);var top=h("div","");w.appendChild(top);
+    var rr=el.getBoundingClientRect(),S=Math.floor(Math.min(rr.width-60,rr.height-120,620)),cs=S/B,dot=Math.max(14,cs*0.16),hw=Math.max(30,cs*0.36);
+    var bd=h("div","dbx");bd.style.width=bd.style.height=(S+dot)+"px";w.appendChild(bd);
+    for(var r=0;r<B;r++)for(var c=0;c<B;c++){var bx=h("div","dbb");bx.style.left=(dot/2+c*cs+dot/2)+"px";bx.style.top=(dot/2+r*cs+dot/2)+"px";bx.style.width=bx.style.height=(cs-dot)+"px";bx.style.fontSize=(cs*0.45)+"px";bd.appendChild(bx);own[r+","+c]=bx;}
+    function edge(kind,r,c){var e=h("button","dbe "+kind);if(kind==="h"){e.style.left=(c*cs+dot)+"px";e.style.top=(dot/2+r*cs-hw/2)+"px";e.style.width=(cs-dot)+"px";e.style.height=hw+"px";}else{e.style.left=(dot/2+c*cs-hw/2)+"px";e.style.top=(r*cs+dot)+"px";e.style.width=hw+"px";e.style.height=(cs-dot)+"px";}
+      tap(e,function(){var m=kind==="h"?H:V,k=r+","+c;if(m[k]||G.done)return;var who=sel[turn];m[k]=who;e.classList.add("on");e.style.setProperty("--pc",COLORS[who]);tone(520,0.06,"triangle",0.15);
+        var got=0;(kind==="h"?[[r-1,c],[r,c]]:[[r,c-1],[r,c]]).forEach(function(q){if(q[0]<0||q[1]<0||q[0]>=B||q[1]>=B)return;var y=q[0],x=q[1];
+          if(H[y+","+x]!=null&&H[(y+1)+","+x]!=null&&V[y+","+x]!=null&&V[y+","+(x+1)]!=null&&!own[y+","+x].dataset.o){own[y+","+x].dataset.o=1;own[y+","+x].style.background=COLORS[who];own[y+","+x].textContent=players[who].av;pts[who]++;got++;left--;}});
+        if(got)sfx.good();else turn=(turn+1)%sel.length;drawTop();if(!left)later(function(){teamEnd(sel,pts," boxes");},700);});bd.appendChild(e);}
+    for(r=0;r<=B;r++)for(c=0;c<B;c++)edge("h",r,c);for(r=0;r<B;r++)for(c=0;c<=B;c++)edge("v",r,c);
+    for(r=0;r<=B;r++)for(c=0;c<=B;c++){var d=h("div","dbd");d.style.left=(c*cs)+"px";d.style.top=(r*cs)+"px";d.style.width=d.style.height=dot+"px";bd.appendChild(d);}
+    function drawTop(){top.innerHTML=turnBar(sel,turn,pts);}drawTop();score("");});
+}});
+
+var DRAWW=["cat","snake","cactus","unicorn","cupcake","rainbow","snowman","deer","horse","pizza","rocket","castle","mermaid","dragon","sunset","igloo","spider","scorpion","cowboy hat","guitar","butterfly","rattlesnake","campfire","tent","fishing pole","lighthouse","volcano","octopus","penguin","robot","roller skates","birthday cake","ice cream cone","turtle","owl","bow and arrow","jellyfish","ferris wheel","candy cane","reindeer","bicycle","treasure chest","tornado","waterfall","hot air balloon"];
+game({id:"drawg",name:"Draw & Guess",em:"🖌️",bl:"One draws a secret word, everyone else guesses out loud.",tc:"#ffe7a3",both:true,
+start:function(el){
+  pickPlayers(el,{title:"Draw & Guess",text:"The artist secretly sees a word and has 60 seconds to draw it. No letters or numbers! Everyone else shouts guesses. Each player draws twice.",min:2},function(sel){
+    var turns=[],pts={},k=0,words=shuffle(DRAWW.slice());sel.forEach(function(i){pts[i]=0;});for(var r=0;r<2;r++)sel.forEach(function(i){turns.push(i);});
+    function pass(){el.innerHTML="";if(k>=turns.length)return teamEnd(sel,pts," pts");var who=turns[k],word=words[k];
+      var box=h("div","ready","<div class='card'><div class='em'>"+players[who].av+"</div><h2>Pass to "+esc(players[who].name)+"</h2><p>Everyone else, no peeking! 🙈</p><button class='btn go'>Show my secret word</button></div>");el.appendChild(box);
+      tap(box.querySelector(".go"),function(){box.querySelector(".card").innerHTML="<p>Your word is</p><h2 style='font-size:44px'>"+esc(word)+"</h2><p>Remember it, then start drawing!</p><button class='btn go'>Start drawing!</button>";
+        tap(box.querySelector(".go"),function(){box.remove();draw(who,word);});});}
+    function draw(who,word){var T=60,col="#13213a",sz=6,over=false;
+      var top=h("div","dgtop");el.appendChild(top);var area=h("div","dgarea");el.appendChild(area);var c=canvasIn(area),cx=c.cx;cx.fillStyle="#fff";cx.fillRect(0,0,c.W,c.H);
+      var bot=h("div","dgbot");el.appendChild(bot);
+      ["#13213a","#e8424f","#2f7fe0","#36b37e","#ffc94a","#8a5a33"].forEach(function(cl){var b=h("button","dgc");b.style.background=cl;tap(b,function(){col=cl;sz=6;});bot.appendChild(b);});
+      var er=h("button","btn","🧽");tap(er,function(){col="#fff";sz=26;});bot.appendChild(er);var cl=h("button","btn","Clear");tap(cl,function(){cx.fillStyle="#fff";cx.fillRect(0,0,c.W,c.H);});bot.appendChild(cl);
+      var guess=h("div","dgg");bot.appendChild(guess);
+      sel.filter(function(i){return i!==who;}).forEach(function(i){var b=h("button","btn go","✋ "+esc(players[i].name)+" got it!");b.style.background=COLORS[i];tap(b,function(){if(over)return;over=true;pts[i]++;pts[who]++;sfx.win();confetti();top.innerHTML="<b>"+esc(players[i].name)+"</b> guessed <b>"+esc(word)+"</b>! +1 each";later(function(){k++;pass();},2200);});guess.appendChild(b);});
+      var sk=h("button","btn","Nobody got it");tap(sk,function(){if(over)return;over=true;top.innerHTML="It was <b>"+esc(word)+"</b>!";later(function(){k++;pass();},2000);});guess.appendChild(sk);
+      var last={};ptr(c.cv,{down:function(p){last[p.id]=p;cx.fillStyle=col;cx.beginPath();cx.arc(p.x,p.y,sz/2,0,6.3);cx.fill();},move:function(p){var l=last[p.id];if(!l)return;cx.strokeStyle=col;cx.lineWidth=sz;cx.lineCap="round";cx.beginPath();cx.moveTo(l.x,l.y);cx.lineTo(p.x,p.y);cx.stroke();last[p.id]=p;},up:function(p){delete last[p.id];}});
+      loop(function(dt){if(over)return false;T-=dt;top.innerHTML=players[who].av+" <b>"+esc(players[who].name)+"</b> is drawing · ⏱ "+Math.max(0,Math.ceil(T));if(T<=0){over=true;sfx.bad();top.innerHTML="Time's up! It was <b>"+esc(word)+"</b>.";later(function(){k++;pass();},2200);return false;}});
+      score(sel.map(function(i){return players[i].av+" "+pts[i];}).join("  "));}
+    pass();});
+}});
+
+var BUZZQ=[["What is the capital of Arizona?","Phoenix",["Tucson","Flagstaff","Sedona"]],["What is the largest planet?","Jupiter",["Saturn","Neptune","Earth"]],["How many legs does a spider have?","8",["6","10","12"]],["Which cactus has arms and grows over 40 feet tall?","Saguaro",["Prickly pear","Cholla","Barrel cactus"]],["What gas do plants take in from the air?","Carbon dioxide",["Oxygen","Helium","Nitrogen"]],["What is the fastest land animal?","Cheetah",["Pronghorn","Lion","Horse"]],["What is the only mammal that can truly fly?","Bat",["Flying squirrel","Sugar glider","Owl"]],["Which ocean is the largest?","Pacific",["Atlantic","Indian","Arctic"]],["Which state is the Grand Canyon in?","Arizona",["Utah","Nevada","Colorado"]],["How many continents are there?","7",["5","6","8"]],["What is a baby deer called?","Fawn",["Calf","Kid","Cub"]],["Water freezes at what temperature in °F?","32",["0","50","100"]],["What is 12 × 12?","144",["124","132","154"]],["Which planet is called the Red Planet?","Mars",["Venus","Jupiter","Mercury"]],["What is the hardest natural material?","Diamond",["Gold","Iron","Quartz"]],["What is Arizona's state bird?","Cactus wren",["Roadrunner","Bald eagle","Cardinal"]],["Who painted the Mona Lisa?","Leonardo da Vinci",["Picasso","Van Gogh","Michelangelo"]],["How many sides does a hexagon have?","6",["5","7","8"]],["What is the biggest animal that has ever lived?","Blue whale","T. rex,Elephant,Megalodon".split(",")],["Which snake is the longest in the world?","Reticulated python",["Anaconda","King cobra","Black mamba"]],["How many days are in a leap year?","366",["365","364","360"]],["What is the closest star to Earth?","The Sun",["Polaris","Sirius","The Moon"]],["How many hearts does an octopus have?","3",["1","2","8"]],["What is a male deer called?","Buck",["Doe","Fawn","Bull"]],["Water boils at what temperature in °F?","212",["100","180","300"]],["Which instrument has 88 keys?","Piano",["Guitar","Violin","Flute"]],["Which river carved the Grand Canyon?","Colorado River",["Mississippi","Rio Grande","Missouri"]],["What does a herpetologist study?","Reptiles and amphibians",["Birds","Rocks","Stars"]],["What color is a polar bear's skin?","Black",["White","Pink","Gray"]],["Which month has the fewest days?","February",["June","April","November"]],["How many players does a soccer team have on the field?","11",["9","10","12"]],["What shape is a stop sign?","Octagon",["Hexagon","Pentagon","Square"]],["Which direction does the sun rise?","East",["West","North","South"]],["What is 3/4 as a percent?","75%",["34%","70%","25%"]],["What is the smallest prime number?","2",["1","0","3"]],["How many bones are in the adult human body?","206",["106","306","156"]],["What do bees make?","Honey",["Milk","Silk","Wax paper"]],["What is the tallest mountain on Earth?","Mount Everest",["K2","Mount Kilimanjaro","Pikes Peak"]],["Which animal is a javelina most like?","Pig",["Dog","Deer","Rabbit"]],["What is frozen water vapor that falls from clouds?","Snow",["Fog","Dew","Steam"]],["How many minutes are in 3 hours?","180",["120","300","160"]],["Which country has the Great Pyramid of Giza?","Egypt",["Mexico","Peru","Greece"]]];
+game({id:"buzz",name:"Buzzer Trivia",em:"🔔",bl:"Slam your buzzer first, then answer. Wrong answers lock you out.",tc:"#9fd8ff",both:true,
+start:function(el){
+  pickPlayers(el,{title:"Buzzer Trivia",text:"Sit around the tablet. When a question shows up, slam your buzzer first, then pick the answer. Wrong answer? You're locked out and the others can buzz. 10 questions.",min:2},function(sel){
+    var Q=shuffle(BUZZQ.slice()).slice(0,10),n=0,pts={},lock={},who=null,busy=false;sel.forEach(function(i){pts[i]=0;});
+    var w=h("div","bzwrap");el.appendChild(w);var qa=h("div","bzq");w.appendChild(qa);var bz=h("div","bzrow");w.appendChild(bz);var btn={};
+    sel.forEach(function(i){var b=h("button","bzb",players[i].av+"<br>"+esc(players[i].name));b.style.background=COLORS[i];tap(b,function(){if(busy||who!=null||lock[i]||G.done)return;who=i;tone(700,0.2,"square",0.12);b.classList.add("on");showOpts();});bz.appendChild(b);btn[i]=b;});
+    function sc(){score(sel.map(function(i){return players[i].av+" "+pts[i];}).join("  "));}
+    function ask(){if(n>=Q.length)return teamEnd(sel,pts," pts");lock={};who=null;busy=false;sel.forEach(function(i){btn[i].classList.remove("on","off");});var q=Q[n];q.o=q.o||shuffle([q[1]].concat(q[2]));
+      qa.innerHTML="<div class='n2small'>Question "+(n+1)+" of "+Q.length+"</div><div class='qtext'>"+esc(q[0])+"</div><div class='n2msg bzh'>🔔 Buzz in!</div><div class='opts' style='visibility:hidden'></div>";
+      var box=qa.querySelector(".opts");q.o.forEach(function(o){var b=h("button","opt",esc(o));tap(b,function(){if(who==null||busy)return;
+          if(o===q[1]){busy=true;b.classList.add("ok");pts[who]++;sfx.good();sc();qa.querySelector(".bzh").textContent="✅ "+players[who].name+" got it!";n++;later(ask,1600);}
+          else{b.classList.add("no");sfx.bad();lock[who]=1;btn[who].classList.remove("on");btn[who].classList.add("off");who=null;box.style.visibility="hidden";
+            if(sel.every(function(i){return lock[i];})){busy=true;[].forEach.call(box.children,function(x){if(x.textContent===q[1])x.classList.add("ok");});box.style.visibility="visible";qa.querySelector(".bzh").textContent="Nobody got it!";n++;later(ask,2200);}
+            else qa.querySelector(".bzh").textContent="❌ Locked out! Someone else buzz in!";}});box.appendChild(b);});}
+    function showOpts(){qa.querySelector(".opts").style.visibility="visible";qa.querySelector(".bzh").textContent=players[who].av+" "+players[who].name+", pick the answer!";}
+    sc();ask();});
+}});
+
+game({id:"membattle",name:"Memory Battle",em:"🃏",bl:"Take turns finding pairs. Find one and go again!",tc:"#ffd1a1",both:true,
+start:function(el){
+  pickPlayers(el,{title:"Memory Battle",text:"Take turns flipping two cards. Find a pair and you keep it and go again. Miss, and it's the next player's turn. Most pairs wins!",min:2},function(sel){
+    var ICON=["🐍","🦌","🦄","💅","🧁","🎯","🌵","🦂","🐎","🦉","🌸","💎","🎀","⭐","🍕","🐢","🦋","🎸"],pairs=sel.length>2?15:12,cols=6,rows=pairs*2/cols,turn=0,pts={},open=[],lock=false,got=0;
+    sel.forEach(function(i){pts[i]=0;});
+    var deck=shuffle(shuffle(ICON).slice(0,pairs).reduce(function(a,e){return a.concat([e,e]);},[]));
+    var w=h("div","n2wrap");el.appendChild(w);var top=h("div","");w.appendChild(top);
+    var rr=el.getBoundingClientRect(),gap=8,cw=Math.min((rr.width-40-gap*(cols-1))/cols,((rr.height-110-gap*(rows-1))/rows)*0.85),ch=cw/0.85;
+    var g=h("div","");g.style.display="grid";g.style.gap=gap+"px";g.style.gridTemplateColumns="repeat("+cols+","+cw+"px)";g.style.gridTemplateRows="repeat("+rows+","+ch+"px)";w.appendChild(g);
+    function drawTop(){top.innerHTML=turnBar(sel,turn,pts);}
+    deck.forEach(function(e){var b=h("button","mc","<div class='in'><div class='b'></div><div class='f' style='font-size:"+(cw*0.55)+"px'>"+e+"</div></div>");b.dataset.e=e;
+      tap(b,function(){if(lock||b.classList.contains("up")||b.classList.contains("got"))return;b.classList.add("up");sfx.tick();open.push(b);
+        if(open.length===2){lock=true;var a=open[0],c=open[1],who=sel[turn];
+          if(a.dataset.e===c.dataset.e){later(function(){a.classList.add("got");c.classList.add("got");sfx.good();pts[who]++;got++;open=[];lock=false;drawTop();if(got===pairs)later(function(){teamEnd(sel,pts," pairs");},600);},400);}
+          else later(function(){a.classList.remove("up");c.classList.remove("up");open=[];lock=false;turn=(turn+1)%sel.length;drawTop();},1000);}});g.appendChild(b);});
+    drawTop();score("");});
+}});
+
+/* ================= take-a-break nudge: every 30 min of screen time, never locks ================= */
+(function(){
+  var EVERY=30*60,STEP=15,ACT=[["🎣","go fishing"],["🎯","do some target practice with a grown-up"],["🚲","go for a bike ride"],["🥾","hike a desert trail"],["🦎","go lizard spotting"],["🪨","hunt for cool rocks"],["🏀","shoot some hoops"],["🐎","go see the horses"],["🌵","explore the backyard"],["🤸","have a cartwheel contest"],["🛝","race to the playground"],["🐕","play fetch with the dog"]];
+  var MSG=[
+    ["Time for a break!","You've been playing for 30 minutes. How about we {a}? The games will be right here when you get back."],
+    ["Hey superstar! 👋","That's an hour on the pad. Your eyes would love some sunshine. Let's {a}!"],
+    ["Brain cells need fresh air!","90 minutes! Real fact: kids who play outside sleep better and get stronger. Let's {a}. The badges aren't going anywhere, promise."],
+    ["Psst… the tablet is getting tired. 😴","Two whole hours! It's begging for a nap. You go {a} and I'll keep your stars safe. Pinky promise."],
+    ["Okay, this is the tablet speaking. 📢","I've been working SO hard. My screen is sweaty. The sun is out, the lizards are out, everyone's out except you! Go {a}. Please. I'm begging. 🙏"],
+    ["Emergency adventure alert! 🚨","Fun outside has been waiting for hours and it's getting lonely. A real Hall of Famer knows when to {a}. Be legendary. Go now, tell the others!"]];
+  var t=0,k=0;try{t=+sessionStorage.getItem("cg-brk-t")||0;k=+sessionStorage.getItem("cg-brk-k")||0;}catch(e){}
+  function store(){try{sessionStorage.setItem("cg-brk-t",t);sessionStorage.setItem("cg-brk-k",k);}catch(e){}}
+  function show(){var m=MSG[Math.min(k,MSG.length-1)],a=ACT[Math.floor(Math.random()*ACT.length)],b=ACT[Math.floor(Math.random()*ACT.length)];
+    var txt=esc(m[1]).replace("{a}","<b>"+a[1]+"</b>");if(k>=MSG.length&&b!==a)txt+=" Or "+b[1]+". "+b[0];
+    k++;var o=document.createElement("div");o.className="brk";
+    o.innerHTML="<div class='card'><div class='em'>"+emo(a[0],"🌞")+"</div><h2>"+esc(m[0])+"</h2><p>"+txt+"</p><button class='btn go'>Okay, I'm going! 🌞</button><button class='btn'>One more level, then I'll go</button></div>";
+    document.body.appendChild(o);try{sfx.good();}catch(e){}
+    [].forEach.call(o.querySelectorAll("button"),function(x){x.addEventListener("click",function(){o.remove();});});}
+  var due=false,n=0;
+  function idle(){var st=document.getElementById("stage");return !G||!G.alive||G.done||!st||st.hidden;}
+  setInterval(function(){if(due&&idle()&&!document.hidden&&!document.querySelector(".brk")){due=false;later2();}
+    if(++n%(STEP/3)!==0||document.hidden)return;t+=STEP;if(t>=EVERY){t=0;due=true;}store();},3000);
+  function later2(){setTimeout(show,G&&G.done?1800:300);}
+  window.__brk=show;window.__brkDue=function(){due=true;};
+})();
+
 var WORLDS=[
-  {id:"sparkle",name:"Sparkle Studio",em:"✨",pat:"✨💖",bg:"linear-gradient(135deg,#ff8fb1,#b07cff)",body:"linear-gradient(180deg,#3a1450 0%,#7a2f7a 55%,#c2559a 100%)",games:["nails","unicorn","cupcake","bracelet","snowman","draw"],bl:"nails, unicorns, cupcakes"},
-  {id:"woods",name:"Wild Woods",em:"🌲",pat:"🌲🍂",bg:"linear-gradient(135deg,#7a9a3e,#3e5420)",body:"linear-gradient(180deg,#1a2410 0%,#2f4419 55%,#55702c 100%)",games:["wildlife","deer","targets","tracks","turkey","trailcam"],bl:"wildlife, deer, targets"},
-  {id:"snake",name:"Snake Zone",em:"🐍",pat:"🐍〰️",bg:"linear-gradient(135deg,#2fb36d,#0d5a3a)",body:"linear-gradient(180deg,#06241a 0%,#0d4a32 55%,#1f7a4e 100%)",games:["snake","snakequiz","charmer","ladders"],bl:"grow, guess, charm"},
-  {id:"christmas",name:"Christmas",em:"🎄",pat:"❄️🎄",bg:"linear-gradient(135deg,#e8424f,#a81f30)",body:"linear-gradient(180deg,#0b1834 0%,#0e1f3d 45%,#24477a 100%)",games:["catch","match","fly","whack","keys","balloon"],bl:"gifts, elves, sleigh"},
-  {id:"brain",name:"Brain Games",em:"🧠",pat:"🧠💡",bg:"linear-gradient(135deg,#4b8cff,#283f9a)",body:"linear-gradient(180deg,#0b1834 0%,#1a2f6a 55%,#3a55b0 100%)",games:["math","word","code","simon","slide"],bl:"math, words, puzzles"},
-  {id:"together",name:"Play Together",em:"👯",pat:"👯🎲",bg:"linear-gradient(135deg,#ffc94a,#ff8f3d)",body:"linear-gradient(180deg,#2a1636 0%,#6a2f3a 55%,#c2662f 100%)",games:["race","quiz","ladders","spin","freeze"],bl:"race, quiz, dance"}];
+  {id:"sparkle",name:"Sparkle Studio",em:"✨",pat:"✨💖",bg:"linear-gradient(135deg,#ff8fb1,#b07cff)",body:"linear-gradient(180deg,#3a1450 0%,#7a2f7a 55%,#c2559a 100%)",games:["nails","unicorn","cupcake","bracelet","snowman","draw","colormix","pattern","jewels","boutique","outfit"],bl:"nails, unicorns, cupcakes"},
+  {id:"woods",name:"Wild Woods",em:"🌲",pat:"🌲🍂",bg:"linear-gradient(135deg,#7a9a3e,#3e5420)",body:"linear-gradient(180deg,#1a2410 0%,#2f4419 55%,#55702c 100%)",games:["wildlife","deer","targets","tracks","turkey","trailcam","fishing","archery","birds","compass","survival"],bl:"wildlife, deer, targets"},
+  {id:"snake",name:"Snake Zone",em:"🐍",pat:"🐍〰️",bg:"linear-gradient(135deg,#2fb36d,#0d5a3a)",body:"linear-gradient(180deg,#06241a 0%,#0d4a32 55%,#1f7a4e 100%)",games:["snake","snakequiz","charmer","ladders","smaze","venom","rattle","sword","lineup"],bl:"grow, guess, charm"},
+  {id:"christmas",name:"Christmas",em:"🎄",pat:"❄️🎄",bg:"linear-gradient(135deg,#e8424f,#a81f30)",body:"linear-gradient(180deg,#0b1834 0%,#0e1f3d 45%,#24477a 100%)",games:["catch","match","fly","whack","keys","balloon","stack","rrun","sball","lights","wsearch"],bl:"gifts, elves, sleigh"},
+  {id:"brain",name:"Brain Games",em:"🧠",pat:"🧠💡",bg:"linear-gradient(135deg,#4b8cff,#283f9a)",body:"linear-gradient(180deg,#0b1834 0%,#1a2f6a 55%,#3a55b0 100%)",games:["math","word","code","simon","slide","sudoku","memgrid","picross","clock","money"],bl:"math, words, puzzles"},
+  {id:"together",name:"Play Together",em:"👯",pat:"👯🎲",bg:"linear-gradient(135deg,#ffc94a,#ff8f3d)",body:"linear-gradient(180deg,#2a1636 0%,#6a2f3a 55%,#c2662f 100%)",games:["race","quiz","ladders","spin","freeze","four","dots","drawg","buzz","membattle"],bl:"race, quiz, dance"}];
 var world=null;
 function byId(id){for(var i=0;i<GAMES.length;i++)if(GAMES[i].id===id)return GAMES[i];return null;}
 function renderHome(){var box=$("#worlds");box.innerHTML="";
-  WORLDS.forEach(function(w){var b=h("button","world","<div class='pat'>"+new Array(16).join(w.pat)+"</div><span class='we'>"+w.em+"</span><span class='wn'>"+w.name+"</span>"+(w.id==="woods"?"<span class='wnew'>NEW GAME</span>":"")+"<span class='wd'>"+w.games.length+" games · "+w.bl+"</span>");
+  WORLDS.forEach(function(w){var b=h("button","world","<div class='pat'>"+new Array(16).join(w.pat)+"</div><span class='we'>"+w.em+"</span><span class='wn'>"+w.name+"</span>"+"<span class='wnew'>+5 NEW</span>"+"<span class='wd'>"+w.games.length+" games · "+w.bl+"</span>");
     b.style.setProperty("--wbg",w.bg);b.addEventListener("click",function(){sfx.pop();openWorld(w);});box.appendChild(b);});}
 function openWorld(w){world=w;LS.set("cg-world",w.id);$("#home").hidden=true;$("#wview").hidden=false;$("#wtitle").innerHTML=w.em+" "+w.name;
   document.body.classList.add("inworld");document.body.style.setProperty("--wbody",w.body);
