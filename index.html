@@ -624,8 +624,10 @@ body{margin:0}
 #sheet .card input::placeholder{color:#8a7f99}
 #main .gt-games{padding-bottom:22px}
 #main .gt-games .wm{gap:10px;margin-top:12px}
-#main .gt-games .wm span{font-size:clamp(14px,1.9vw,20px);background:rgba(255,255,255,.2);box-shadow:inset 0 -4px 0 rgba(0,0,0,.12);min-height:84px;cursor:pointer}
-#main .gt-games .wm i{font-size:clamp(32px,5vh,56px)}
+#main .gt-games .wm span{font-size:clamp(14px,1.9vw,20px);background:rgba(255,255,255,.2);box-shadow:inset 0 -4px 0 rgba(0,0,0,.12);min-height:0;overflow:hidden;cursor:pointer}
+#main .gt-games .wm i{font-size:clamp(24px,4.6vh,56px);margin-bottom:2px}
+#main .gt-games{overflow:hidden}
+#main .gt-games .em{font-size:clamp(34px,7vh,60px)}
 #main .gt-games .wm span:active{transform:scale(.95)}
 .edrow{flex-wrap:wrap}
 .bdrow{flex-basis:100%;display:flex;align-items:center;gap:8px;font-weight:800;font-size:15px;padding-left:4px}
@@ -647,6 +649,9 @@ body{margin:0}
 .hst,.hst td,.hst th,.hst td:first-child{color:#2b2140}
 .mh .pill{white-space:nowrap}
 #sheet #setupIn{padding:10px 12px;border-radius:12px;font:700 16px var(--body)}
+#main .gt-games .wm{grid-template-columns:repeat(3,1fr)}
+#main .gt-games .wm span{font-size:clamp(12px,2.4vh,20px);white-space:nowrap;padding:4px 2px}
+@media (orientation:landscape) and (max-height:640px){#main .gt-games .wm{gap:6px;margin-top:6px}#main .gt-games{padding-bottom:16px}#main .gt-games .wm i{font-size:clamp(20px,4.2vh,40px)}}
 </style>
 
 <canvas id="snow"></canvas>
@@ -2979,7 +2984,7 @@ function checkUpdate(btn){btn.disabled=true;fetch("version.json?t="+Date.now(),{
   else if(j)toast("You have the newest version ✓");else toast("Couldn't check right now");}).catch(function(){btn.disabled=false;toast("Couldn't check right now");});}
 
 /* ================= "new version" banner ================= */
-var APPV="2026.11.26f";
+var APPV="2026.11.26g";
 function verCheck(){if(!/^https?:$/.test(location.protocol)||/claude|localhost|127\.0/.test(location.hostname))return;
   fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.json():null;}).then(function(j){
     if(!j||!j.v||j.v===APPV||document.querySelector(".upd"))return;var b=h("button","upd","✨ New version! Tap to update");
