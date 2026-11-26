@@ -589,6 +589,39 @@ body{margin:0}
 .brk .bub{position:relative;background:#fff;border-radius:18px;padding:12px 14px;box-shadow:0 3px 10px rgba(0,0,0,.15)}
 .brk .bub:before{content:"";position:absolute;left:-12px;top:30px;border:8px solid transparent;border-right:12px solid #fff;border-left:0}
 .brk .bub p{margin:0;font-size:18px}.brk .bub small{display:block;font-weight:900;color:#c8202f;margin-bottom:4px;font-size:14px}
+/* cloud: update banner, favorites, crown, message board */
+.upd{position:fixed;left:50%;transform:translateX(-50%);bottom:18px;z-index:9998;background:#ff3d7f;color:#fff;font:900 18px var(--body);border-radius:999px;padding:14px 24px;box-shadow:0 6px 24px rgba(0,0,0,.4),0 0 18px rgba(255,61,127,.7);animation:npulse 1.6s ease-in-out infinite;max-width:calc(100vw - 32px)}
+#favTile{display:flex;flex-direction:column;position:relative;text-align:left;overflow:hidden}
+#favTile .fvsw{position:absolute;right:10px;top:10px;background:rgba(255,255,255,.6);color:var(--ink);border-radius:999px;padding:4px 10px;font:900 14px var(--body);display:flex;align-items:center;gap:4px}
+#favTile .fvsw .avimg,#favTile .fvsw img{width:22px;height:22px;border-radius:50%;object-fit:cover}
+#favTile .fvl{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px;flex:1;min-height:0;align-content:start}
+#favTile .fvg{background:rgba(255,255,255,.82);color:var(--ink);border-radius:12px;padding:6px 8px;font:800 13px var(--body);text-align:left;display:flex;align-items:center;gap:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-height:36px}
+#favTile .fvg i{font-style:normal;font-size:20px}
+#favTile .s{margin-top:auto}
+.tile .tag+.fvb{}
+.crown{display:block;font-size:13px;font-weight:800;margin-top:6px;opacity:.95}
+#joke.msgmode .q{font-size:18px}
+.mnew{background:#ff3d7f;color:#fff;border-radius:999px;padding:1px 8px;font-size:12px;letter-spacing:1px;vertical-align:middle}
+.brk.msgs .card{max-height:88vh;overflow:auto;text-align:left}
+.mpost{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.mpost input,.mpost textarea{font:700 17px var(--body);padding:10px;border-radius:12px;border:2px solid rgba(0,0,0,.15);width:100%;box-sizing:border-box}
+.mlist{display:flex;flex-direction:column;gap:10px;margin:8px 0 14px}
+.mitem{background:rgba(255,255,255,.75);border-radius:16px;padding:12px 14px;position:relative}
+.mitem p{margin:0 0 4px;font-size:18px;line-height:1.35;white-space:pre-wrap}
+.mitem small{opacity:.7}
+.mdel{position:absolute;right:10px;bottom:8px;font:800 12px var(--body);color:#c8202f;background:none}
+.fmme .n2chip{display:flex;align-items:center;gap:6px}
+.fmme .n2chip img{width:26px;height:26px;border-radius:50%;object-fit:cover}
+.mpost input,.mpost textarea{background:#fff!important;color:var(--ink)!important}
+#main #favTile .s{display:block!important;font-size:14px;opacity:.85}
+.tile .fvb{position:absolute;right:8px;bottom:8px;width:46px;height:46px;border-radius:50%;font-size:28px;line-height:46px;text-align:center;background:rgba(255,255,255,.6);color:#7a6a8a;padding:0;z-index:2}
+.tile .fvb.on{color:#f5a400;background:#fff3c4}
+.tile.locked{filter:grayscale(.85);opacity:.72}
+.tile.locked .em{opacity:.5}
+.tile .lk{position:absolute;left:0;right:0;bottom:0;background:rgba(0,0,0,.55);color:#fff;font:800 14px var(--body);padding:8px 12px}
+.unl{margin-top:8px;font-weight:900;color:#2a7a2a}
+#sheet .card input{background:#fff;color:#2b2140;border:2px solid rgba(0,0,0,.18)}
+#sheet .card input::placeholder{color:#8a7f99}
 </style>
 
 <canvas id="snow"></canvas>
@@ -630,7 +663,7 @@ body{margin:0}
     </a>
     <button class="gt gt-joke" id="joke" style="--g:#7aa7ff"><span class="k">Joke of the day</span><span class="q" id="jokeQ"></span><span class="s" id="jokeA">Tap for the answer</span></button>
     <button class="gt gt-badges" id="badgesTile" style="--g:#ffd36e"><span class="k">🏆 Badge board</span><span class="bstrip" id="bstrip"></span><span class="s">Level up to unlock all 8 photo badges. Tap to see who's next!</span></button>
-    <button class="gt gt-wild" id="wildTile" style="--g:#4fe0a8"><span class="newtag">NEW</span><span class="k">New game</span><span class="em">🌎</span><span class="h">Name That Wildlife</span><span class="s">Spin the globe, pick a place</span></button>
+    <div class="gt gt-wild gt-fav" id="favTile" style="--g:#ffd23f"></div>
     <button class="gt gt-stars" id="starsTile" style="--g:#ffc94a"><span class="k">Star board</span><span class="srow2" id="srow"></span></button>
   </div>
 </div>
@@ -719,7 +752,7 @@ function cropper(i,im,done){
   if(window.PointerEvent){cv.addEventListener("pointerdown",dn);window.addEventListener("pointermove",mv);window.addEventListener("pointerup",up);}
   else{cv.addEventListener("touchstart",dn,{passive:false});cv.addEventListener("touchmove",mv,{passive:false});cv.addEventListener("touchend",up);cv.addEventListener("mousedown",dn);window.addEventListener("mousemove",mv);window.addEventListener("mouseup",up);}
   function close(){window.removeEventListener("pointermove",mv);window.removeEventListener("pointerup",up);window.removeEventListener("mousemove",mv);window.removeEventListener("mouseup",up);o.remove();}
-  bs[0].addEventListener("click",function(){var c=document.createElement("canvas");c.width=c.height=200;draw(c.getContext("2d"),200);PICS[i]=c.toDataURL("image/jpeg",0.82);LS.set("cg-pics",PICS);close();sfx.good();if(done)done();});
+  bs[0].addEventListener("click",function(){var c=document.createElement("canvas");c.width=c.height=200;draw(c.getContext("2d"),200);PICS[i]=c.toDataURL("image/jpeg",0.82);LS.set("cg-pics",PICS);PICT[i]=Date.now();LS.set("cg-pict",PICT);save();close();sfx.good();if(done)done();});
   bs[1].addEventListener("click",close);}
  if(!(cur>=0&&cur<3))cur=0;
 function save(){LS.set("cg-players",players);LS.set("cg-cur",cur);}
@@ -750,7 +783,7 @@ window.addEventListener("hashchange",function(){if((location.hash||"").indexOf("
 var BADGES=[["f1",1,"Rookie"],["f3",3,"Rising Star"],["f8",5,"Sharpshooter"],["f2",8,"Trailblazer"],["f4",12,"Champion"],["f5",16,"Legend"],["f7",20,"Hall of Famer"],["f6",25,"The GOAT 🐐"]];
 function badgeHTML(b,on,big){return "<span class='bdg"+(on?" on":"")+(big?" big":"")+"'>"+"<span class='bi'><img src='"+bsrc(b)+"' alt=''>"+(on?"":"<i>🔒</i>")+"</span>"+(big?"":"<small>"+(on?b[2]:b[2]+"<br>"+b[1]+" lv-up"+(b[1]>1?"s":""))+"</small>")+"</span>";}
 function badgesFor(i){var t=totalLv(i);return BADGES.filter(function(b){return t>=b[1];}).length;}
-function totalLv(i){var t=0;for(var k in LV)if(LV.hasOwnProperty(k)&&LV[k][i]>1)t+=LV[k][i]-1;return t;}
+function totalLv(i){var t=(players[i]&&players[i].bx)||0;for(var k in LV)if(LV.hasOwnProperty(k)&&LV[k][i]>1)t+=LV[k][i]-1;return t;}
 function curD(){return G&&G.D?G.D:(G?G.level:1)||1;}
 function P(a){var d=curD(),v;if(d<=3){var k=Math.min(1,Math.floor(d-1)),t=d-1-k;k=Math.min(k,1);t=d-1-k;v=a[k]+(a[k+1]-a[k])*Math.min(1,t);}else v=a[2]+(a[2]-a[1])*0.5*(d-3);
   var ints=a.every(function(x){return x===Math.round(x);});return ints?Math.round(v):v;}
@@ -817,7 +850,7 @@ function finish(o){
   else if(s>0)players[cur].stars+=s;
   save();var up="",lvUp=false;
   if(G.g.levels&&!o.award&&!o.noStars){var lv=lvOf(G.g.id,cur);
-    if(s>=2&&lv<MAXLV){lvUp=true;var nb0=badgesFor(cur);setLv(G.g.id,cur,lv+1);var nb1=badgesFor(cur);up="<div class='lvup'>⬆️ "+esc(players[cur].name)+" is now <b>Level "+(lv+1)+"</b></div>";
+    if(s>=2&&lv<MAXLV){lvUp=true;var nb0=badgesFor(cur),U0=unlockedN();if(leadLv(cur)-totalLv(cur)>1){players[cur].bx=(players[cur].bx||0)+1;}setLv(G.g.id,cur,lv+1);var nb1=badgesFor(cur),U1=unlockedN();up="<div class='lvup'>⬆️ "+esc(players[cur].name)+" is now <b>Level "+(lv+1)+"</b></div>";if(U1>U0){var ng=byId(ADV[U1-1]);if(ng)up+="<div class='unl'>🔓 New game unlocked for all three sisters: "+ng.em+" "+esc(ng.name)+"!</div>";}
       if(nb1>nb0){up+="<div class='newbdg'>"+badgeHTML(BADGES[nb1-1],true,true)+"<span>"+BADGES[nb1-1][2]+"!<br><small>New badge "+nb1+" of "+BADGES.length+"</small></span></div>";}if(!o.title)o.title="Level up!";}
     else if(s>=2)up="<div class='lvup'>👑 Top level! Level "+MAXLV+"</div>";
     else up="<div class='lvup dim'>Get 2 stars to reach Level "+(lv+1)+"</div>";}
@@ -2828,13 +2861,120 @@ function byId(id){for(var i=0;i<GAMES.length;i++)if(GAMES[i].id===id)return GAME
 function renderHome(){var box=$("#worlds");box.innerHTML="";
   WORLDS.forEach(function(w){var b=h("button","world","<div class='pat'>"+new Array(16).join(w.pat)+"</div><span class='we'>"+w.em+"</span><span class='wn'>"+w.name+"</span>"+"<span class='wnew'>+5 NEW</span>"+"<span class='wd'>"+w.games.length+" games · "+w.bl+"</span>");
     b.style.setProperty("--wbg",w.bg);b.addEventListener("click",function(){sfx.pop();openWorld(w);});box.appendChild(b);});}
+/* ================= family sync (Firestore REST). The family code lives only on the tablets and the private QR sheet, never in this repo. ================= */
+var FB={key:"AIzaSyCxbZEqlOZmUv7RLlXW-Im62fKRa7I_5D8",proj:"arizona-girls"};
+var FAM=LS.get("cg-fam",""),ME=LS.get("cg-me",-1),ADMIN=LS.get("cg-admin",false),MSGS=LS.get("cg-msgs",[])||[],PICT=LS.get("cg-pict",{})||{};
+var CLOUD={ok:false,busy:false,last:0,err:"",dirty:false};
+players.forEach(function(p){if(!p.fav)p.fav=[];if(!p.wk||typeof p.wk!=="object")p.wk={};});
+function famNorm(c){return String(c||"").toUpperCase().replace(/[^A-Z0-9]/g,"");}
+function famShow(c){return (c||"").replace(/(.{4})(?=.)/g,"$1-");}
+function famDoc(){return "fam-"+FAM+"-arizona-girls-sync";}
+(function(){var hs=location.hash||"",m=hs.match(/[#&]fam=([A-Za-z0-9-]+)/);if(!m)return;var c=famNorm(m[1]);if(c.length>=12){FAM=c;LS.set("cg-fam",FAM);}
+  var mm=hs.match(/[#&]me=(\d)/);if(mm&&+mm[1]<3){ME=+mm[1];LS.set("cg-me",ME);cur=ME;LS.set("cg-cur",cur);}
+  if(/[#&]admin=1/.test(hs)){ADMIN=true;LS.set("cg-admin",true);}})();
+if(ME>=0&&ME<3)cur=ME;
+function fsURL(q){return "https://firestore.googleapis.com/v1/projects/"+FB.proj+"/databases/(default)/documents/families/"+famDoc()+"?key="+FB.key+(q||"");}
+function fsGet(){return fetch(fsURL(),{cache:"no-store"}).then(function(r){if(r.status===404)return {};if(!r.ok)throw new Error("Could not reach the family record ("+r.status+")");
+  return r.json().then(function(j){var o={},f=j.fields||{};for(var k in f)if(f.hasOwnProperty(k)){try{o[k]=JSON.parse(f[k].stringValue);}catch(e){}}return o;});});}
+function fsPut(obj){var keys=Object.keys(obj);if(!keys.length)return Promise.resolve();var f={};keys.forEach(function(k){f[k]={stringValue:JSON.stringify(obj[k])};});
+  return fetch(fsURL(keys.map(function(k){return "&updateMask.fieldPaths="+k;}).join("")),{method:"PATCH",headers:{"Content-Type":"application/json"},body:JSON.stringify({fields:f})}).then(function(r){if(!r.ok)throw new Error("Could not save ("+r.status+")");});}
+function wkKey(d){d=d||new Date();var m=new Date(d.getFullYear(),d.getMonth(),d.getDate()-((d.getDay()+6)%7));return m.getFullYear()+"-"+("0"+(m.getMonth()+1)).slice(-2)+"-"+("0"+m.getDate()).slice(-2);}
+function bumpWk(i,n){var p=players[i],k=wkKey();p.wk[k]=(p.wk[k]||0)+n;var keep=Object.keys(p.wk).sort().slice(-8),o={};keep.forEach(function(x){o[x]=p.wk[x];});p.wk=o;}
+function champ(key){var c=players.map(function(p){return (p.wk&&p.wk[key])||0;}),mx=Math.max.apply(null,c);return mx<1?null:{who:c.map(function(v,i){return v===mx?i:-1;}).filter(function(i){return i>=0;}),n:mx};}
+function lastWk(){var d=new Date();d.setDate(d.getDate()-7);return wkKey(d);}
+var _setLv0=setLv;setLv=function(id,i,v){var o=lvOf(id,i);_setLv0(id,i,v);if(v>o)bumpWk(i,v-o);save();};
+var _save0=save;save=function(){_save0();CLOUD.dirty=true;};
+function recP(i){var p=players[i],lv={};for(var id in LV)if(LV.hasOwnProperty(id)&&LV[id][i]>1)lv[id]=LV[id][i];
+  return {n:p.name,a:p.age,av:p.av,nt:p.nt||0,st:p.stars||0,lv:lv,fav:p.fav||[],ft:p.ft||0,wk:p.wk||{},pic:PICS[i]||null,pt:PICT[i]||0,bx:p.bx||0};}
+function mergeP(i,r){var p=players[i];
+  if((r.nt||0)>(p.nt||0)){if(r.n)p.name=String(r.n).slice(0,16);if(r.a)p.age=+r.a;if(r.av)p.av=r.av;p.nt=r.nt;}
+  if((r.st||0)>(p.stars||0))p.stars=r.st;
+  if((r.bx||0)>(p.bx||0))p.bx=r.bx;
+  if(r.lv)for(var id in r.lv)if(r.lv.hasOwnProperty(id)&&r.lv[id]>lvOf(id,i)){if(!LV[id])LV[id]={};LV[id][i]=Math.min(MAXLV,+r.lv[id]);}
+  if((r.ft||0)>(p.ft||0)){p.fav=(r.fav||[]).slice(0,12);p.ft=r.ft;}
+  if(r.wk)for(var k in r.wk)if(r.wk.hasOwnProperty(k)&&(r.wk[k]||0)>(p.wk[k]||0))p.wk[k]=r.wk[k];
+  if((r.pt||0)>(PICT[i]||0)){if(r.pic)PICS[i]=r.pic;else delete PICS[i];PICT[i]=r.pt;}}
+function cloudSync(){if(!FAM||CLOUD.busy)return Promise.resolve();CLOUD.busy=true;CLOUD.dirty=false;
+  return fsGet().then(function(R){var out={};
+    [0,1,2].forEach(function(i){var r=R["p"+i];if(r)mergeP(i,r);var l=recP(i);if(!r||JSON.stringify(r)!==JSON.stringify(l))out["p"+i]=l;});
+    if(R.faces){var ch=false;for(var k in R.faces)if(R.faces.hasOwnProperty(k)&&FACES[k]!==R.faces[k]){FACES[k]=R.faces[k];ch=true;}if(ch)LS.set("cg-faces",FACES);}
+    else if(Object.keys(FACES).length)out.faces=FACES;
+    if(R.msgs)MSGS=R.msgs;LS.set("cg-msgs",MSGS);
+    _save0();LS.set("cg-lv",LV);LS.set("cg-pics",PICS);LS.set("cg-pict",PICT);
+    CLOUD.ok=true;CLOUD.err="";CLOUD.last=Date.now();cloudRender();return fsPut(out);
+  }).catch(function(e){CLOUD.ok=false;CLOUD.err=String(e&&e.message||e);}).then(function(){CLOUD.busy=false;CLOUD.last=Date.now();});}
+function cloudRender(){try{if(!$("#main").hidden){renderStars();}}catch(e){}}
+setInterval(function(){if(document.hidden||!FAM)return;var age=Date.now()-CLOUD.last;if((CLOUD.dirty&&age>4000)||age>180000)cloudSync();},5000);
+document.addEventListener("visibilitychange",function(){if(!document.hidden&&FAM&&Date.now()-CLOUD.last>15000)cloudSync();});
+
+
+/* ================= unlocks and quiet catch-up (John, 2026-11-26) =================
+   The 31 original games are always open. The 30 harder ones unlock one at a time, about one per 2 level-ups,
+   counting all three sisters together, so an unlock by anyone opens it for everyone.
+   Catch-up: a sister more than one level-up behind the leader gets one hidden bonus level-up each time she levels up.
+   The bonus only counts toward badges and unlocks; each game's own difficulty level is never changed. */
+var ADV=["colormix", "fishing", "smaze", "stack", "sudoku", "four", "pattern", "archery", "venom", "rrun", "memgrid", "dots", "jewels", "birds", "rattle", "sball", "picross", "drawg", "boutique", "compass", "sword", "lights", "clock", "buzz", "outfit", "survival", "lineup", "wsearch", "money", "membattle"];
+function famLv(){return totalLv(0)+totalLv(1)+totalLv(2);}
+function unlockedN(){return Math.min(ADV.length,Math.floor(famLv()/2));}
+function isLocked(id){var k=ADV.indexOf(id);return k>=0&&k>=unlockedN();}
+function lvToUnlock(id){var k=ADV.indexOf(id);return Math.max(1,(k+1)*2-famLv());}
+function leadLv(i){var m=0;[0,1,2].forEach(function(j){if(j!==i)m=Math.max(m,totalLv(j));});return m;}
+
+/* ================= "new version" banner ================= */
+var APPV="2026.11.26c";
+function verCheck(){if(!/^https?:$/.test(location.protocol)||/claude|localhost|127\.0/.test(location.hostname))return;
+  fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.json():null;}).then(function(j){
+    if(!j||!j.v||j.v===APPV||document.querySelector(".upd"))return;var b=h("button","upd","✨ New version! Tap to update");
+    b.addEventListener("click",function(){location.replace(location.pathname+"?v="+encodeURIComponent(j.v)+location.hash);});document.body.appendChild(b);}).catch(function(){});}
+setInterval(function(){if(!document.hidden)verCheck();},15*60000);
+document.addEventListener("visibilitychange",function(){if(!document.hidden)verCheck();});
+
+/* ================= favorites, champion crown, message board ================= */
+function favWho(){return ME>=0&&ME<3?ME:cur;}
+function worldOf(id){for(var i=0;i<WORLDS.length;i++)if(WORLDS[i].games.indexOf(id)>=0)return WORLDS[i];return null;}
+function toggleFav(i,id){var p=players[i],k=p.fav.indexOf(id);if(k>=0)p.fav.splice(k,1);else{p.fav.unshift(id);p.fav=p.fav.slice(0,12);}p.ft=Date.now();save();}
+function renderFav(){var t=$("#favTile");if(!t)return;var i=favWho(),p=players[i],list=p.fav.map(byId).filter(function(g){return g&&!isLocked(g.id);}).slice(0,6);
+  t.innerHTML="<span class='k'>⭐ "+esc(p.name)+"'s favorites</span><button class='fvsw' aria-label='Switch sister'>"+AVH(p)+" ⇄</button>"+
+    (list.length?"<span class='fvl'>"+list.map(function(g){return "<button class='fvg' data-id='"+g.id+"'><i>"+g.em+"</i>"+esc(g.name)+"</button>";}).join("")+"</span>":"<span class='s'>Tap the ☆ on any game to pin it here.</span>");
+  t.querySelector(".fvsw").addEventListener("click",function(){if(ME>=0){ME=-1;LS.set("cg-me",-1);}cur=(cur+1)%3;LS.set("cg-cur",cur);sfx.tick();renderFav();});
+  [].forEach.call(t.querySelectorAll(".fvg"),function(b){b.addEventListener("click",function(){var g=byId(b.dataset.id);if(!g)return;sfx.pop();world=worldOf(g.id);cur=i;openGame(g);});});}
+function crownLine(){var c=champ(wkKey()),l=c?null:champ(lastWk());
+  if(c)return "👑 Sister Champion this week: "+c.who.map(function(i){return esc(players[i].name);}).join(" & ")+" ("+c.n+" level-up"+(c.n>1?"s":"")+")";
+  if(l)return "👑 Last week's champion: "+l.who.map(function(i){return esc(players[i].name);}).join(" & ")+". New week, anyone's crown!";
+  return "👑 Level up this week to win the Sister Champion crown!";}
+function isChamp(i){var c=champ(wkKey());return !!(c&&c.who.indexOf(i)>=0);}
+function ago(t){var s=(Date.now()-t)/1000;return s<3600?Math.max(1,Math.round(s/60))+" min ago":s<86400?Math.round(s/3600)+" hr ago":Math.round(s/86400)+" day"+(s<172800?"":"s")+" ago";}
+function renderMsg(){var t=$("#joke");if(!t)return;var m=MSGS[0];t.classList.toggle("msgmode",!!(m||ADMIN));
+  if(m){var seen=LS.get("cg-msg-seen",0);$("#jokeQ").innerHTML=(m.t>seen?"<b class='mnew'>NEW</b> ":"")+esc(m.text.length>90?m.text.slice(0,88)+"…":m.text);$("#jokeA").textContent="From "+m.from+" · "+ago(m.t)+" · Tap to read";t.querySelector(".k").textContent="📬 Message board";}
+  else if(ADMIN){$("#jokeQ").textContent="No messages yet.";$("#jokeA").textContent="Tap to post one for the girls";t.querySelector(".k").textContent="📬 Message board";}}
+function openMsgs(){LS.set("cg-msg-seen",Date.now());var o=h("div","brk msgs");
+  function draw(){o.innerHTML="<div class='card'><h2>📬 Message board</h2>"+(ADMIN?"<div class='mpost'><input id='mFrom' maxlength='24' placeholder='From (like Grandpa)' value='"+esc(LS.get("cg-from",""))+"'><textarea id='mText' maxlength='400' rows='3' placeholder='Write a message for the girls'></textarea><button class='btn go' id='mGo'>Post</button><div class='n2small' id='mErr' style='color:#c8202f'></div></div>":"")+
+    "<div class='mlist'>"+(MSGS.length?MSGS.map(function(m,k){return "<div class='mitem'><p>"+esc(m.text)+"</p><small>From "+esc(m.from)+" · "+ago(m.t)+"</small>"+(ADMIN?"<button class='mdel' data-k='"+k+"'>Delete</button>":"")+"</div>";}).join(""):"<p>No messages yet.</p>")+"</div><button class='btn' id='mClose'>Close</button></div>";
+    o.querySelector("#mClose").addEventListener("click",function(){o.remove();renderMsg();});
+    if(ADMIN){o.querySelector("#mGo").addEventListener("click",function(){var fr=o.querySelector("#mFrom").value.trim().slice(0,24)||"Family",tx=o.querySelector("#mText").value.trim().slice(0,400);if(!tx)return;LS.set("cg-from",fr);var btn=this;btn.disabled=true;
+        fsGet().then(function(R){var L=[{t:Date.now(),from:fr,text:tx}].concat(R.msgs||[]).slice(0,30);return fsPut({msgs:L}).then(function(){MSGS=L;LS.set("cg-msgs",MSGS);sfx.good();draw();});}).catch(function(e){btn.disabled=false;o.querySelector("#mErr").textContent="Couldn't post: "+(e.message||e);});});
+      [].forEach.call(o.querySelectorAll(".mdel"),function(b){b.addEventListener("click",function(){var k=+b.dataset.k;fsGet().then(function(R){var L=(R.msgs||[]).filter(function(m){return !(MSGS[k]&&m.t===MSGS[k].t);});return fsPut({msgs:L}).then(function(){MSGS=L;LS.set("cg-msgs",MSGS);draw();});}).catch(function(){});});});}}
+  draw();document.body.appendChild(o);}
+/* family sync section in the Stars & names sheet */
+function famPanel(box){function draw(){if(FAM){box.innerHTML="<p style='margin-top:14px'><b>☁️ Family sync is on.</b> Levels, stars, favorites and profile pictures sync between the sisters' tablets.<br><small>Family code "+famShow(FAM)+" · "+(CLOUD.ok?"synced "+ago(CLOUD.last):CLOUD.err?esc(CLOUD.err):"connecting…")+"</small></p><p style='font-size:15px;margin:6px 0'>Whose tablet is this?</p><div class='n2row fmme'>"+players.map(function(p,i){return "<button class='n2chip"+(ME===i?" on":"")+"' data-i='"+i+"'>"+AVH(p)+" "+esc(p.name)+"</button>";}).join("")+"<button class='n2chip"+(ME<0?" on":"")+"' data-i='-1'>Shared</button></div><button class='btn' id='fmSync'>Sync now</button>";
+      [].forEach.call(box.querySelectorAll(".fmme button"),function(b){b.addEventListener("click",function(){ME=+b.dataset.i;LS.set("cg-me",ME);if(ME>=0){cur=ME;LS.set("cg-cur",cur);}draw();});});
+      box.querySelector("#fmSync").addEventListener("click",function(){var b=this;b.textContent="Syncing…";cloudSync().then(draw);});}
+    else{box.innerHTML="<p style='margin-top:14px'><b>☁️ Family sync</b><br><small>Got a family code from the setup sheet? Type it here so this tablet syncs with your sisters.</small></p><div class='n2row'><input id='fmIn' placeholder='XXXX-XXXX-XXXX' maxlength='16' style='flex:1;min-width:0;font:800 20px var(--body);padding:10px;border-radius:12px;text-transform:uppercase'><button class='btn go' id='fmGo'>Join</button></div><div class='n2small' id='fmErr'></div>";
+      box.querySelector("#fmGo").addEventListener("click",function(){var c=famNorm(box.querySelector("#fmIn").value);if(c.length!==12){box.querySelector("#fmErr").textContent="The code has 12 letters and numbers.";return;}
+        FAM=c;var b=this;b.textContent="Checking…";fsGet().then(function(R){if(!R.p0){FAM="";b.textContent="Join";box.querySelector("#fmErr").textContent="That code didn't match. Check it and try again.";return;}LS.set("cg-fam",FAM);return cloudSync().then(draw);}).catch(function(e){FAM="";b.textContent="Join";box.querySelector("#fmErr").textContent=String(e.message||e);});});}}
+  draw();}
+
 function openWorld(w){world=w;LS.set("cg-world",w.id);$("#home").hidden=true;$("#wview").hidden=false;$("#wtitle").innerHTML=w.em+" "+w.name;
   document.body.classList.add("inworld");document.body.style.setProperty("--wbody",w.body);
   var box=$("#tiles");box.innerHTML="";
   w.games.forEach(function(id){var g=byId(id);if(!g)return;
     var b=h("button","tile","<span class='tag"+(g.both?" both":"")+"'>"+(g.both?"Together":g.id==="wildlife"?"NEW · Level up":g.levels?"Level up":"Free play")+"</span><span class='em'>"+g.em+"</span><span class='nm'>"+g.name+"</span><span class='bl'>"+g.bl+"</span>"+
       (g.levels?"<span class='tlv'>"+players.map(function(p,i){return "<i style='background:"+COLORS[i]+"'>"+AVH(p)+" "+lvOf(g.id,i)+"</i>";}).join("")+"</span>":""));
-    b.style.setProperty("--tc",g.tc);b.addEventListener("click",function(){sfx.pop();openGame(g);});box.appendChild(b);});
+    b.style.setProperty("--tc",g.tc);
+    if(isLocked(id)){b.classList.add("locked");var n=lvToUnlock(id);b.appendChild(h("span","lk","🔒 Unlocks after "+n+" more level-up"+(n>1?"s":"")+" (any sister)"));b.addEventListener("click",function(){sfx.tick();});box.appendChild(b);return;}
+    b.addEventListener("click",function(){sfx.pop();openGame(g);});
+    var fw=favWho(),fb=h("button","fvb"+(players[fw].fav.indexOf(id)>=0?" on":""),players[fw].fav.indexOf(id)>=0?"★":"☆");fb.setAttribute("aria-label","Favorite");
+    fb.addEventListener("click",function(e){e.stopPropagation();var w=favWho();toggleFav(w,id);var on=players[w].fav.indexOf(id)>=0;fb.textContent=on?"★":"☆";fb.classList.toggle("on",on);sfx.tick();});b.appendChild(fb);box.appendChild(b);});
   scrollTo(0,0);}
 function goHome(){world=null;LS.set("cg-world","");$("#wview").hidden=true;$("#home").hidden=false;document.body.classList.remove("inworld");}
 $("#wback").addEventListener("click",function(){sfx.tick();goHome();});
@@ -2879,18 +3019,18 @@ $("#mute").textContent=muted?"🔇":"🔊";
 
 /* ================= stars & names sheet ================= */
 $("#edit").addEventListener("click",function(){var sh=$("#sheet");sh.hidden=false;var resetN=0;
-  sh.innerHTML="<div class='card'><h2>⭐ Star board</h2><p style='margin:-4px 0 10px;font-size:15px'>Every 🏅 level-up counts toward the next photo badge.</p><div id='sb'></div><p style='margin-top:18px'>Change names, ages and pictures. Age sets how hard the games are.</p><div id='eds'></div><p style='margin-top:14px;font-size:15px'>Got a setup link? Paste it here to load names and badge photos.</p><input id='setupIn' aria-label='Setup link' placeholder='Paste setup link' style='width:100%;box-sizing:border-box'><button class='btn' id='rs'>Reset all stars</button><button class='btn go' id='ok'>Done</button></div>";
+  sh.innerHTML="<div class='card'><h2>⭐ Star board</h2><p style='margin:-4px 0 10px;font-size:15px'>Every 🏅 level-up counts toward the next photo badge.</p><div id='sb'></div><p style='margin-top:18px'>Change names, ages and pictures. Age sets how hard the games are.</p><div id='eds'></div><p style='margin-top:14px;font-size:15px'>Got a setup link? Paste it here to load names and badge photos.</p><input id='setupIn' aria-label='Setup link' placeholder='Paste setup link' style='width:100%;box-sizing:border-box'><div id='famBox'></div><button class='btn' id='rs'>Reset all stars</button><button class='btn go' id='ok'>Done</button></div>";
   var sb=sh.querySelector("#sb");players.map(function(p,i){return [p,i];}).sort(function(a,b){return b[0].stars-a[0].stars;}).forEach(function(x){var r=h("div","starrow","<span class='av'>"+AVH(x[0])+"</span><span class='nm'>"+esc(x[0].name)+"</span><span class='ct'>★ "+x[0].stars+" <small style='font-size:16px;opacity:.85'>🏅 "+totalLv(x[1])+"</small></span>");r.style.background=COLORS[x[1]];sb.appendChild(r);
     var t=totalLv(x[1]),sf=h("div","shelf",BADGES.map(function(b){return badgeHTML(b,t>=b[1]);}).join(""));sb.appendChild(sf);});
-  var eds=sh.querySelector("#eds");
+  famPanel(sh.querySelector("#famBox"));var eds=sh.querySelector("#eds");
   players.forEach(function(p,i){var r=h("div","edrow","<button class='avb'>"+AVH(p)+"</button><button class='phb'>📷<br>Photo</button><input id='nm"+i+"' maxlength='16' value='"+esc(p.name)+"' aria-label='Name'><select id='ag"+i+"' aria-label='Age'>"+[4,5,6,7,8,9,10,11,12,13].map(function(a){return "<option"+(a===p.age?" selected":"")+">"+a+"</option>";}).join("")+"</select>");
-    var avb=r.querySelector(".avb");avb.addEventListener("click",function(){if(PICS[i]){delete PICS[i];LS.set("cg-pics",PICS);}else p.av=AVATARS[(AVATARS.indexOf(p.av)+1)%AVATARS.length];avb.innerHTML=AVH(p);});
+    var avb=r.querySelector(".avb");avb.addEventListener("click",function(){if(PICS[i]){delete PICS[i];LS.set("cg-pics",PICS);PICT[i]=Date.now();LS.set("cg-pict",PICT);}else{p.av=AVATARS[(AVATARS.indexOf(p.av)+1)%AVATARS.length];p.nt=Date.now();}avb.innerHTML=AVH(p);});
     r.querySelector(".phb").addEventListener("click",function(){photoPicker(i,function(){avb.innerHTML=AVH(p);});});
-    r.querySelector("input").addEventListener("input",function(){p.name=this.value.trim()||("Player "+(i+1));});
-    r.querySelector("select").addEventListener("change",function(){p.age=+this.value;});eds.appendChild(r);});
+    r.querySelector("input").addEventListener("input",function(){p.name=this.value.trim()||("Player "+(i+1));p.nt=Date.now();});
+    r.querySelector("select").addEventListener("change",function(){p.age=+this.value;p.nt=Date.now();});eds.appendChild(r);});
   sh.querySelector("#setupIn").addEventListener("input",function(){var ok=applySetup(this.value.trim());if(ok){this.value="";this.placeholder="✅ Loaded! Tap Done.";players.forEach(function(p,i){var a=sh.querySelector("#nm"+i);if(a)a.value=p.name;var g=sh.querySelector("#ag"+i);if(g)g.value=p.age;});}});
   sh.querySelector("#rs").addEventListener("click",function(){resetN++;if(resetN<2){this.textContent="Tap again to reset";return;}players.forEach(function(p){p.stars=0;});this.textContent="Stars reset";});
-  sh.querySelector("#ok").addEventListener("click",function(){save();sh.hidden=true;sh.innerHTML="";renderStars();});
+  sh.querySelector("#ok").addEventListener("click",function(){save();sh.hidden=true;sh.innerHTML="";renderStars();if(FAM)cloudSync();});
 });
 
 
@@ -2906,7 +3046,7 @@ function openBadges(){var sh=$("#sheet2");sh.hidden=false;sh.className="";sh.id=
   sh.innerHTML="<div class='card' id='bboard'><h2>🏆 Badge Board</h2><p style='text-align:center;margin:-4px 0 10px'>Get 2 or more stars in a game to level up. Every level-up counts!</p><div class='bbtop'>"+top+"</div>"+rows+"<p style='text-align:center'><button class='btn go' id='bbok'>Done</button></p></div>";
   sh.querySelector("#bbok").addEventListener("click",function(){sh.hidden=true;sh.innerHTML="";});}
 $("#badgesTile").addEventListener("click",function(){sfx.pop();openBadges();});
-$("#wildTile").addEventListener("click",function(){sfx.pop();world=WORLDS[1];openGame(byId("wildlife"));});
+
 /* ================= home snow ================= */
 var sc0=$("#snow"),sx=sc0.getContext("2d"),flakes=[],snowOn=true,snowRun=false;
 function startSnow(){if(snowRun)return;snowRun=true;var d=Math.min(2,devicePixelRatio||1);sc0.width=innerWidth*d;sc0.height=innerHeight*d;sx.setTransform(d,0,0,d,0,0);
@@ -2927,10 +3067,10 @@ function tickClock(){var n=new Date(),hh=n.getHours()%12||12,mm=("0"+n.getMinute
 function mainCount(){var now=new Date(),y=now.getFullYear(),x=new Date(y,11,25);if(now.getMonth()===11&&now.getDate()>25)x=new Date(y+1,11,25);
   var ev=nextEvents(2),e=ev[0],nx=ev[1];$("#cdK").textContent=e.em+" "+e.name.replace(/&#39;/g,"'");$("#cdN").textContent=e.d===0?e.em:e.d;
   $("#cdS").innerHTML=(e.d===0?e.happy:e.d===1?"sleep to go!":"sleeps to go")+(nx?"<small class='cdnx'>Then "+nx.em+" "+nx.name+" in "+nx.d+"</small>":"");}
-function renderStars(){if($("#bstrip"))renderBadgeStrip();var r=$("#srow");r.innerHTML="";players.forEach(function(p,i){var s=h("span","","<span class='av' style='background:"+COLORS[i]+"'>"+AVH(p)+"</span><span><b>"+esc(p.name)+"</b><small>★ "+p.stars+" · 🏅 "+totalLv(i)+" · 🎖️ "+badgesFor(i)+"/"+BADGES.length+"</small></span>");r.appendChild(s);});}
+function renderStars(){if($("#bstrip"))renderBadgeStrip();var r=$("#srow");r.innerHTML="";players.forEach(function(p,i){var s=h("span","","<span class='av' style='background:"+COLORS[i]+"'>"+AVH(p)+"</span><span><b>"+(isChamp(i)?"👑 ":"")+esc(p.name)+"</b><small>★ "+p.stars+" · 🏅 "+totalLv(i)+" · 🎖️ "+badgesFor(i)+"/"+BADGES.length+"</small></span>");r.appendChild(s);});var cl=$("#crownL");if(!cl){cl=h("span","crown");cl.id="crownL";r.parentNode.appendChild(cl);}cl.innerHTML=crownLine();renderFav();renderMsg();}
 var jk=JOKES[((dayNo()%JOKES.length)+JOKES.length)%JOKES.length];
 function renderJoke(){$("#jokeQ").textContent=jk[0];$("#jokeA").textContent="Tap for the answer";$("#joke").classList.remove("open");}
-$("#joke").addEventListener("click",function(){var o=$("#joke").classList.toggle("open");$("#jokeA").textContent=o?jk[1]:"Tap for the answer";if(o)sfx.good();});
+$("#joke").addEventListener("click",function(){if(this.classList.contains("msgmode")){sfx.pop();openMsgs();return;}var o=$("#joke").classList.toggle("open");$("#jokeA").textContent=o?jk[1]:"Tap for the answer";if(o)sfx.good();});
 $("#lgSvg").innerHTML=AZLOGO;
 function showMain(){world=null;["#home","#wview","#stage"].forEach(function(s){$(s).hidden=true;});$("#main").hidden=false;document.body.classList.remove("inworld");renderStars();scrollTo(0,0);}
 function showGames(){world=null;$("#main").hidden=true;$("#wview").hidden=true;$("#home").hidden=false;document.body.classList.remove("inworld");scrollTo(0,0);}
@@ -2940,7 +3080,7 @@ $("#starsTile").addEventListener("click",function(){$("#edit").click();});
 $("#edit2").addEventListener("click",function(){$("#edit").click();});
 $("#mute2").addEventListener("click",function(){$("#mute").click();this.textContent=muted?"🔇":"🔊";});
 $("#mute2").textContent=muted?"🔇":"🔊";
-tickClock();setInterval(tickClock,10000);mainCount();renderJoke();renderStars();
+tickClock();setInterval(tickClock,10000);mainCount();renderJoke();renderStars();if(FAM)cloudSync();verCheck();
 if(!STANDALONE&&!window.SETUP_OK&&!LS.get("cg-tip-off",false)&&(ANDROID||/iPad|iPhone|Macintosh/.test(navigator.userAgent)&&("ontouchend" in document))){(function(){var b=h("div","a2tip","<div><b>Make it an app:</b> "+(ANDROID?"tap the menu, then Add to Home screen.":"tap Share, then Add to Home Screen.")+"</div><button aria-label='Show how'>How?</button><button aria-label='Hide tip'>✕</button>");document.body.appendChild(b);var bs=b.querySelectorAll("button");
   bs[0].addEventListener("click",function(){var t=h("div","ready","<div class='card'><div class='em'>📲</div><h2>Add to Home Screen</h2>"+A2HS+"<button class='btn go'>Got it</button></div>");t.style.position="fixed";t.style.zIndex="60";document.body.appendChild(t);t.querySelector(".go").addEventListener("click",function(){t.remove();});});
   bs[1].addEventListener("click",function(){LS.set("cg-tip-off",true);b.remove();});})();}
