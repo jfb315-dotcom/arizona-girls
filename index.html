@@ -563,18 +563,20 @@ var EMO='"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
 var COLORS=["#7aa7ff","#41c9a0","#ff8fb1"];
 var AVATARS=["🦄","🐍","🦌","🐧","🦊","🦉","🐰","🦄","🐱","🐶","🦌","⛄","🐼","🐨","🐻‍❄️","🦋","🐬"];
 var players=LS.get("cg-players",null)||[
-  {name:"Player 1",age:10,av:"🦌",stars:0},
-  {name:"Player 2",age:8,av:"🐍",stars:0},
-  {name:"Player 3",age:6,av:"🦄",stars:0}];
+  {name:"Player 1",age:11,av:"🦌",stars:0},
+  {name:"Player 2",age:10,av:"🐍",stars:0},
+  {name:"Player 3",age:8,av:"🦄",stars:0}];
+if(!LS.get("cg-age2",false)){if(players[0].age===10&&players[1].age===8&&players[2].age===6){players[0].age=11;players[1].age=10;players[2].age=8;LS.set("cg-players",players);}LS.set("cg-age2",true);}
 var cur=LS.get("cg-cur",0); if(!(cur>=0&&cur<3))cur=0;
 function save(){LS.set("cg-players",players);LS.set("cg-cur",cur);}
-function lvlFor(p){return p.age<=6?1:p.age<=8?2:3;}
+function lvlFor(p){return p.age<=6?1:p.age<=9?2:3;}
+function baseD(p){var a=+p.age||8;return a<=5?1:a<=6?1.4:a<=7?1.8:a<=8?2.2:a<=9?2.5:a<=10?2.8:3.1;}
 var LVL=["","Easy","Medium","Hard"];
 /* levels: each girl levels up per game; level 1 starts at her age difficulty */
 var LV=LS.get("cg-lv",{}),MAXLV=20;if(!LV||typeof LV!=="object")LV={};
 function lvOf(id,i){var o=LV[id];return o&&o[i]>0?o[i]:1;}
 function setLv(id,i,v){if(!LV[id])LV[id]={};LV[id][i]=v;LS.set("cg-lv",LV);}
-function diffFor(i,lv){return Math.min(4.2,lvlFor(players[i])+(lv-1)*0.35);}
+var DCAP=4.4;function diffFor(i,lv){var b=baseD(players[i]);return Math.min(DCAP,b+(DCAP-b)*Math.min(1,(lv-1)/12));}
 /* photo badges: unlocked by total level-ups. Photos come from the private setup link (saved on this tablet), or from badges/ in the private copy. */
 var BADGE_FILES=false,FACES=LS.get("cg-faces",{})||{};
 var BPH="data:image/svg+xml,"+encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='#c9b8f0'/><circle cx='50' cy='40' r='18' fill='#fff'/><path d='M18 96c4-22 18-32 32-32s28 10 32 32z' fill='#fff'/></svg>").replace(/'/g,"%27");
@@ -659,15 +661,15 @@ function finish(o){
   if(!G||G.done)return;G.done=true;var s=o.stars||0;
   if(o.award)o.award.forEach(function(a){players[a[0]].stars+=a[1];});
   else if(s>0)players[cur].stars+=s;
-  save();var up="";
+  save();var up="",lvUp=false;
   if(G.g.levels&&!o.award&&!o.noStars){var lv=lvOf(G.g.id,cur);
-    if(s>=2&&lv<MAXLV){var nb0=badgesFor(cur);setLv(G.g.id,cur,lv+1);var nb1=badgesFor(cur);up="<div class='lvup'>⬆️ "+esc(players[cur].name)+" is now <b>Level "+(lv+1)+"</b></div>";
+    if(s>=2&&lv<MAXLV){lvUp=true;var nb0=badgesFor(cur);setLv(G.g.id,cur,lv+1);var nb1=badgesFor(cur);up="<div class='lvup'>⬆️ "+esc(players[cur].name)+" is now <b>Level "+(lv+1)+"</b></div>";
       if(nb1>nb0){up+="<div class='newbdg'>"+badgeHTML(BADGES[nb1-1],true,true)+"<span>"+BADGES[nb1-1][2]+"!<br><small>New badge "+nb1+" of "+BADGES.length+"</small></span></div>";}if(!o.title)o.title="Level up!";}
     else if(s>=2)up="<div class='lvup'>👑 Top level! Level "+MAXLV+"</div>";
     else up="<div class='lvup dim'>Get 2 stars to reach Level "+(lv+1)+"</div>";}
   var title=o.title||(s>=3?"Amazing!":s===2?"Great job!":s===1?"Nice one!":"Good try!");
   var st=o.noStars?"":"<div class='stars'>"+[1,2,3].map(function(i){return "<span class='"+(i<=s?"on":"")+"' style='animation-delay:"+(i*0.25)+"s'>★</span>";}).join("")+"</div>";
-  var box=h("div","done","<div class='card'><h2>"+title+"</h2>"+st+"<p>"+(o.msg||"")+"</p>"+up+"<button class='btn go'>Play again</button><button class='btn'>More games</button></div>");
+  var box=h("div","done","<div class='card'><h2>"+title+"</h2>"+st+"<p>"+(o.msg||"")+"</p>"+up+"<button class='btn go'>"+(lvUp?"Next level ›":"Try again")+"</button><button class='btn'>More games</button></div>");
   var bs=box.querySelectorAll("button");
   bs[0].addEventListener("click",function(){openGame(G.g,null,true);});
   bs[1].addEventListener("click",closeGame);
@@ -751,7 +753,7 @@ start:function(el,L){
     loop(function(dt){
       t-=dt;if(t<=0){finish({stars:starsFor(sc,thr),msg:"You scored "+sc+" points. "+(sc<thr[2]?"Get "+thr[starsFor(sc,thr)]+" for the next star.":"Top score!")});return false;}
       spawn-=dt;if(spawn<=0){spawn=P([0.85,0.65,0.5])*(0.6+Math.random()*0.8);var r=Math.random(),k=r<0.08?"star":(L>1&&r<0.08+0.1*L)?"coal":"gift";
-        items.push({x:30+Math.random()*(c.W-60),y:-30,k:k,v:(110+L*45)*(1+(40-t)/70)*(0.8+Math.random()*0.4)});}
+        items.push({x:30+Math.random()*(c.W-60),y:-30,k:k,v:(110+curD()*45)*(1+(40-t)/70)*(0.8+Math.random()*0.4)});}
       var by=c.H-60;
       items=items.filter(function(it){it.y+=it.v*dt;
         if(it.y>by-30&&it.y<by+20&&Math.abs(it.x-x)<wide*0.7){
@@ -769,7 +771,7 @@ start:function(el,L){
 game({id:"match",name:"Ornament Match",em:"🔴",cats:["holiday","brain"],bl:"Flip two ornaments. Find all the pairs.",tc:"#ff9aa5",levels:true,
 start:function(el,L){
   var icons=["🎄","🎅","⛄","🦌","🎁","🔔","⭐","🍪","🧦","🛷","❄️","🕯️","🧤","🍭"];
-  var pairs=[6,8,10][L-1],cols=[4,4,5][L-1],rows=pairs*2/cols;
+  var pairs=Math.min(14,P([6,8,10])),cols=pairs<=6?4:pairs<=10?5:pairs<=12?6:7,rows=Math.ceil(pairs*2/cols);
   var deck=shuffle(shuffle(icons).slice(0,pairs).reduce(function(a,e){return a.concat([e,e]);},[]));
   var grid=h("div","mgrid"),open=[],lock=false,got=0,moves=0;el.appendChild(grid);
   function size(){var r=el.getBoundingClientRect(),gap=12,cw=Math.min((r.width-40-gap*(cols-1))/cols,(r.height-30-gap*(rows-1))/rows*0.85),ch=cw/0.85;
@@ -992,8 +994,9 @@ start:function(el,L){
   function mk(){var a,b,op,ans,pic="";
     if(L===1){a=rnd(1,5);b=rnd(1,5);ans=a+b;op="+";var it=pick(["🍪","⭐","🎁","🔔"]);pic=new Array(a+1).join(it)+"  +  "+new Array(b+1).join(it);}
     else if(L===2){if(Math.random()<0.5){a=rnd(3,15);b=rnd(2,10);op="+";ans=a+b;}else{a=rnd(8,20);b=rnd(2,a-1);op="−";ans=a-b;}}
+    else if(curD()>=3.5){var r=Math.random();if(r<0.35){a=rnd(6,15);b=rnd(6,15);op="×";ans=a*b;}else if(r<0.6){b=rnd(3,12);ans=rnd(4,15);a=b*ans;op="÷";}else if(r<0.8){a=rnd(120,499);b=rnd(45,299);if(Math.random()<0.5){op="+";ans=a+b;}else{if(b>a){var tt=a;a=b;b=tt;}op="−";ans=a-b;}}else{var x=rnd(3,9),y=rnd(3,9),z=rnd(2,15);a=x+" × "+y;b=z;op="+";ans=x*y+z;}}
     else{var r=Math.random();if(r<0.5){a=rnd(3,12);b=rnd(3,12);op="×";ans=a*b;}else if(r<0.75){b=rnd(2,10);ans=rnd(2,10);a=b*ans;op="÷";}else{a=rnd(25,89);b=rnd(12,49);op="+";ans=a+b;}}
-    var opts=[ans];while(opts.length<4){var d=ans+pick([-3,-2,-1,1,2,3,10,-10,L===3?a:1]);if(d>=0&&opts.indexOf(d)<0)opts.push(d);}
+    var opts=[ans];while(opts.length<4){var d=ans+pick([-3,-2,-1,1,2,3,10,-10,L===3&&typeof a==="number"&&a<60?a:1]);if(d>=0&&opts.indexOf(d)<0)opts.push(d);}
     return {q:a+" "+op+" "+b+" = ?",ans:ans,opts:shuffle(opts),pic:pic};}
   function show(){if(n>=10){var s=right>=9?3:right>=7?2:right>=5?1:0;finish({stars:s,msg:right+" out of 10 right."});return;}
     var q=mk(),done=false;
@@ -1035,7 +1038,7 @@ start:function(el,L){
 /* ---- Code Breaker (from the panel's Spy HQ) ---- */
 game({id:"code",name:"Code Breaker",em:"🔐",cats:["brain"],bl:"Guess the secret color code using clues.",tc:"#c9b5ff",levels:true,
 start:function(el,L){
-  var COL=["#e8424f","#41c9a0","#ffc94a","#7aa7ff","#c77dff","#ff9f43"],pegs=[3,4,4][L-1],nc=[4,5,6][L-1],dup=L===3,tries=10;
+  var COL=["#e8424f","#41c9a0","#ffc94a","#7aa7ff","#c77dff","#ff9f43"],pegs=curD()>=3.6?5:[3,4,4][L-1],nc=[4,5,6][L-1],dup=L===3,tries=curD()>=3.6?12:10;
   var secret=[];while(secret.length<pegs){var k=rnd(0,nc-1);if(dup||secret.indexOf(k)<0)secret.push(k);}
   var wrap=h("div","cb");el.appendChild(wrap);var rows=h("div","cbrows"),side=h("div","cbside");wrap.appendChild(rows);wrap.appendChild(side);
   var guess=[],hist=[];
@@ -1097,10 +1100,10 @@ start:function(el,L){
 /* ---- Balloon Pop (new) ---- */
 game({id:"balloon",name:"Balloon Pop",em:"🎈",cats:["arcade"],bl:"Pop balloons. Older cousins follow a tricky rule.",tc:"#ffb3a7",levels:true,
 start:function(el,L){
-  var c=canvasIn(el),cx=c.cx,bl=[],t=40,sc=0,spawn=0,rule,ruleT=0,pops=[];
+  var c=canvasIn(el),cx=c.cx,bl=[],t=40,sc=0,spawn=0,rule,ruleT=0,pops=[],NM=30;
   var COL=[["red","#e8424f"],["blue","#4b8cff"],["yellow","#ffc94a"],["green","#36b37e"]];
   var thr=PT([[15,25,35],[10,17,24],[8,13,19]]);
-  function newRule(){if(L===2){var k=pick(COL);rule={c:k[0],txt:"Pop only "+k[0].toUpperCase()+" balloons",col:k[1]};}else if(L===3){var m=pick([2,3,4,5]);rule={m:m,txt:"Pop numbers you can count by "+m+"s ("+m+", "+(2*m)+", "+(3*m)+"…)"};}else rule={txt:"Pop them all!"};ruleT=12;}
+  function newRule(){if(L===2){var k=pick(COL);rule={c:k[0],txt:"Pop only "+k[0].toUpperCase()+" balloons",col:k[1]};}else if(L===3){var m=curD()>=3.6?pick([4,6,7,8,9]):pick([2,3,4,5]);rule={m:m,txt:"Pop numbers you can count by "+m+"s ("+m+", "+(2*m)+", "+(3*m)+"…)"};}else rule={txt:"Pop them all!"};ruleT=12;}
   function good(b){return L===1||(L===2?b.c===rule.c:b.n%rule.m===0);}
   ptr(c.cv,{down:function(p){for(var i=bl.length-1;i>=0;i--){var b=bl[i];if(Math.hypot(p.x-b.x,p.y-b.y)<b.r*1.15){bl.splice(i,1);
       if(good(b)){sc++;sfx.pop();pops.push({x:b.x,y:b.y,t:"+1",c:"#ffc94a",l:1});}else{sc=Math.max(0,sc-1);sfx.bad();pops.push({x:b.x,y:b.y,t:"-1",c:"#e8424f",l:1});}return;}}}});
@@ -1114,7 +1117,7 @@ start:function(el,L){
   ready(el,{em:"🎈",title:"Balloon Pop",text:L===1?"Tap the balloons to pop them before they float away!":L===2?"Read the sign at the top. Pop only that color. The color changes, so keep watching! Wrong ones cost a point.":"Each balloon has a number. Pop the numbers that match the rule at the top. The rule changes every 12 seconds. Wrong ones cost a point."},function(){
     loop(function(dt){t-=dt;ruleT-=dt;if(ruleT<=0&&L>1)newRule();
       if(t<=0){finish({stars:starsFor(sc,thr),msg:"You popped "+sc+" right balloon"+(sc===1?"":"s")+"."});return false;}
-      spawn-=dt;if(spawn<=0){spawn=P([0.55,0.5,0.6]);var k=pick(COL),n=rnd(1,30);if(L===3&&Math.random()<0.45)n=rule.m*rnd(1,Math.floor(30/rule.m));if(L===2&&Math.random()<0.35)k=COL.filter(function(x){return x[0]===rule.c;})[0];
+      spawn-=dt;if(spawn<=0){spawn=P([0.55,0.5,0.6]);var k=pick(COL),NM=curD()>=3.6?72:30,n=rnd(1,NM);if(L===3&&Math.random()<0.45)n=rule.m*rnd(1,Math.floor(NM/rule.m));if(L===2&&Math.random()<0.35)k=COL.filter(function(x){return x[0]===rule.c;})[0];
         var r=P([46,40,40])+Math.random()*10;bl.push({x:r+Math.random()*(c.W-2*r),y:c.H+r,r:r,c:k[0],col:k[1],n:n,v:P([70,95,85])+Math.random()*50+(40-t)*1.5});}
       bl=bl.filter(function(b){b.y-=b.v*dt;return b.y>-b.r-70;});
       pops=pops.filter(function(p){p.y-=60*dt;p.l-=dt*1.4;return p.l>0;});
