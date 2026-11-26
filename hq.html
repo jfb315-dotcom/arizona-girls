@@ -662,7 +662,7 @@ body.bedOn>*:not(#bedFrame){visibility:hidden}
 <section class="view" id="v-count"><div class="vbar"><button class="back" data-back>BACKICON Back</button><h1>Countdowns</h1></div><div class="vbody" id="countBody"></div></section>
 <section class="view" id="v-moon"><div class="vbar"><button class="back" data-back>BACKICON Back</button><h1>Moon and stars</h1></div><div class="vbody" id="moonBody"></div></section>
 <section class="view" id="v-wifi"><div class="vbar"><button class="back" data-back>BACKICON Back</button><h1>Guest Wi-Fi</h1></div><div class="vbody" id="wifiBody"></div></section>
-<section class="view" id="v-fun"><div class="vbar"><button class="back" data-back>BACKICON Back</button><h1>Fun</h1></div><div class="vbody" id="funBody"></div></section>
+<section class="view" id="v-fun"><div class="vbar"><button class="back" data-back>BACKICON Back</button><h1>Funtime</h1></div><div class="vbody" id="funBody"></div></section>
 <section class="view" id="v-trivia"><div class="vbar"><button class="back" data-back>BACKICON Back</button><h1>Trivia night</h1><button class="btn" data-act="qnew" style="margin:0 0 0 auto">New game</button></div><div class="vbody" id="triviaBody"></div></section>
 <section class="view" id="v-score"><div class="vbar"><button class="back" data-back>BACKICON Back</button><h1>Scoreboard</h1><div class="sub" style="margin:0 0 0 16px">Tap a team name to rename it</div></div><div class="vbody" id="scoreBody"></div></section>
 <section class="view" id="v-dice"><div class="vbar"><button class="back" data-back>BACKICON Back</button><h1>Dice and coin</h1></div><div class="vbody" id="diceBody"></div></section>
@@ -836,7 +836,7 @@ body.bedOn>*:not(#bedFrame){visibility:hidden}
   <div id="escBox"><div id="escLocks"></div><div id="escPuz"></div></div>
 </section>
 <section class="view hview tg" id="v-tg">
-  <div class="hbar"><button class="hback" data-open="fun">◂ Fun</button><h1>Thanksgiving games</h1></div>
+  <div class="hbar"><button class="hback" data-open="fun">◂ Funtime</button><h1>Thanksgiving games</h1></div>
   <div class="hgrid">
     <button class="htile" data-open="tcatch"><div class="em">🥧</div><b>Feast Catch</b><span>Catch the food, dodge the broccoli</span></button>
     <button class="htile" data-open="ttriv"><div class="em">🦃</div><b>Turkey Trivia</b><span>1 or 2 players · 3 levels</span></button>
@@ -847,7 +847,7 @@ body.bedOn>*:not(#bedFrame){visibility:hidden}
   </div>
 </section>
 <section class="view hview xm" id="v-xm">
-  <div class="hbar"><button class="hback" data-open="fun">◂ Fun</button><h1>Christmas games</h1></div>
+  <div class="hbar"><button class="hback" data-open="fun">◂ Funtime</button><h1>Christmas games</h1></div>
   <div class="hgrid">
     <button class="htile" data-open="xdrop"><div class="em">🎁</div><b>Present Drop</b><span>Land gifts in the chimneys</span></button>
     <button class="htile" data-open="xtriv"><div class="em">🎄</div><b>Christmas Trivia</b><span>1 or 2 players · 3 levels</span></button>
@@ -899,7 +899,7 @@ body.bedOn>*:not(#bedFrame){visibility:hidden}
   <div class="hbody"><div class="mgrid" id="xmGrid"></div><div class="hover" id="xmOv"></div></div>
 </section>
 <section class="view hview" id="v-football">
-  <div class="hbar"><button class="hback" data-open="fun">◂ Fun</button><h1>Football</h1>
+  <div class="hbar"><button class="hback" data-open="fun">◂ Funtime</button><h1>Football</h1>
     <button class="fsm" data-act="fbundo" style="height:52px;padding:0 18px">↶ Undo</button><button class="fsm" data-act="fblen" style="height:52px;padding:0 18px" id="fbLenB">12 min quarters</button><button class="fsm" data-act="fbnew" style="height:52px;padding:0 18px">New game</button></div>
   <div class="hbody">
     <div id="fbBoard">
@@ -3311,7 +3311,7 @@ function tickClock(){
  if(dn!==lastDay){lastDay=dn;jokeShown=false;joke2=false;renderWordTile();renderVerse();renderCount();renderPhotoTile();renderMoon();}
  applyTheme();if(typeof renderSky==="function")renderSky();
  // Pick up any app updates once a night, unless a timer is going.
- if(h===3&&d.getMinutes()===30&&!timer)setTimeout(function(){location.replace(location.pathname+"?v="+Date.now());},1000);
+ if(h===3&&d.getMinutes()===30&&!timer)setTimeout(function(){location.replace(location.pathname+"?v="+Date.now()+location.hash);},1000);
 }
 
 /* ---------- Weather (Open-Meteo, no key, town-level location only) ---------- */
@@ -4025,9 +4025,7 @@ function renderFun(){
   L("draw","Drawing pad","Finger painting")+
   L("movie","Movie night picker",movies.length?movies.length+" movies on the list":"Add movies, it picks")+
   L("wifi","Guest Wi-Fi","QR code for guests")+
-  L("football","Football scoreboard","Touchdowns with fireworks")+
-  L("tg","Thanksgiving games","5 games · 1 or 2 players")+
-  L("xm","Christmas games","5 games · 1 or 2 players")+'</div>'+
+  L("football","Football scoreboard","Touchdowns with fireworks")+'</div>'+
   '<button class="card fcard" data-act="joke" style="display:block;width:100%"><div class="lbl">Joke or riddle of the day</div><div style="font-size:26px;font-weight:600;margin-top:8px;line-height:1.3">'+esc(j[0])+'</div><div style="font-size:24px;margin-top:10px;color:var(--accentTxt);font-weight:600">'+(jokeShown?esc(j[1]):"Tap for the answer")+'</div></button>'+
   '<div class="card"><div class="lbl">Word of the day</div><div style="font-size:34px;font-weight:700;margin-top:6px">'+esc(w[0])+' <span style="font-size:18px;font-weight:400;color:var(--muted);font-style:italic">'+esc(w[1])+'</span></div><div style="font-size:22px;margin-top:6px">'+esc(w[2])+'</div><div style="font-size:19px;color:var(--muted);margin-top:8px">“'+esc(w[3])+'”</div></div>'+
   '<div class="row" style="justify-content:space-between;margin-top:4px"><div class="ref">Version '+esc(APP_VERSION)+'</div><button class="btn" data-act="latest" style="margin:0">Get latest version</button></div>';
@@ -4350,7 +4348,7 @@ document.addEventListener("click",function(e){
  if(t.hasAttribute("data-open")){var n=t.getAttribute("data-open");if(n==="photo"&&!photos.length&&db){openView("photo");$("photoInput").click();return;}openView(n);return;}
  var a=t.getAttribute("data-act");
  if(spyAct(a,t)||holAct(a,t)||fbAct(a,t))return;
- if(a==="latest"){toast("Getting the latest version…");setTimeout(function(){location.replace(location.pathname+"?v="+Date.now());},600);return;}
+ if(a==="latest"){toast("Getting the latest version…");setTimeout(function(){location.replace(location.pathname+"?v="+Date.now()+location.hash);},600);return;}
  if(a==="toBedside"){if(timer){toast("Stop the timer first");return;}if(trivia&&trivia.winner==null&&!toBedArm){toBedArm=true;toast("Tap again to leave the trivia game");setTimeout(function(){toBedArm=false;},3000);return;}openBed();return;}
  if(a==="joke"){jokeShown=!jokeShown;renderFun();return;}
  if(a==="ssec"){slideSec=+t.getAttribute("data-v");lsSet("slide-sec",slideSec);renderPhotoView();if(page===2)startSlides();else startTile();toast("Changes every "+(slideSec<60?slideSec+" seconds":slideSec/60+" minute"+(slideSec>60?"s":"")));return;}
@@ -4386,7 +4384,7 @@ function checkUpdate(){
   if(!m||m[1]===APP_VERSION)return;
   // Only when nobody is using it: home screen showing, no timer, no trivia game going.
   if(bedOpen||view||timer||(trivia&&trivia.winner==null)||Date.now()-lastTouch<60000){setTimeout(checkUpdate,60000);return;}
-  location.replace(location.pathname+"?v="+encodeURIComponent(m[1]));
+  location.replace(location.pathname+"?v="+encodeURIComponent(m[1])+location.hash);
  }).catch(function(){});
 }
 /* self-update off in the cousins' copy */
@@ -5749,7 +5747,8 @@ setInterval(function(){if(page===2)renderPage2();},10000);
 window.addEventListener("resize",function(){skyKey="";renderSky();fitText($("verseText"),22,14);renderWordTile();});
 /* ---------- Cousins' HQ: John's Spy HQ and Fun pages, opened from the girls' home page ---------- */
 function hqTone(f,d){var a=audio();if(a)tone(f,a.currentTime+0.01,d||0.1,0.12);}
-var HQ=(location.hash||"").replace("#","")==="fun"?"fun":"spy";
+var HQG=((location.hash||"").match(/^#g=(\w+)/)||[])[1]||"";
+var HQ=(HQG||(location.hash||"").replace("#","")==="fun")?"fun":"spy";
 /* shrink the radar on shorter screens so the red Scan Agent ID button stays visible */
 function hqFitRadar(){var card=document.getElementById("radarCard"),r=document.getElementById("radar");if(!card||!r)return;
   r.style.transform="";r.style.marginBottom="";r.style.marginRight="";
@@ -5759,12 +5758,12 @@ function hqFitRadar(){var card=document.getElementById("radarCard"),r=document.g
 window.addEventListener("resize",function(){setTimeout(hqFitRadar,60);});setTimeout(hqFitRadar,300);setTimeout(hqFitRadar,1200);
 document.documentElement.className+=" hq-"+HQ;
 var _hqSet=setPage;setPage=function(){_hqSet(HQ==="spy"?3:1);};
-var _hqClose=closeView;closeView=function(){var was=view;_hqClose();if(HQ==="fun"){if(was==="fun"||!was)location.href="index.html";else openView("fun");}};
-window.addEventListener("click",function(e){var t=e.target;while(t&&t!==document&&!(t.getAttribute&&t.getAttribute("data-act")==="toHome"))t=t.parentNode;
+var _hqClose=closeView;closeView=function(){var was=view;_hqClose();if(HQG){location.href="index.html#w=christmas";return;}if(HQ==="fun"){if(was==="fun"||!was)location.href="index.html";else openView("fun");}};
+window.addEventListener("click",function(e){if(HQG){var hb=e.target.closest?e.target.closest(".hback,[data-open='tg'],[data-open='xm'],[data-open='fun']"):null;if(hb){e.stopPropagation();e.preventDefault();location.href="index.html#w=christmas";return;}}var t=e.target;while(t&&t!==document&&!(t.getAttribute&&t.getAttribute("data-act")==="toHome"))t=t.parentNode;
   if(t&&t!==document){e.stopPropagation();e.preventDefault();location.href="index.html";}},true);
 window.addEventListener("hashchange",function(){location.reload();});
 setPage(3);
-if(HQ==="fun"){openView("fun");}
+if(HQ==="fun"){openView(HQG||"fun");}
 else (function(){
   var AG=[["Player 1","NIGHT HAWK","#7aa7ff"],["Player 2","SILVER FOX","#41c9a0"],["Player 3","SHADOW KITTEN","#ff8fb1"]];
   try{var cp=JSON.parse(localStorage.getItem("cg-players")||"null");if(cp&&cp.length===3){AG=cp.map(function(p,i){return [p.name,AG[i][1],AG[i][2]];});}}catch(e){}

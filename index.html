@@ -622,6 +622,31 @@ body{margin:0}
 .unl{margin-top:8px;font-weight:900;color:#2a7a2a}
 #sheet .card input{background:#fff;color:#2b2140;border:2px solid rgba(0,0,0,.18)}
 #sheet .card input::placeholder{color:#8a7f99}
+#main .gt-games{padding-bottom:22px}
+#main .gt-games .wm{gap:10px;margin-top:12px}
+#main .gt-games .wm span{font-size:clamp(14px,1.9vw,20px);background:rgba(255,255,255,.2);box-shadow:inset 0 -4px 0 rgba(0,0,0,.12);min-height:84px;cursor:pointer}
+#main .gt-games .wm i{font-size:clamp(32px,5vh,56px)}
+#main .gt-games .wm span:active{transform:scale(.95)}
+.edrow{flex-wrap:wrap}
+.bdrow{flex-basis:100%;display:flex;align-items:center;gap:8px;font-weight:800;font-size:15px;padding-left:4px}
+.bdrow select{font:800 16px var(--body);padding:6px 8px;border-radius:10px}
+.cdlist .mitem{display:flex;align-items:center;gap:12px}
+.cdlist .mitem b{font:800 22px var(--display);min-width:64px;text-align:center}
+.gt-cd{cursor:pointer}
+.hsbtn{position:absolute;right:14px;top:10px;background:rgba(255,255,255,.75);color:var(--ink);border-radius:999px;padding:5px 12px;font:900 14px var(--body)}
+.gt-stars{position:relative}
+.hst{width:100%;border-collapse:collapse;font-size:15px}
+.hst th{font-size:13px;text-align:center;padding:4px}
+.hst td{padding:7px 4px;border-top:1px solid rgba(0,0,0,.08);text-align:center;font-variant-numeric:tabular-nums}
+.hst td:first-child{text-align:left;font-weight:800}
+.hst td.me{background:rgba(255,210,63,.25)}
+.hst small{display:block;opacity:.65;font-size:12px}
+.hswrap{overflow-x:auto;max-height:58vh}
+.hsnote{font-size:14px;opacity:.8;margin:0 0 8px}
+.pbest{margin-top:8px;font-weight:900;color:#b56a00}
+.hst,.hst td,.hst th,.hst td:first-child{color:#2b2140}
+.mh .pill{white-space:nowrap}
+#sheet #setupIn{padding:10px 12px;border-radius:12px;font:700 16px var(--body)}
 </style>
 
 <canvas id="snow"></canvas>
@@ -642,6 +667,7 @@ body{margin:0}
       <div class="mdate" id="mdate"></div>
     </div>
     <div class="sp"></div>
+    <button class="pill" id="upd2" aria-label="Check for update" title="Check for update">🔄</button>
     <button class="pill gag" id="gag2" aria-label="Don't press">🔴 Don't press</button>
     <button class="pill" id="mute2" aria-label="Sound on or off">🔊</button>
     <button class="pill" id="edit2">⭐ Stars &amp; names</button>
@@ -649,22 +675,22 @@ body{margin:0}
   <div class="mgrid2">
     <button class="gt gt-games" id="toGames" style="--g:#ff8fb1">
       <span class="k">Play</span><span class="em">🎮</span>
-      <span class="h">Games</span><span class="s">61 games in 6 worlds</span>
-      <span class="wm"><span><i>✨</i>Sparkle</span><span><i>🌲</i>Woods</span><span><i>🐍</i>Snakes</span><span><i>🎄</i>Christmas</span><span><i>🧠</i>Brain</span><span><i>👯</i>Together</span></span>
+      <span class="h">Games</span><span class="s">71 games in 6 worlds</span>
+      <span class="wm"><span data-w="0"><i>✨</i>Sparkle</span><span data-w="1"><i>🌲</i>Woods</span><span data-w="2"><i>🐍</i>Snakes</span><span data-w="3"><i>🎄</i>Holidays</span><span data-w="4"><i>🧠</i>Brain</span><span data-w="5"><i>👯</i>Together</span></span>
     </button>
     <a class="gt gt-spy" href="hq.html#spy" style="--g:#4fffa0">
       <span class="k">Classified</span><span class="radar"><i style="left:28px;top:36px"></i><i style="left:66px;top:62px"></i></span>
       <span class="h">AGENT HQ</span><span class="s">Fingerprint login required</span>
     </a>
-    <div class="gt gt-cd" style="--g:#e8424f"><span class="k" id="cdK">Christmas</span><span class="big" id="cdN">--</span><span class="s" id="cdS">sleeps to go</span></div>
+    <div class="gt gt-cd" id="cdTile" role="button" style="--g:#e8424f"><span class="k" id="cdK">Christmas</span><span class="big" id="cdN">--</span><span class="s" id="cdS">sleeps to go</span></div>
     <a class="gt gt-fun" href="hq.html#fun" style="--g:#ffc94a">
       <span class="k">Party</span><span class="em">🎲</span>
-      <span class="h">Fun</span><span class="s">Trivia night, dice, drawing, movie picker</span>
+      <span class="h">Funtime</span><span class="s">Trivia night, dice, drawing, movie picker</span>
     </a>
     <button class="gt gt-joke" id="joke" style="--g:#7aa7ff"><span class="k">Joke of the day</span><span class="q" id="jokeQ"></span><span class="s" id="jokeA">Tap for the answer</span></button>
     <button class="gt gt-badges" id="badgesTile" style="--g:#ffd36e"><span class="k">🏆 Badge board</span><span class="bstrip" id="bstrip"></span><span class="s">Level up to unlock all 8 photo badges. Tap to see who's next!</span></button>
     <div class="gt gt-wild gt-fav" id="favTile" style="--g:#ffd23f"></div>
-    <button class="gt gt-stars" id="starsTile" style="--g:#ffc94a"><span class="k">Star board</span><span class="srow2" id="srow"></span></button>
+    <button class="gt gt-stars" id="starsTile" style="--g:#ffc94a"><span class="k">Star board</span><span class="hsbtn" id="hsBtn">🏆 High scores</span><span class="srow2" id="srow"></span></button>
   </div>
 </div>
 
@@ -854,6 +880,7 @@ function finish(o){
       if(nb1>nb0){up+="<div class='newbdg'>"+badgeHTML(BADGES[nb1-1],true,true)+"<span>"+BADGES[nb1-1][2]+"!<br><small>New badge "+nb1+" of "+BADGES.length+"</small></span></div>";}if(!o.title)o.title="Level up!";}
     else if(s>=2)up="<div class='lvup'>👑 Top level! Level "+MAXLV+"</div>";
     else up="<div class='lvup dim'>Get 2 stars to reach Level "+(lv+1)+"</div>";}
+  if(!o.noStars)up+=recHS(o);
   var title=o.title||(s>=3?"Amazing!":s===2?"Great job!":s===1?"Nice one!":"Good try!");
   var st=o.noStars?"":"<div class='stars'>"+[1,2,3].map(function(i){return "<span class='"+(i<=s?"on":"")+"' style='animation-delay:"+(i*0.25)+"s'>★</span>";}).join("")+"</div>";
   var box=h("div","done","<div class='card'><h2>"+title+"</h2>"+st+"<p>"+(o.msg||"")+"</p>"+up+"<button class='btn go'>"+(lvUp?"Next level ›":(s>=2||o.award||!G.g.levels)?"Play again":"Try again")+"</button><button class='btn'>More games</button></div>");
@@ -938,7 +965,7 @@ start:function(el,L){
   draw();
   ready(el,{em:"🎁",title:"Present Catch",text:"Move your finger to slide the basket. Catch 🎁 for 1 point and ⭐ for 3."+(L>1?" Dodge the "+emo("🪨","⚫")+" coal, it takes 2 away!":"")+" You have 40 seconds."},function(){
     loop(function(dt){
-      t-=dt;if(t<=0){finish({stars:starsFor(sc,thr),msg:"You scored "+sc+" points. "+(sc<thr[2]?"Get "+thr[starsFor(sc,thr)]+" for the next star.":"Top score!")});return false;}
+      t-=dt;if(t<=0){finish({hs:sc,stars:starsFor(sc,thr),msg:"You scored "+sc+" points. "+(sc<thr[2]?"Get "+thr[starsFor(sc,thr)]+" for the next star.":"Top score!")});return false;}
       spawn-=dt;if(spawn<=0){spawn=P([0.85,0.65,0.5])*(0.6+Math.random()*0.8);var r=Math.random(),k=r<0.08?"star":(L>1&&r<0.08+0.1*L)?"coal":"gift";
         items.push({x:30+Math.random()*(c.W-60),y:-30,k:k,v:(110+curD()*45)*(1+(40-t)/70)*(0.8+Math.random()*0.4)});}
       var by=c.H-60;
@@ -1117,7 +1144,7 @@ start:function(el,L){
       pipes=pipes.filter(function(p){return p.x>-100;});
       var hit=y>c.H-36||y<-30;pipes.forEach(function(p){if(px()+18>p.x-6&&px()-18<p.x+p.w+6&&(y-16<p.top||y+16>p.top+p.gap))hit=true;});
       score("🏠 "+sc);draw();
-      if(hit){sfx.bad();finish({stars:starsFor(sc,thr),msg:"You flew past "+sc+" chimney"+(sc===1?"":"s")+"."});return false;}
+      if(hit){sfx.bad();finish({hs:sc,stars:starsFor(sc,thr),msg:"You flew past "+sc+" chimney"+(sc===1?"":"s")+"."});return false;}
     });
   });
 }});
@@ -1281,7 +1308,7 @@ start:function(el,L){
       later(function(){o.on=false;o.b.classList.remove("up");},up*(0.8+Math.random()*0.4));}
     later(pop,every*(0.7+Math.random()*0.6));}
   ready(el,{em:"🧝",title:"Whack-an-Elf",text:"Tap the elves 🧝 as fast as you can."+(L>1?" Don't tap the cat 🐈, it costs 2 points!":"")+" 30 seconds."},function(){
-    pop();loop(function(dt){t-=dt;score("🧝 "+sc+"   ⏱ "+Math.max(0,Math.ceil(t)));if(t<=0){finish({stars:starsFor(sc,thr),msg:"You bopped "+sc+" elves."});return false;}});});
+    pop();loop(function(dt){t-=dt;score("🧝 "+sc+"   ⏱ "+Math.max(0,Math.ceil(t)));if(t<=0){finish({hs:sc,stars:starsFor(sc,thr),msg:"You bopped "+sc+" elves."});return false;}});});
 }});
 
 /* ---- Balloon Pop (new) ---- */
@@ -1303,7 +1330,7 @@ start:function(el,L){
   newRule();draw();
   ready(el,{em:"🎈",title:"Balloon Pop",text:L===1?"Tap the balloons to pop them before they float away!":L===2?"Read the sign at the top. Pop only that color. The color changes, so keep watching! Wrong ones cost a point.":"Each balloon has a number. Pop the numbers that match the rule at the top. The rule changes every 12 seconds. Wrong ones cost a point."},function(){
     loop(function(dt){t-=dt;ruleT-=dt;if(ruleT<=0&&L>1)newRule();
-      if(t<=0){finish({stars:starsFor(sc,thr),msg:"You popped "+sc+" right balloon"+(sc===1?"":"s")+"."});return false;}
+      if(t<=0){finish({hs:sc,stars:starsFor(sc,thr),msg:"You popped "+sc+" right balloon"+(sc===1?"":"s")+"."});return false;}
       spawn-=dt;if(spawn<=0){spawn=P([0.55,0.5,0.6]);var k=pick(COL),NM=curD()>=3.6?72:30,n=rnd(1,NM);if(L===3&&Math.random()<0.45)n=rule.m*rnd(1,Math.floor(NM/rule.m));if(L===2&&Math.random()<0.35)k=COL.filter(function(x){return x[0]===rule.c;})[0];
         var r=P([46,40,40])+Math.random()*10;bl.push({x:r+Math.random()*(c.W-2*r),y:c.H+r,r:r,c:k[0],col:k[1],n:n,v:P([70,95,85])+Math.random()*50+(40-t)*1.5});}
       bl=bl.filter(function(b){b.y-=b.v*dt;return b.y>-b.r-70;});
@@ -1472,7 +1499,7 @@ start:function(el,L){
     if(q.length)dir=q.shift();var d=dirs[dir],hx=sn[0].x+d[0],hy=sn[0].y+d[1];
     if(wrap){hx=(hx+cols)%cols;hy=(hy+rows)%rows;}
     var dead=hx<0||hy<0||hx>=cols||hy>=rows||rocks.some(function(r){return r.x===hx&&r.y===hy;})||sn.some(function(s,i){return i<sn.length-1&&s.x===hx&&s.y===hy;});
-    if(dead){sfx.bad();var b=el;b.classList.add("shake");finish({stars:starsFor(sc,thr),msg:"Your snake ate "+sc+" mice and grew "+sn.length+" long."});return;}
+    if(dead){sfx.bad();var b=el;b.classList.add("shake");finish({hs:sc,stars:starsFor(sc,thr),msg:"Your snake ate "+sc+" mice and grew "+sn.length+" long."});return;}
     sn.unshift({x:hx,y:hy});
     if(hx===food.x&&hy===food.y){sc++;sfx.pop();place();}else sn.pop();
     tongue=Math.random()<0.25?3:tongue-1;
@@ -1589,7 +1616,7 @@ start:function(el,L){
   draw();score("🎯 0");
   ready(el,{em:"🎯",title:"Target Range",text:"Tap the targets before they drop. The middle is worth 3, the next ring 2, the edge 1."+(L>1?" Flying orange clays are worth 3!":"")+(L===3?" Some targets slide.":"")+" 40 seconds."},function(){
     G.go=true;
-    loop(function(dt){t-=dt;if(t<=0){finish({stars:starsFor(sc,thr),msg:"You scored "+sc+" points."});return false;}
+    loop(function(dt){t-=dt;if(t<=0){finish({hs:sc,stars:starsFor(sc,thr),msg:"You scored "+sc+" points."});return false;}
       spawn-=dt;if(spawn<=0){spawn=every*(0.7+Math.random()*0.6);
         if(Math.random()<clayP){var fromL=Math.random()<0.5;tg.push({k:"c",x:fromL?-30:c.W+30,y:c.H*(0.45+Math.random()*0.15),vx:(fromL?1:-1)*(260+L*60+Math.random()*80),vy:-(300+Math.random()*120),r:26,rot:0});}
         else tg.push({k:"b",x:R+20+Math.random()*(c.W-2*R-40),y:R+30+Math.random()*(c.H*0.62-2*R-40),r:R,sc:0,age:0,vx:L===3&&Math.random()<0.4?(Math.random()<0.5?-1:1)*90:0});}
@@ -2050,7 +2077,7 @@ start:function(el,L){
     else{fails++;sfx.bad();var pc=Math.max(0,Math.round(100-dist(paintMix(mine),paintMix(tgt))/4.4));
       if(fails>=3){m.innerHTML="The recipe was "+tgt.map(function(v,i){return v?v+" "+PAINTS[i][0].toLowerCase():"";}).filter(Boolean).join(" + ");next(1800);}
       else m.textContent=pc+"% close. "+(3-fails)+" tr"+(3-fails===1?"y":"ies")+" left.";}});
-  function next(ms){r++;later(function(){if(r>=R){finish({stars:pts>=13?3:pts>=10?2:pts>=6?1:0,msg:"You scored "+pts+" of "+(R*3)+" paint points."});}else newT();},ms||900);}
+  function next(ms){r++;later(function(){if(r>=R){finish({hs:pts,stars:pts>=13?3:pts>=10?2:pts>=6?1:0,msg:"You scored "+pts+" of "+(R*3)+" paint points."});}else newT();},ms||900);}
   ready(el,{em:"🎨",title:"Color Mixer",text:"Tap the paint pots to add drops. Red and yellow make orange, blue and yellow make green. Match the secret color, then press Check. 3 tries per color."+(np>3?" Use white to make colors lighter"+(np>4?" and black to make them darker":"")+".":"")},newT);
 }});
 
@@ -2135,7 +2162,7 @@ start:function(el,L){
     loop(function(dt){T-=dt;cust.t-=dt;if(cust.hide>0){cust.hide-=dt;if(cust.hide<=0)drawO();}
       if(cust.t<=0){sfx.bad();newC();}
       w.querySelector("#btP").style.width=Math.max(0,cust.t/cust.max*100)+"%";score("🛍️ "+served+"   ⏱ "+Math.max(0,Math.ceil(T)));
-      if(T<=0){finish({stars:starsFor(served,thr),msg:"You helped "+served+" shopper"+(served===1?"":"s")+". "+(served<thr[2]?"Help "+thr[starsFor(served,thr)]+" for the next star.":"Top seller!")});return false;}});});
+      if(T<=0){finish({hs:served,stars:starsFor(served,thr),msg:"You helped "+served+" shopper"+(served===1?"":"s")+". "+(served<thr[2]?"Help "+thr[starsFor(served,thr)]+" for the next star.":"Top seller!")});return false;}});});
 }});
 
 game({id:"outfit",name:"Outfit Memory",em:"👚",bl:"Study the outfit, then build it again from memory.",tc:"#f3c6ff",levels:true,
@@ -2501,7 +2528,7 @@ start:function(el,L){
       ck.forEach(function(k){k.x-=s*dt;if(!k.got&&Math.abs(k.x-110)<40&&Math.abs(k.y-(gy-30+y))<44){k.got=true;sc+=1;sfx.pop();}});
       obs=obs.filter(function(o){return o.x>-100;});ck=ck.filter(function(k){return k.x>-50&&!k.got;});
       score("⭐ "+sc+"   ⏱ "+Math.max(0,Math.ceil(T-t)));draw();
-      if(hearts<=0||t>=T){finish({stars:starsFor(sc,thr),msg:(hearts<=0?"Out of hearts! ":"You made it! ")+"Score "+sc+". "+(sc<thr[2]?"Get "+thr[starsFor(sc,thr)]+" for the next star.":"Fastest reindeer!")});return false;}});});
+      if(hearts<=0||t>=T){finish({hs:sc,stars:starsFor(sc,thr),msg:(hearts<=0?"Out of hearts! ":"You made it! ")+"Score "+sc+". "+(sc<thr[2]?"Get "+thr[starsFor(sc,thr)]+" for the next star.":"Fastest reindeer!")});return false;}});});
 }});
 
 game({id:"sball",name:"Snowball Fight",em:"❄️",bl:"Throw snowballs at the sneaky elves. Lead the moving ones!",tc:"#d6ecff",levels:true,
@@ -2526,7 +2553,7 @@ start:function(el,L){
         else pops.push({x:b.x1,y:b.y1,t:"💨",c:"#9bb5d6",l:0.6});}});
       balls=balls.filter(function(b){return !b.done;});pops=pops.filter(function(p){p.y-=40*dt;p.l-=dt*1.3;return p.l>0;});
       score("❄️ "+sc+"   ⏱ "+Math.max(0,Math.ceil(T-t)));draw();
-      if(t>=T){finish({stars:starsFor(sc,thr),msg:"You hit "+sc+" elves. "+(sc<thr[2]?"Hit "+thr[starsFor(sc,thr)]+" for the next star.":"Snowball sharpshooter!")});return false;}});});
+      if(t>=T){finish({hs:sc,stars:starsFor(sc,thr),msg:"You hit "+sc+" elves. "+(sc<thr[2]?"Hit "+thr[starsFor(sc,thr)]+" for the next star.":"Snowball sharpshooter!")});return false;}});});
 }});
 
 game({id:"lights",name:"Light Up the Tree",em:"💡",bl:"Each bulb flips its neighbors too. Turn every light on.",tc:"#ffe08a",levels:true,
@@ -2853,7 +2880,7 @@ var WORLDS=[
   {id:"sparkle",name:"Sparkle Studio",em:"✨",pat:"✨💖",bg:"linear-gradient(135deg,#ff8fb1,#b07cff)",body:"linear-gradient(180deg,#3a1450 0%,#7a2f7a 55%,#c2559a 100%)",games:["nails","unicorn","cupcake","bracelet","snowman","draw","colormix","pattern","jewels","boutique","outfit"],bl:"nails, unicorns, cupcakes"},
   {id:"woods",name:"Wild Woods",em:"🌲",pat:"🌲🍂",bg:"linear-gradient(135deg,#7a9a3e,#3e5420)",body:"linear-gradient(180deg,#1a2410 0%,#2f4419 55%,#55702c 100%)",games:["wildlife","deer","targets","tracks","turkey","trailcam","fishing","archery","birds","compass","survival"],bl:"wildlife, deer, targets"},
   {id:"snake",name:"Snake Zone",em:"🐍",pat:"🐍〰️",bg:"linear-gradient(135deg,#2fb36d,#0d5a3a)",body:"linear-gradient(180deg,#06241a 0%,#0d4a32 55%,#1f7a4e 100%)",games:["snake","snakequiz","charmer","ladders","smaze","venom","rattle","sword","lineup"],bl:"grow, guess, charm"},
-  {id:"christmas",name:"Christmas",em:"🎄",pat:"❄️🎄",bg:"linear-gradient(135deg,#e8424f,#a81f30)",body:"linear-gradient(180deg,#0b1834 0%,#0e1f3d 45%,#24477a 100%)",games:["catch","match","fly","whack","keys","balloon","stack","rrun","sball","lights","wsearch"],bl:"gifts, elves, sleigh"},
+  {id:"christmas",name:"Holidays",links:[["tcatch","🥧","Feast Catch","Catch the food, dodge the broccoli."],["ttriv","🦃","Turkey Trivia","Thanksgiving questions, 1 or 2 players."],["twhack","🔨","Whack-a-Turkey","Tap the turkeys when they pop up."],["tstack","🥞","Pie Tower","Stack the pies sky high."],["tmatch","🍂","Harvest Match","Find the matching pairs."],["xdrop","🎁","Present Drop","Land gifts in the chimneys."],["xtriv","🎄","Christmas Trivia","Christmas questions, 1 or 2 players."],["xrace","🦌","Reindeer Race","Race a sister, or race Comet."],["xfly","🛷","Sleigh Ride","Fly past the chimneys."],["xmatch","🎅","Ornament Match","Find the matching ornaments."]],em:"🎄",pat:"❄️🎄",bg:"linear-gradient(135deg,#e8424f,#a81f30)",body:"linear-gradient(180deg,#0b1834 0%,#0e1f3d 45%,#24477a 100%)",games:["catch","match","fly","whack","keys","balloon","stack","rrun","sball","lights","wsearch"],bl:"gifts, elves, sleigh"},
   {id:"brain",name:"Brain Games",em:"🧠",pat:"🧠💡",bg:"linear-gradient(135deg,#4b8cff,#283f9a)",body:"linear-gradient(180deg,#0b1834 0%,#1a2f6a 55%,#3a55b0 100%)",games:["math","word","code","simon","slide","sudoku","memgrid","picross","clock","money"],bl:"math, words, puzzles"},
   {id:"together",name:"Play Together",em:"👯",pat:"👯🎲",bg:"linear-gradient(135deg,#ffc94a,#ff8f3d)",body:"linear-gradient(180deg,#2a1636 0%,#6a2f3a 55%,#c2662f 100%)",games:["race","quiz","ladders","spin","freeze","four","dots","drawg","buzz","membattle"],bl:"race, quiz, dance"}];
 var world=null;
@@ -2885,11 +2912,12 @@ function lastWk(){var d=new Date();d.setDate(d.getDate()-7);return wkKey(d);}
 var _setLv0=setLv;setLv=function(id,i,v){var o=lvOf(id,i);_setLv0(id,i,v);if(v>o)bumpWk(i,v-o);save();};
 var _save0=save;save=function(){_save0();CLOUD.dirty=true;};
 function recP(i){var p=players[i],lv={};for(var id in LV)if(LV.hasOwnProperty(id)&&LV[id][i]>1)lv[id]=LV[id][i];
-  return {n:p.name,a:p.age,av:p.av,nt:p.nt||0,st:p.stars||0,lv:lv,fav:p.fav||[],ft:p.ft||0,wk:p.wk||{},pic:PICS[i]||null,pt:PICT[i]||0,bx:p.bx||0};}
+  return {n:p.name,a:p.age,av:p.av,nt:p.nt||0,st:p.stars||0,lv:lv,fav:p.fav||[],ft:p.ft||0,wk:p.wk||{},pic:PICS[i]||null,pt:PICT[i]||0,bx:p.bx||0,hs:p.hs||{},bd:p.bd||""};}
 function mergeP(i,r){var p=players[i];
-  if((r.nt||0)>(p.nt||0)){if(r.n)p.name=String(r.n).slice(0,16);if(r.a)p.age=+r.a;if(r.av)p.av=r.av;p.nt=r.nt;}
+  if((r.nt||0)>(p.nt||0)){if(r.n)p.name=String(r.n).slice(0,16);if(r.a)p.age=+r.a;if(r.av)p.av=r.av;if(r.bd!=null)p.bd=String(r.bd);p.nt=r.nt;}
   if((r.st||0)>(p.stars||0))p.stars=r.st;
   if((r.bx||0)>(p.bx||0))p.bx=r.bx;
+  if(r.hs)for(var hk in r.hs)if(r.hs.hasOwnProperty(hk)&&(+r.hs[hk]||0)>(p.hs[hk]||0))p.hs[hk]=+r.hs[hk];
   if(r.lv)for(var id in r.lv)if(r.lv.hasOwnProperty(id)&&r.lv[id]>lvOf(id,i)){if(!LV[id])LV[id]={};LV[id][i]=Math.min(MAXLV,+r.lv[id]);}
   if((r.ft||0)>(p.ft||0)){p.fav=(r.fav||[]).slice(0,12);p.ft=r.ft;}
   if(r.wk)for(var k in r.wk)if(r.wk.hasOwnProperty(k)&&(r.wk[k]||0)>(p.wk[k]||0))p.wk[k]=r.wk[k];
@@ -2920,8 +2948,36 @@ function isLocked(id){var k=ADV.indexOf(id);return k>=0&&k>=unlockedN();}
 function lvToUnlock(id){var k=ADV.indexOf(id);return Math.max(1,(k+1)*2-famLv());}
 function leadLv(i){var m=0;[0,1,2].forEach(function(j){if(j!==i)m=Math.max(m,totalLv(j));});return m;}
 
+
+/* ================= high scores (per game, per sister; no overall ranking) ================= */
+players.forEach(function(p){if(!p.hs||typeof p.hs!=="object")p.hs={};});
+function recHS(o){if(typeof o.hs!=="number"||o.award||!G||!G.g||o.hs<=0)return "";var p=players[cur],id=G.g.id,old=p.hs[id]||0;
+  if(o.hs<=old)return "<div class='pbest' style='opacity:.75'>Your best: "+old+"</div>";
+  p.hs[id]=o.hs;save();return "<div class='pbest'>🏆 "+(old?"New personal best! "+o.hs+" (was "+old+")":"First score saved: "+o.hs)+"</div>";}
+function openRecords(){var o=h("div","brk msgs"),me=favWho(),rows=[];
+  WORLDS.forEach(function(w){w.games.forEach(function(id){var g=byId(id);if(!g||!g.levels)return;
+    var any=players.some(function(p,i){return (p.hs&&p.hs[id])||lvOf(id,i)>1;});if(any)rows.push(g);});});
+  o.innerHTML="<div class='card'><h2>🏆 High scores</h2><p class='hsnote'>Each sister's best score and level in every game she has played. Beat your own record to get a 🏆.</p>"+
+    (rows.length?"<div class='hswrap'><table class='hst'><tr><th></th>"+players.map(function(p){return "<th>"+AVH(p)+"<br>"+esc(p.name)+"</th>";}).join("")+"</tr>"+
+    rows.map(function(g){var best=Math.max.apply(null,players.map(function(p){return (p.hs&&p.hs[g.id])||0;}));
+      return "<tr><td>"+g.em+" "+esc(g.name)+"</td>"+players.map(function(p,i){var v=(p.hs&&p.hs[g.id])||0,l=lvOf(g.id,i);
+        return "<td class='"+(i===me?"me":"")+"'>"+(v?(v===best&&best>0?"🥇 ":"")+v:"–")+"<small>Level "+l+"</small></td>";}).join("")+"</tr>";}).join("")+"</table></div>"
+    :"<p>No scores yet. Play a game and get 2 stars to start the board!</p>")+"<button class='btn' id='hsClose'>Close</button></div>";
+  o.querySelector("#hsClose").addEventListener("click",function(){o.remove();});document.body.appendChild(o);}
+/* ================= countdown list with dates ================= */
+var MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+function fmtD(d){return MON[d.getMonth()]+" "+d.getDate();}
+function openCount(){var o=h("div","brk msgs"),ev=nextEvents(10);
+  o.innerHTML="<div class='card'><h2>📅 Coming up</h2><div class='mlist cdlist'>"+ev.map(function(e){return "<div class='mitem'><b>"+(e.d===0?"Today":e.d)+"</b><div><p>"+e.em+" "+e.name+"</p><small>"+fmtD(e.dt)+(e.d===0?"":e.d===1?" · 1 sleep":" · "+e.d+" sleeps")+"</small></div></div>";}).join("")+
+    "</div><p class='hsnote'>Add birthdays in ⭐ Stars &amp; names.</p><button class='btn' id='cdClose'>Close</button></div>";
+  o.querySelector("#cdClose").addEventListener("click",function(){o.remove();});document.body.appendChild(o);}
+/* ================= check for update button ================= */
+function checkUpdate(btn){btn.disabled=true;fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.json():null;}).then(function(j){btn.disabled=false;
+  if(j&&j.v&&j.v!==APPV){toast("Updating…");setTimeout(function(){location.replace(location.pathname+"?v="+encodeURIComponent(j.v)+location.hash);},400);}
+  else if(j)toast("You have the newest version ✓");else toast("Couldn't check right now");}).catch(function(){btn.disabled=false;toast("Couldn't check right now");});}
+
 /* ================= "new version" banner ================= */
-var APPV="2026.11.26c";
+var APPV="2026.11.26d";
 function verCheck(){if(!/^https?:$/.test(location.protocol)||/claude|localhost|127\.0/.test(location.hostname))return;
   fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.json():null;}).then(function(j){
     if(!j||!j.v||j.v===APPV||document.querySelector(".upd"))return;var b=h("button","upd","✨ New version! Tap to update");
@@ -2975,6 +3031,8 @@ function openWorld(w){world=w;LS.set("cg-world",w.id);$("#home").hidden=true;$("
     b.addEventListener("click",function(){sfx.pop();openGame(g);});
     var fw=favWho(),fb=h("button","fvb"+(players[fw].fav.indexOf(id)>=0?" on":""),players[fw].fav.indexOf(id)>=0?"★":"☆");fb.setAttribute("aria-label","Favorite");
     fb.addEventListener("click",function(e){e.stopPropagation();var w=favWho();toggleFav(w,id);var on=players[w].fav.indexOf(id)>=0;fb.textContent=on?"★":"☆";fb.classList.toggle("on",on);sfx.tick();});b.appendChild(fb);box.appendChild(b);});
+  (w.links||[]).forEach(function(x){var b=h("button","tile","<span class='tag'>Holiday classic</span><span class='em'>"+x[1]+"</span><span class='nm'>"+x[2]+"</span><span class='bl'>"+x[3]+"</span>");
+    b.style.setProperty("--tc",x[0].charAt(0)==="t"?"#ffb36b":"#ff9aa5");b.addEventListener("click",function(){sfx.pop();location.href="hq.html#g="+x[0];});box.appendChild(b);});
   scrollTo(0,0);}
 function goHome(){world=null;LS.set("cg-world","");$("#wview").hidden=true;$("#home").hidden=false;document.body.classList.remove("inworld");}
 $("#wback").addEventListener("click",function(){sfx.tick();goHome();});
@@ -2982,9 +3040,10 @@ $("#wback").addEventListener("click",function(){sfx.tick();goHome();});
 function nthDow(y,m,dow,n){var d=new Date(y,m,1),c=0;while(true){if(d.getDay()===dow){c++;if(c===n)return d;}d.setDate(d.getDate()+1);}}
 function easter(y){var a=y%19,b=Math.floor(y/100),c=y%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451),mo=Math.floor((h+l-7*m+114)/31),da=((h+l-7*m+114)%31)+1;return new Date(y,mo-1,da);}
 function holidays(y){var L=[[new Date(y,0,1),"🎆","New Year's Day","Happy New Year!"],[new Date(y,1,14),"💝","Valentine's Day","Happy Valentine's Day!"],[new Date(y,2,17),"🍀","St. Patrick's Day","Happy St. Patrick's Day!"],[easter(y),"🐣","Easter","Happy Easter!"],[nthDow(y,4,0,2),"💐","Mother's Day","Happy Mother's Day!"],[nthDow(y,5,0,3),"👔","Father's Day","Happy Father's Day!"],[new Date(y,6,4),"🎇","4th of July","Happy 4th of July!"],[new Date(y,9,31),"🎃","Halloween","Happy Halloween!"],[nthDow(y,10,4,4),"🦃","Thanksgiving","Happy Thanksgiving!"],[new Date(y,11,25),"🎄","Christmas","Merry Christmas!"]];
+  players.forEach(function(p){var q=String(p.bd||"").split("-");if(q.length===2&&+q[0]&&+q[1])L.push([new Date(y,+q[0]-1,+q[1]),"🎂",esc(p.name)+"'s birthday","Happy birthday, "+esc(p.name)+"!"]);});
   (LS.get("cg-bdays",[])||[]).forEach(function(b){var p=String(b[1]||"").split("-");if(p.length===2)L.push([new Date(y,+p[0]-1,+p[1]),"🎂",esc(b[0])+"'s birthday","Happy birthday, "+esc(b[0])+"!"]);});return L;}
 function nextEvents(n){var now=new Date(),t0=new Date(now.getFullYear(),now.getMonth(),now.getDate()),y=now.getFullYear(),L=holidays(y).concat(holidays(y+1));
-  return L.map(function(e){return {d:Math.round((e[0]-t0)/864e5),em:e[1],name:e[2],happy:e[3]};}).filter(function(e){return e.d>=0;}).sort(function(a,b){return a.d-b.d;}).slice(0,n||2);}
+  return L.map(function(e){return {d:Math.round((e[0]-t0)/864e5),em:e[1],name:e[2],happy:e[3],dt:e[0]};}).filter(function(e){return e.d>=0;}).sort(function(a,b){return a.d-b.d;}).slice(0,n||2);}
 function countdown(){var now=new Date(),y=now.getFullYear(),x=new Date(y,11,25);if(now.getMonth()===11&&now.getDate()>25)x=new Date(y+1,11,25);
   var e=nextEvents(1)[0];$("#cd").innerHTML=e.d===0?"<b>"+e.happy+"</b>":"<b>"+e.d+"</b> sleep"+(e.d===1?"":"s")+" until "+e.em+" "+e.name;}
 
@@ -3023,11 +3082,13 @@ $("#edit").addEventListener("click",function(){var sh=$("#sheet");sh.hidden=fals
   var sb=sh.querySelector("#sb");players.map(function(p,i){return [p,i];}).sort(function(a,b){return b[0].stars-a[0].stars;}).forEach(function(x){var r=h("div","starrow","<span class='av'>"+AVH(x[0])+"</span><span class='nm'>"+esc(x[0].name)+"</span><span class='ct'>★ "+x[0].stars+" <small style='font-size:16px;opacity:.85'>🏅 "+totalLv(x[1])+"</small></span>");r.style.background=COLORS[x[1]];sb.appendChild(r);
     var t=totalLv(x[1]),sf=h("div","shelf",BADGES.map(function(b){return badgeHTML(b,t>=b[1]);}).join(""));sb.appendChild(sf);});
   famPanel(sh.querySelector("#famBox"));var eds=sh.querySelector("#eds");
-  players.forEach(function(p,i){var r=h("div","edrow","<button class='avb'>"+AVH(p)+"</button><button class='phb'>📷<br>Photo</button><input id='nm"+i+"' maxlength='16' value='"+esc(p.name)+"' aria-label='Name'><select id='ag"+i+"' aria-label='Age'>"+[4,5,6,7,8,9,10,11,12,13].map(function(a){return "<option"+(a===p.age?" selected":"")+">"+a+"</option>";}).join("")+"</select>");
+  players.forEach(function(p,i){var r=h("div","edrow","<button class='avb'>"+AVH(p)+"</button><button class='phb'>📷<br>Photo</button><input id='nm"+i+"' maxlength='16' value='"+esc(p.name)+"' aria-label='Name'><select id='ag"+i+"' aria-label='Age'>"+[4,5,6,7,8,9,10,11,12,13].map(function(a){return "<option"+(a===p.age?" selected":"")+">"+a+"</option>";}).join("")+"</select>"+
+      (function(){var q=String(p.bd||"").split("-"),bm=+q[0]||0,bd=+q[1]||0;return "<div class='bdrow'>🎂 Birthday <select class='bm' aria-label='Birthday month'><option value='0'>Month</option>"+MON.map(function(m,k){return "<option value='"+(k+1)+"'"+(bm===k+1?" selected":"")+">"+m+"</option>";}).join("")+"</select><select class='bdd' aria-label='Birthday day'><option value='0'>Day</option>"+Array.apply(null,Array(31)).map(function(x,k){return "<option"+(bd===k+1?" selected":"")+">"+(k+1)+"</option>";}).join("")+"</select></div>";})());
     var avb=r.querySelector(".avb");avb.addEventListener("click",function(){if(PICS[i]){delete PICS[i];LS.set("cg-pics",PICS);PICT[i]=Date.now();LS.set("cg-pict",PICT);}else{p.av=AVATARS[(AVATARS.indexOf(p.av)+1)%AVATARS.length];p.nt=Date.now();}avb.innerHTML=AVH(p);});
     r.querySelector(".phb").addEventListener("click",function(){photoPicker(i,function(){avb.innerHTML=AVH(p);});});
     r.querySelector("input").addEventListener("input",function(){p.name=this.value.trim()||("Player "+(i+1));p.nt=Date.now();});
-    r.querySelector("select").addEventListener("change",function(){p.age=+this.value;p.nt=Date.now();});eds.appendChild(r);});
+    r.querySelector("select").addEventListener("change",function(){p.age=+this.value;p.nt=Date.now();});
+    [].forEach.call(r.querySelectorAll(".bm,.bdd"),function(sel){sel.addEventListener("change",function(){var m=+r.querySelector(".bm").value,d=+r.querySelector(".bdd").value;p.bd=m&&d?("0"+m).slice(-2)+"-"+("0"+d).slice(-2):"";p.nt=Date.now();save();mainCount();});});eds.appendChild(r);});
   sh.querySelector("#setupIn").addEventListener("input",function(){var ok=applySetup(this.value.trim());if(ok){this.value="";this.placeholder="✅ Loaded! Tap Done.";players.forEach(function(p,i){var a=sh.querySelector("#nm"+i);if(a)a.value=p.name;var g=sh.querySelector("#ag"+i);if(g)g.value=p.age;});}});
   sh.querySelector("#rs").addEventListener("click",function(){resetN++;if(resetN<2){this.textContent="Tap again to reset";return;}players.forEach(function(p){p.stars=0;});this.textContent="Stars reset";});
   sh.querySelector("#ok").addEventListener("click",function(){save();sh.hidden=true;sh.innerHTML="";renderStars();if(FAM)cloudSync();});
@@ -3065,8 +3126,8 @@ function dayNo(){var n=new Date();return Math.floor((new Date(n.getFullYear(),n.
 var DAYS=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],MONTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];
 function tickClock(){var n=new Date(),hh=n.getHours()%12||12,mm=("0"+n.getMinutes()).slice(-2);$("#clock").textContent=hh+":"+mm;$("#mdate").textContent=DAYS[n.getDay()]+", "+MONTHS[n.getMonth()]+" "+n.getDate();}
 function mainCount(){var now=new Date(),y=now.getFullYear(),x=new Date(y,11,25);if(now.getMonth()===11&&now.getDate()>25)x=new Date(y+1,11,25);
-  var ev=nextEvents(2),e=ev[0],nx=ev[1];$("#cdK").textContent=e.em+" "+e.name.replace(/&#39;/g,"'");$("#cdN").textContent=e.d===0?e.em:e.d;
-  $("#cdS").innerHTML=(e.d===0?e.happy:e.d===1?"sleep to go!":"sleeps to go")+(nx?"<small class='cdnx'>Then "+nx.em+" "+nx.name+" in "+nx.d+"</small>":"");}
+  var ev=nextEvents(2),e=ev[0],nx=ev[1];$("#cdK").textContent=e.em+" "+e.name.replace(/&#39;/g,"'")+" · "+fmtD(e.dt);$("#cdN").textContent=e.d===0?e.em:e.d;
+  $("#cdS").innerHTML=(e.d===0?e.happy:e.d===1?"sleep to go!":"sleeps to go")+(nx?"<small class='cdnx'>Then "+nx.em+" "+nx.name+" ("+fmtD(nx.dt)+") in "+nx.d+"</small>":"");}
 function renderStars(){if($("#bstrip"))renderBadgeStrip();var r=$("#srow");r.innerHTML="";players.forEach(function(p,i){var s=h("span","","<span class='av' style='background:"+COLORS[i]+"'>"+AVH(p)+"</span><span><b>"+(isChamp(i)?"👑 ":"")+esc(p.name)+"</b><small>★ "+p.stars+" · 🏅 "+totalLv(i)+" · 🎖️ "+badgesFor(i)+"/"+BADGES.length+"</small></span>");r.appendChild(s);});var cl=$("#crownL");if(!cl){cl=h("span","crown");cl.id="crownL";r.parentNode.appendChild(cl);}cl.innerHTML=crownLine();renderFav();renderMsg();}
 var jk=JOKES[((dayNo()%JOKES.length)+JOKES.length)%JOKES.length];
 function renderJoke(){$("#jokeQ").textContent=jk[0];$("#jokeA").textContent="Tap for the answer";$("#joke").classList.remove("open");}
@@ -3074,13 +3135,16 @@ $("#joke").addEventListener("click",function(){if(this.classList.contains("msgmo
 $("#lgSvg").innerHTML=AZLOGO;
 function showMain(){world=null;["#home","#wview","#stage"].forEach(function(s){$(s).hidden=true;});$("#main").hidden=false;document.body.classList.remove("inworld");renderStars();scrollTo(0,0);}
 function showGames(){world=null;$("#main").hidden=true;$("#wview").hidden=true;$("#home").hidden=false;document.body.classList.remove("inworld");scrollTo(0,0);}
-$("#toGames").addEventListener("click",function(){sfx.pop();showGames();});
+$("#toGames").addEventListener("click",function(e){var wb=e.target.closest?e.target.closest("[data-w]"):null;sfx.pop();showGames();if(wb)openWorld(WORLDS[+wb.dataset.w]);});
+$("#upd2").addEventListener("click",function(){sfx.tick();checkUpdate(this);});
+$("#cdTile").addEventListener("click",function(){sfx.pop();openCount();});
 $("#gback").addEventListener("click",function(){sfx.tick();showMain();});
-$("#starsTile").addEventListener("click",function(){$("#edit").click();});
+$("#starsTile").addEventListener("click",function(e){if(e.target.closest&&e.target.closest("#hsBtn")){sfx.pop();openRecords();return;}$("#edit").click();});
 $("#edit2").addEventListener("click",function(){$("#edit").click();});
 $("#mute2").addEventListener("click",function(){$("#mute").click();this.textContent=muted?"🔇":"🔊";});
 $("#mute2").textContent=muted?"🔇":"🔊";
 tickClock();setInterval(tickClock,10000);mainCount();renderJoke();renderStars();if(FAM)cloudSync();verCheck();
+(function(){var m=(location.hash||"").match(/[#&]w=(\w+)/);if(!m)return;for(var k=0;k<WORLDS.length;k++)if(WORLDS[k].id===m[1]){showGames();openWorld(WORLDS[k]);try{history.replaceState(null,"",location.pathname+location.search);}catch(e){}}})();
 if(!STANDALONE&&!window.SETUP_OK&&!LS.get("cg-tip-off",false)&&(ANDROID||/iPad|iPhone|Macintosh/.test(navigator.userAgent)&&("ontouchend" in document))){(function(){var b=h("div","a2tip","<div><b>Make it an app:</b> "+(ANDROID?"tap the menu, then Add to Home screen.":"tap Share, then Add to Home Screen.")+"</div><button aria-label='Show how'>How?</button><button aria-label='Hide tip'>✕</button>");document.body.appendChild(b);var bs=b.querySelectorAll("button");
   bs[0].addEventListener("click",function(){var t=h("div","ready","<div class='card'><div class='em'>📲</div><h2>Add to Home Screen</h2>"+A2HS+"<button class='btn go'>Got it</button></div>");t.style.position="fixed";t.style.zIndex="60";document.body.appendChild(t);t.querySelector(".go").addEventListener("click",function(){t.remove();});});
   bs[1].addEventListener("click",function(){LS.set("cg-tip-off",true);b.remove();});})();}
