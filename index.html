@@ -68,6 +68,14 @@ button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 .newbdg{display:flex;align-items:center;justify-content:center;gap:14px;margin:0 0 14px;font-weight:900;font-size:22px;text-align:left}
 .newbdg small{font-size:14px;opacity:.8}
 @keyframes bpop{0%{transform:scale(.2) rotate(-30deg)}70%{transform:scale(1.15) rotate(6deg)}100%{transform:none}}
+.wlearn{background:var(--snow);color:var(--ink);border-radius:26px;padding:18px 22px 20px;max-width:640px;width:100%;box-sizing:border-box;text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 14px 40px rgba(0,0,0,.35);border-top:8px solid var(--mint)}
+.wlearn.no{border-top-color:var(--candy)}
+.wlh{font-weight:900;font-size:clamp(18px,2.4vw,22px)}
+.wlpic{font-size:clamp(60px,11vh,96px);line-height:1}
+.wlname{font-family:var(--display);font-weight:700;font-size:clamp(26px,3.6vw,36px)}
+.wlclue{font-weight:700;font-size:17px;opacity:.75}
+.wlfact{font-weight:700;font-size:clamp(17px,2.2vw,20px);line-height:1.4;background:#fff4d6;border-radius:16px;padding:12px 14px;text-align:left}
+.wnext{margin-top:6px}
 .wgh{position:absolute;left:0;right:0;top:10px;text-align:center;font-family:var(--display);font-size:clamp(20px,3vw,30px);color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.5);pointer-events:none}
 .wpic{font-size:clamp(70px,14vh,130px);line-height:1}
 .wclue{font-size:clamp(22px,3.4vw,36px)}
@@ -337,6 +345,32 @@ body.inworld{background-image:var(--wbody)}
 .gt-joke .s{margin-top:auto;padding-top:8px}
 .gt-joke.open .s{color:var(--snow);font-family:var(--display);font-weight:600;font-size:19px}
 .gt-badges{grid-column:span 2}
+/* home fits one iPad screen: the grid fills what's left under the header */
+body{margin:0}
+#main{height:100vh;height:100dvh;display:flex;flex-direction:column;box-sizing:border-box;padding-block:12px 14px}
+#main .mgrid2{flex:1;min-height:0;grid-template-rows:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) auto;grid-auto-rows:auto;gap:12px;margin-top:12px}
+#main .gt{min-height:0;padding:14px 18px}
+#main .gt-stars{padding-bottom:12px}
+#main .srow2{margin-top:6px}
+#main .srow2 > span{padding:6px 10px}
+#main .srow2 .av{width:40px;height:40px;font-size:26px}
+@media (orientation:landscape) and (max-height:900px){
+  .mleft{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+  .mleft .logo{align-self:center}
+  .clock{font-size:46px;margin-top:0}
+  .mdate{margin-top:0}
+  #main .gt .em{font-size:60px}
+  #main .gt-games .h{font-size:40px}
+  #main .wm i{font-size:24px}
+  #main .wm span{padding:7px 4px}
+  #main .gt-cd .big{font-size:56px}
+}
+@media (max-width:820px){
+  #main .mgrid2{grid-template-rows:minmax(0,1.25fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) auto}
+  #main .wm{grid-template-columns:repeat(6,1fr)}
+  #main .bstrip .bi{width:40px;height:40px}
+  #main .gt-badges .s{display:none}
+}
 .a2hs{text-align:left;margin:10px auto 16px;max-width:420px;padding-left:24px;display:flex;flex-direction:column;gap:8px;font-weight:700;line-height:1.4}
 .a2tip{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;align-items:center;gap:10px;background:#fff7ee;color:#2b1d55;border-radius:999px;padding:8px 8px 8px 18px;font-weight:700;font-size:15px;box-shadow:0 8px 30px rgba(0,0,0,.4);max-width:calc(100% - 32px)}
 .a2tip button{font:inherit;font-weight:900;border:0;border-radius:999px;padding:8px 14px;background:#ffb35c;color:#2b1d55}
@@ -1520,6 +1554,140 @@ var WILD={
   ca:{n:"Canada",em:"🍁",a:[["🫎","Moose","I'm huge, and I can swim and dive for plants."],["🦫","Beaver","I'm Canada's national animal."],["🐻‍❄️","Polar bear","Churchill, Manitoba is called my capital."],["🦢","Canada goose","I fly south in a V shape and honk."],["🦉","Snowy owl","I'm a white owl who visits in winter."],["🐋","Beluga whale","I'm white and I'm called the canary of the sea."],["🐺","Wolf","I howl across the northern forests."],["🦝","Raccoon","Toronto is full of us raiding trash cans!"]]},
   mx:{n:"Mexico & Central America",em:"🌮",a:[["🦜","Scarlet macaw","I'm a red, yellow and blue parrot."],["🐆","Jaguar","The ancient Maya thought I was powerful and special."],["🦋","Monarch butterfly","Millions of us fly to Mexico every winter."],["🐒","Spider monkey","I use my tail like a fifth arm."],["🦥","Three-toed sloth","Green algae grows in my fur."],["🐸","Red-eyed tree frog","I have bright red eyes and orange feet."],["","Axolotl","I'm a smiling salamander who can regrow my legs."],["🦈","Whale shark","I'm the biggest fish in the world, but I only eat tiny plankton."]]}
 };
+var WFACT={
+"Lion":"Lions are the only cats that live in big family groups called prides. The lionesses do most of the hunting.",
+"African elephant":"An elephant's trunk has about 40,000 muscles. It can pick up a single peanut or spray a shower of water.",
+"Giraffe":"A giraffe's tongue is about 20 inches long and dark purple, which helps keep it from getting sunburned.",
+"Zebra":"Baby zebras learn their mom's stripe pattern so they can find her in the herd.",
+"Hippo":"Hippos can't really swim. They walk or bounce along the bottom of the river.",
+"Rhino":"A rhino's horn is made of keratin, the same stuff as your fingernails.",
+"Cheetah":"A cheetah can go from 0 to 60 miles an hour in about 3 seconds, as fast as a sports car.",
+"Nile crocodile":"Crocodile moms carry their babies gently in their mouths to get them to the water.",
+"Flamingo":"Flamingos are born gray. They turn pink from the food they eat.",
+"Gorilla":"Gorillas build a fresh nest of leaves to sleep in every night.",
+"Camel":"A camel's hump stores fat, not water. A thirsty camel can drink 30 gallons in about 13 minutes.",
+"Baboon":"Baboons live in troops of up to 100 and talk to each other with more than 30 different sounds.",
+"Giant panda":"A panda eats up to 40 pounds of bamboo a day and has an extra thumb-like bone to hold it.",
+"Tiger":"No two tigers have the same stripes, and the stripes are on their skin too, not just their fur.",
+"Orangutan":"Orangutans use big leaves as umbrellas when it rains.",
+"Bactrian camel":"Bactrian camels can eat snow for water and handle temperatures from freezing cold to very hot.",
+"Peacock":"Only the boys (peacocks) have the fancy tail. The girls are called peahens.",
+"King cobra":"King cobras are the only snakes that build nests for their eggs.",
+"Snow monkey":"Snow monkeys in Japan have been seen making snowballs just to play with them.",
+"Komodo dragon":"Komodo dragons can grow 10 feet long and smell food from miles away with their forked tongue.",
+"Asian elephant":"Asian elephants can recognize themselves in a mirror, which only a few animals can do.",
+"Yak":"Yaks live higher up in the mountains than almost any other big animal, up to 20,000 feet.",
+"Hedgehog":"A hedgehog has about 5,000 to 7,000 spines, and it can't shoot them like a porcupine.",
+"Red fox":"Red foxes can hear a mouse squeak from about 100 feet away.",
+"Wild boar":"Wild boars have a super nose and can smell food buried deep under the ground.",
+"Reindeer":"Reindeer noses warm up the cold air before it reaches their lungs.",
+"Badger":"Badger homes, called setts, can have tunnels that are hundreds of years old.",
+"Wolf":"A wolf's howl can be heard up to 6 miles away in the forest.",
+"Swan":"Swans usually keep the same partner for their whole life.",
+"Red squirrel":"Red squirrels can bury thousands of nuts each fall, and the forgotten ones grow into trees.",
+"Eagle owl":"An owl can turn its head about three quarters of the way around.",
+"Gray seal":"Gray seals can hold their breath for over an hour and dive more than 1,000 feet.",
+"Llama":"Llamas hum to each other, and a group of them can guard sheep from coyotes.",
+"Sloth":"Sloths only come down from their tree about once a week to go to the bathroom.",
+"Jaguar":"Jaguars have the strongest bite of any big cat, strong enough to crack a turtle shell.",
+"Macaw":"Macaws can live 50 years or more and some learn to say words.",
+"Poison dart frog":"Some poison dart frogs are smaller than a paper clip.",
+"Anaconda":"Green anacondas can weigh over 500 pounds, about as much as a piano.",
+"Howler monkey":"A howler monkey's call can be heard 3 miles away through thick jungle.",
+"Galápagos tortoise":"Galápagos tortoises can go a whole year without eating or drinking.",
+"Piranha":"Most piranhas actually eat seeds, fruit and bugs, not just meat.",
+"Caiman":"Caimans have bony plates in their skin, like built-in armor.",
+"Kangaroo":"A baby kangaroo, called a joey, is only as big as a jellybean when it's born.",
+"Koala":"Koalas have fingerprints that look almost exactly like human fingerprints.",
+"Platypus":"Boy platypuses have a venom spur on their back feet, and platypuses glow under black light.",
+"Emu":"Emu dads sit on the eggs for about 8 weeks without eating.",
+"Cockatoo":"Cockatoos can dance to music, bobbing their heads to the beat.",
+"Saltwater crocodile":"Saltwater crocodiles can swim far out to sea and grow over 20 feet long.",
+"Clownfish":"All clownfish are born boys, and the biggest one can turn into a girl.",
+"Dingo":"Dingoes don't bark like pet dogs. They howl instead.",
+"Wombat":"Wombats have a backwards pouch so dirt doesn't get in when they dig.",
+"Sea turtle":"Sea turtles can sleep underwater for hours by slowing down their heartbeat.",
+"Emperor penguin":"Emperor penguins huddle in a big group and take turns standing in the warm middle.",
+"Leopard seal":"Leopard seals are one of the top hunters in Antarctica, along with orcas.",
+"Blue whale":"A blue whale's heart is about the size of a small car.",
+"Krill":"Krill are tiny, but there are so many that they weigh more than all the people on Earth.",
+"Albatross":"An albatross can fly for hours without flapping its wings once.",
+"Orca":"Orcas are actually the biggest kind of dolphin, and each family has its own way of talking.",
+"Polar bear":"A polar bear's fur looks white, but its skin underneath is black to soak up heat.",
+"Walrus":"Walruses can sleep while floating, using air sacs in their neck like a pool float.",
+"Arctic fox":"Arctic foxes have fur on the bottoms of their feet to keep their toes warm.",
+"Snowy owl":"Snowy owls can eat over 1,000 lemmings in one year.",
+"Beluga whale":"Belugas can move their heads up, down and side to side because their neck bones aren't joined.",
+"Caribou":"Caribou hooves change with the seasons: soft pads in summer and sharp edges in winter for ice.",
+"Great white shark":"Great white sharks can sense a tiny bit of blood from far away and have about 300 teeth.",
+"Octopus":"An octopus has blue blood and can squeeze through any hole bigger than its beak.",
+"Dolphin":"Dolphins give each other names, using a special whistle for each friend.",
+"Humpback whale":"Humpback whale songs can last 20 minutes and travel for miles underwater.",
+"Jellyfish":"Jellyfish have been around for over 500 million years, longer than dinosaurs.",
+"Crab":"Crabs can grow back a claw if they lose one.",
+"Pufferfish":"A pufferfish can puff up to 3 times its size by gulping water.",
+"Lobster":"Lobsters taste with their legs and can live over 100 years.",
+"Western diamondback":"A rattlesnake adds a new segment to its rattle every time it sheds its skin.",
+"Gila monster":"Gila monsters store fat in their fat tails and may only eat a few times a year.",
+"Coyote":"Coyotes can run up to 40 miles an hour and live in cities like Phoenix too.",
+"Roadrunner":"Roadrunners would rather run than fly. They're the state bird of New Mexico, right next door to Arizona.",
+"Scorpion":"The Arizona bark scorpion can climb walls and ceilings, so always shake out your shoes.",
+"Javelina":"Javelinas aren't real pigs. They're cousins called peccaries and they smell a bit skunky.",
+"Elf owl":"Elf owls are about the size of a sparrow and move into old woodpecker holes in saguaros.",
+"Tarantula":"Girl tarantulas can live 25 years or more.",
+"Jackrabbit":"Jackrabbits are really hares, and they can jump 10 feet in one hop.",
+"Bighorn sheep":"A bighorn ram's horns can weigh 30 pounds, more than all the bones in its body.",
+"Grizzly bear":"Grizzlies can smell food from miles away, better than a bloodhound.",
+"Moose":"Moose can dive almost 20 feet underwater to eat plants.",
+"Beaver":"Beavers' front teeth are orange because they have iron in them, which makes them super strong.",
+"Salmon":"Salmon find their way back to the exact stream where they were born, using their sense of smell.",
+"Sea otter":"Sea otters keep a favorite rock in a pocket of skin under their arm to crack open shells.",
+"Mountain goat":"Baby mountain goats can climb steep rocks just hours after they're born.",
+"Gray wolf":"When wolves came back to Yellowstone, even the rivers changed because elk stopped overeating the trees.",
+"Bald eagle":"Bald eagles aren't bald. Their white head feathers only grow in when they're about 5 years old.",
+"Mountain lion":"Mountain lions can't roar. They purr, hiss and chirp like a giant house cat.",
+"Elk":"A bull elk's antlers can grow an inch a day in summer.",
+"Bison":"Bison can run 35 miles an hour and jump 6 feet high, even though they weigh a ton.",
+"Wild turkey":"Wild turkeys can see in color and have almost 360 degree vision.",
+"White-tailed deer":"Fawns have almost no smell when they're born, which helps them hide from predators.",
+"Prairie dog":"Prairie dogs 'kiss' to say hello and have different alarm calls for hawks, coyotes and people.",
+"Skunk":"A skunk can spray about 10 feet, and it stamps its feet as a warning first.",
+"Raccoon":"Raccoons have super sensitive paws and can open jars and latches.",
+"Red-tailed hawk":"The scream you hear for eagles in movies is usually a red-tailed hawk.",
+"Cottontail rabbit":"Cottontails zigzag when they run to escape foxes and hawks.",
+"Box turtle":"Box turtles can live over 100 years.",
+"Alligator":"Alligators have about 80 teeth and grow new ones when old ones fall out, up to 3,000 in a lifetime.",
+"Manatee":"Manatees' closest relatives are elephants, and they never leave the water.",
+"Loggerhead turtle":"Loggerhead babies use the moon's light on the ocean to find their way after hatching.",
+"Florida panther":"Florida panthers are very rare, with only about 200 left in the wild.",
+"Cottonmouth":"Cottonmouths can swim with their whole body floating on top of the water.",
+"Roseate spoonbill":"Spoonbills swing their spoon-shaped beaks side to side in the water to catch food.",
+"Armadillo":"Armadillos can hold their breath for 6 minutes and walk across the bottom of a stream.",
+"Green tree frog":"Tree frogs have sticky toe pads so they can climb glass windows.",
+"Crawfish":"Crawfish can walk backwards super fast by flipping their tails.",
+"Black bear":"Black bears aren't always black. They can be brown, cinnamon or even white.",
+"Cardinal":"Girl cardinals sing too, often from the nest to talk with their mate.",
+"Barred owl":"Barred owls have dark eyes, while most owls have yellow eyes.",
+"Gray squirrel":"Gray squirrels pretend to bury nuts to trick other squirrels watching them.",
+"Little brown bat":"A little brown bat can eat 1,000 mosquitoes in an hour.",
+"Kodiak bear":"A Kodiak bear standing up can be 10 feet tall.",
+"Dall sheep":"Dall sheep have hooves with grippy pads that work like climbing shoes.",
+"Green sea turtle":"Green sea turtles are green because of the green fat under their shell from eating seaweed.",
+"Monk seal":"Hawaiian monk seals have been around for millions of years and are very rare.",
+"Spinner dolphin":"Spinner dolphins can spin 7 times in one jump.",
+"Humuhumunukunukuāpuaʻa":"Its name means 'triggerfish with a snout like a pig', and it can grunt.",
+"Tiger shark":"Tiger sharks eat almost anything, even license plates have been found in their bellies.",
+"Day octopus":"Octopuses can change color in less than a second to match the reef.",
+"Nene":"The nene is the rarest goose in the world and has less webbing on its feet for walking on lava.",
+"Canada goose":"Geese fly in a V so each bird gets a lift from the one in front.",
+"Scarlet macaw":"Macaws eat clay from riverbanks to help their tummies.",
+"Monarch butterfly":"Monarchs fly up to 3,000 miles to Mexico, and none of them has made the trip before.",
+"Spider monkey":"Spider monkeys can hang from their tail while eating with both hands.",
+"Three-toed sloth":"Sloths can turn their heads almost all the way around.",
+"Red-eyed tree frog":"Red-eyed tree frogs flash their bright eyes to startle predators.",
+"Axolotl":"Axolotls can regrow legs, tails and even parts of their heart and brain.",
+"Whale shark":"Each whale shark has its own pattern of spots, like a fingerprint."
+};
 var NAPICK=["sw","nw","mw","se","ne","ak","hi","ca","mx"];
 function wildGlobe(el,onPick){
   var c=canvasIn(el),cx=c.cx,lam0=-100,phi0=25,R=0,ox=0,oy=0,drag=null,spin=true,hover=null,D2R=Math.PI/180;
@@ -1573,12 +1741,14 @@ start:function(el,L){
       var seen={};seen[a[1]]=1;return shuffle(pool2).filter(function(x){if(seen[x[1]])return false;seen[x[1]]=1;return true;}).slice(0,nOpt-1).map(function(x){return x[1];});}
     function sb(){score(W.em+" "+W.n+"  ✅ "+pts);}
     function next(){if(n>=qs.length)return end();var a=qs[n],pic=a[0]||"❓",showPic=!clueOnly&&a[0];
-      w.innerHTML="<div class='qwho'>"+W.em+" "+W.n+" · Animal "+(n+1)+" of "+qs.length+"</div><div class='wpic'>"+(showPic?pic:"🔍")+"</div><div class='qtext wclue'>"+(showPic&&D<1.6?"Who is this?":esc(a[2]))+"</div><div class='opts'></div><div class='wfact'></div>";
+      w.innerHTML="<div class='qwho'>"+W.em+" "+W.n+" · Animal "+(n+1)+" of "+qs.length+"</div><div class='wpic'>"+(showPic?pic:"🔍")+"</div><div class='qtext wclue'>"+(showPic&&D<1.6?"Who is this?":esc(a[2]))+"</div><div class='opts'></div>";
       var box=w.querySelector(".opts"),done=false,opts=shuffle([a[1]].concat(others(a)));
       opts.forEach(function(o){var b=h("button","opt",esc(o));b.addEventListener("click",function(){if(done)return;done=true;var ok=o===a[1];
         if(ok){b.classList.add("ok");pts++;sfx.good();}else{b.classList.add("no");sfx.bad();[].forEach.call(box.children,function(x){if(x.textContent===a[1])x.classList.add("ok");});}
-        w.querySelector(".wpic").textContent=pic;w.querySelector(".wfact").innerHTML=(ok?"✅ ":"It's the <b>"+esc(a[1])+"</b>. ")+(showPic&&D<1.6?esc(a[2]):"");
-        sb();n++;later(next,ok?1800:2800);});box.appendChild(b);});}
+        sb();n++;later(function(){learn(a,ok,o);},ok?450:700);});box.appendChild(b);});}
+    function learn(a,ok,picked){w.innerHTML="<div class='wlearn "+(ok?"ok":"no")+"'><div class='wlh'>"+(ok?"✅ You got it!":"❌ Not quite. You picked "+esc(picked)+".")+"</div><div class='wlpic'>"+(a[0]||"🔍")+"</div><div class='wlname'>"+esc(a[1])+"</div>"+
+        "<div class='wlclue'>"+esc(a[2])+"</div><div class='wlfact'><b>💡 Fun fact:</b> "+esc(WFACT[a[1]]||"")+"</div><button class='btn go wnext'>"+(n>=qs.length?"See my stars ›":"Next animal ›")+"</button></div>";
+      w.querySelector(".wnext").addEventListener("click",function(){sfx.tick();next();});}
     function end(){var f=pts/qs.length;finish({stars:f>=0.85?3:f>=0.65?2:f>=0.4?1:0,msg:pts+" out of "+qs.length+" animals from "+W.n+"."});}
     sb();next();}
   ready(el,{em:"🌎",title:"Name That Wildlife",text:D<1.6?"Spin the globe and tap a place. Then pick the right name for each animal!":D<2.6?"Pick a place on the globe. Name each animal from 4 choices.":"Pick a place. You only get a clue, no picture, so read carefully!"+(D>=3.4?" Watch out: some answers are animals from other places.":"")},globe);
