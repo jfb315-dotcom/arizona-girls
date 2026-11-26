@@ -3113,7 +3113,7 @@ function bearsPoll(){var LOGO=LS.get("cg-bears","")||BEARS_LOGO,o=h("div","bpoll
   ask();document.body.appendChild(o);sfx.pop();}
 
 /* ================= "new version" banner ================= */
-var APPV="2026.11.26r";
+var APPV="2026.11.26s";
 function verCheck(){if(!/^https?:$/.test(location.protocol)||/claude|localhost|127\.0/.test(location.hostname))return;
   fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.json():null;}).then(function(j){
     if(!j||!j.v||j.v===APPV||document.querySelector(".upd"))return;var b=h("button","upd","✨ New version! Tap to update");
