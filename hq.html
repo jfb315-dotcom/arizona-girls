@@ -5748,6 +5748,8 @@ window.addEventListener("resize",function(){skyKey="";renderSky();fitText($("ver
 /* ---------- Cousins' HQ: John's Spy HQ and Fun pages, opened from the girls' home page ---------- */
 function hqTone(f,d){var a=audio();if(a)tone(f,a.currentTime+0.01,d||0.1,0.12);}
 var HQG=((location.hash||"").match(/^#g=(\w+)/)||[])[1]||"";
+var HQME=(function(){try{var m=JSON.parse(localStorage.getItem("cg-me")||"-1"),p=JSON.parse(localStorage.getItem("cg-players")||"null");if(m>=0&&m<3&&p&&p[m]&&p[m].name&&!/^Player \d$/.test(p[m].name))return String(p[m].name).replace(/[<>&"]/g,"");}catch(e){}return "";})();
+if(HQME)document.title=HQME+" HQ";
 var HQ=(HQG||(location.hash||"").replace("#","")==="fun")?"fun":"spy";
 /* shrink the radar on shorter screens so the red Scan Agent ID button stays visible */
 function hqFitRadar(){var card=document.getElementById("radarCard"),r=document.getElementById("radar");if(!card||!r)return;
@@ -5768,7 +5770,7 @@ else (function(){
   var AG=[["Player 1","NIGHT HAWK","#7aa7ff"],["Player 2","SILVER FOX","#41c9a0"],["Player 3","SHADOW KITTEN","#ff8fb1"]];
   try{var cp=JSON.parse(localStorage.getItem("cg-players")||"null");if(cp&&cp.length===3){AG=cp.map(function(p,i){return [p.name,AG[i][1],AG[i][2]];});}}catch(e){}
   var lg=document.createElement("div");lg.id="hqLogin";
-  lg.innerHTML="<div class='hqbox'><div class='hqt'>TOP SECRET · AGENT LOGIN</div><div class='hqs' id='hqStep'>Tap your agent file</div><div id='hqAgents'></div>"+
+  lg.innerHTML="<div class='hqbox'><div class='hqt'>TOP SECRET · "+(HQME?HQME.toUpperCase()+" HQ":"AGENT")+" LOGIN</div><div class='hqs' id='hqStep'>Tap your agent file</div><div id='hqAgents'></div>"+
     "<div id='hqPad' hidden><svg viewBox='0 0 120 150' width='170' height='212'><g fill='none' stroke='#4fffa0' stroke-width='3' stroke-linecap='round' opacity='.85'>"+
     "<path d='M60 20c-22 0-38 16-38 40v30'/><path d='M60 32c-15 0-27 12-27 28v40c0 10 4 18 10 24'/><path d='M60 44c-9 0-16 7-16 16v42c0 9 4 16 10 21'/><path d='M60 56c-3 0-5 2-5 5v45c0 8 3 14 8 18'/>"+
     "<path d='M60 20c22 0 38 16 38 40v38'/><path d='M60 32c15 0 27 12 27 28v48'/><path d='M60 44c9 0 16 7 16 16v52c0 8-3 14-8 18'/><path d='M66 62v44c0 6 2 12 6 16'/></g>"+
@@ -5788,7 +5790,7 @@ else (function(){
   ["touchstart","mousedown"].forEach(function(ev){pad.addEventListener(ev,start,{passive:false});});
   ["touchend","touchcancel","mouseup","mouseleave"].forEach(function(ev){pad.addEventListener(ev,stop);});
   function grant(){var ok=lg.querySelector("#hqOk");lg.querySelector("#hqPad").hidden=true;ok.hidden=false;
-    ok.innerHTML="<div class='hqg'>ACCESS GRANTED</div><div class='hqn'>Welcome, Agent "+who[0]+"</div><div class='hqs'>CODE NAME: "+who[1]+"</div>";
+    ok.innerHTML="<div class='hqg'>ACCESS GRANTED</div><div class='hqn'>Welcome"+(HQME?" to "+HQME+" HQ":"")+", Agent "+who[0]+"</div><div class='hqs'>CODE NAME: "+who[1]+"</div>";
     [523,659,784,1047].forEach(function(f,i){setTimeout(function(){hqTone(f,0.15);},i*120);});
     setTimeout(function(){lg.className="out";setTimeout(function(){lg.remove();},600);},2200);}
 })();

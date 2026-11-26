@@ -652,6 +652,8 @@ body{margin:0}
 #main .gt-games .wm{grid-template-columns:repeat(3,1fr)}
 #main .gt-games .wm span{font-size:clamp(12px,2.4vh,20px);white-space:nowrap;padding:4px 2px}
 @media (orientation:landscape) and (max-height:640px){#main .gt-games .wm{gap:6px;margin-top:6px}#main .gt-games{padding-bottom:16px}#main .gt-games .wm i{font-size:clamp(20px,4.2vh,40px)}}
+@media (max-width:820px) and (orientation:portrait){#main{height:auto;min-height:100vh;min-height:100dvh}#main .mgrid2{grid-template-rows:none;grid-auto-rows:minmax(150px,auto)}}
+@media (max-width:820px){#main .gt-games .wm{grid-template-columns:repeat(6,1fr);gap:8px;flex:none}#main .gt-games .wm span{min-height:76px}#main .gt-games .em{font-size:44px}#main .gt-games .wm span{font-size:clamp(12px,2.2vw,18px)}}
 </style>
 
 <canvas id="snow"></canvas>
@@ -685,7 +687,7 @@ body{margin:0}
     </button>
     <a class="gt gt-spy" href="hq.html#spy" style="--g:#4fffa0">
       <span class="k">Classified</span><span class="radar"><i style="left:28px;top:36px"></i><i style="left:66px;top:62px"></i></span>
-      <span class="h">AGENT HQ</span><span class="s">Fingerprint login required</span>
+      <span class="h" id="hqName">AGENT HQ</span><span class="s">Fingerprint login required</span>
     </a>
     <div class="gt gt-cd" id="cdTile" role="button" style="--g:#e8424f"><span class="k" id="cdK">Christmas</span><span class="big" id="cdN">--</span><span class="s" id="cdS">sleeps to go</span></div>
     <a class="gt gt-fun" href="hq.html#fun" style="--g:#ffc94a">
@@ -2984,7 +2986,7 @@ function checkUpdate(btn){btn.disabled=true;fetch("version.json?t="+Date.now(),{
   else if(j)toast("You have the newest version ✓");else toast("Couldn't check right now");}).catch(function(){btn.disabled=false;toast("Couldn't check right now");});}
 
 /* ================= "new version" banner ================= */
-var APPV="2026.11.26g";
+var APPV="2026.11.26h";
 function verCheck(){if(!/^https?:$/.test(location.protocol)||/claude|localhost|127\.0/.test(location.hostname))return;
   fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.json():null;}).then(function(j){
     if(!j||!j.v||j.v===APPV||document.querySelector(".upd"))return;var b=h("button","upd","✨ New version! Tap to update");
@@ -3138,7 +3140,8 @@ function tickClock(){var n=new Date(),hh=n.getHours()%12||12,mm=("0"+n.getMinute
 function mainCount(){var now=new Date(),y=now.getFullYear(),x=new Date(y,11,25);if(now.getMonth()===11&&now.getDate()>25)x=new Date(y+1,11,25);
   var ev=nextEvents(2),e=ev[0],nx=ev[1];$("#cdK").textContent=e.em+" "+e.name.replace(/&#39;/g,"'")+" · "+fmtD(e.dt);$("#cdN").textContent=e.d===0?e.em:e.d;
   $("#cdS").innerHTML=(e.d===0?e.happy:e.d===1?"sleep to go!":"sleeps to go")+(nx?"<small class='cdnx'>Then "+nx.em+" "+nx.name+" ("+fmtD(nx.dt)+") in "+nx.d+"</small>":"");}
-function renderStars(){if($("#bstrip"))renderBadgeStrip();var r=$("#srow");r.innerHTML="";players.forEach(function(p,i){var s=h("span","","<span class='av' style='background:"+COLORS[i]+"'>"+AVH(p)+"</span><span><b>"+(isChamp(i)?"👑 ":"")+esc(p.name)+"</b><small>★ "+p.stars+" · 🏅 "+totalLv(i)+" · 🎖️ "+badgesFor(i)+"/"+BADGES.length+"</small></span>");r.appendChild(s);});var cl=$("#crownL");if(!cl){cl=h("span","crown");cl.id="crownL";r.parentNode.appendChild(cl);}cl.innerHTML=crownLine();renderFav();renderMsg();}
+function renderHQ(){var e=$("#hqName");if(e)e.textContent=(ME>=0&&ME<3&&players[ME]&&!/^Player \d$/.test(players[ME].name))?players[ME].name.toUpperCase()+" HQ":"AGENT HQ";}
+function renderStars(){renderHQ();if($("#bstrip"))renderBadgeStrip();var r=$("#srow");r.innerHTML="";players.forEach(function(p,i){var s=h("span","","<span class='av' style='background:"+COLORS[i]+"'>"+AVH(p)+"</span><span><b>"+(isChamp(i)?"👑 ":"")+esc(p.name)+"</b><small>★ "+p.stars+" · 🏅 "+totalLv(i)+" · 🎖️ "+badgesFor(i)+"/"+BADGES.length+"</small></span>");r.appendChild(s);});var cl=$("#crownL");if(!cl){cl=h("span","crown");cl.id="crownL";r.parentNode.appendChild(cl);}cl.innerHTML=crownLine();renderFav();renderMsg();}
 var jk=JOKES[((dayNo()%JOKES.length)+JOKES.length)%JOKES.length];
 function renderJoke(){$("#jokeQ").textContent=jk[0];$("#jokeA").textContent="Tap for the answer";$("#joke").classList.remove("open");}
 $("#joke").addEventListener("click",function(){if(this.classList.contains("msgmode")){sfx.pop();openMsgs();return;}var o=$("#joke").classList.toggle("open");$("#jokeA").textContent=o?jk[1]:"Tap for the answer";if(o)sfx.good();});
