@@ -691,6 +691,8 @@ body{margin:0}
 .bpoll .yes{background:#c83803;color:#fff}
 .bpoll .no{background:#fff;color:#0b162a}
 .bpoll .no.run{position:fixed;z-index:2}
+.bpoll.stink{background:#000;padding:0}
+.bpoll.stink img{width:100vw;height:100vh;object-fit:contain;animation:pop .35s}
 .bpoll .got{font:700 clamp(40px,8vw,80px)/1 var(--display);color:#ffb38a;animation:pop .4s}
 </style>
 
@@ -2985,6 +2987,7 @@ function cloudSync(){if(!FAM||CLOUD.busy)return Promise.resolve();CLOUD.busy=tru
     players.forEach(function(pp,i){var r=R["p"+i];if(r)mergeP(i,r);var l=recP(i);if(!r||JSON.stringify(r)!==JSON.stringify(l))out["p"+i]=l;});
     if(R.faces){var ch=false;for(var k in R.faces)if(R.faces.hasOwnProperty(k)&&FACES[k]!==R.faces[k]){FACES[k]=R.faces[k];ch=true;}if(ch)LS.set("cg-faces",FACES);}
     else if(Object.keys(FACES).length)out.faces=FACES;
+    if(R.bears2&&R.bears2!==LS.get("cg-bears2",""))LS.set("cg-bears2",R.bears2);
     if(R.bears&&R.bears!==LS.get("cg-bears","")){LS.set("cg-bears",R.bears);try{renderHome();}catch(e){}}
     if(R.msgs)MSGS=R.msgs;LS.set("cg-msgs",MSGS);
     _save0();LS.set("cg-lv",LV);LS.set("cg-pics",PICS);LS.set("cg-pict",PICT);
@@ -3080,20 +3083,23 @@ function bearsPoll(){var LOGO=LS.get("cg-bears",""),o=h("div","bpoll"),tries=0;
   function ask(){o.innerHTML="<button class='bk'>‹ Back</button>"+logo()+"<h2>Do you agree the Bears stink?</h2><div class='cap'></div><div class='row'><button class='yes'>Yes</button><button class='no'>No</button></div>";
     o.querySelector(".bk").addEventListener("click",close);var no=o.querySelector(".no"),cap=o.querySelector(".cap");
     o.querySelector(".yes").addEventListener("click",reveal);
-    function dodge(e){if(e){e.preventDefault();e.stopPropagation();}tries++;try{tone(220-tries*12,0.12,"square",0.08);}catch(x){}
+    var lastD=0;function dodge(e){if(e){e.preventDefault();e.stopPropagation();}var nw=Date.now();if(nw-lastD<500)return;lastD=nw;tries++;try{tone(220-tries*12,0.12,"square",0.08);}catch(x){}
       cap.textContent=CAPS[Math.min(tries-1,CAPS.length-1)];
-      if(tries>=6){no.textContent="Yes";no.className="yes";no.removeEventListener("pointerdown",dodge);no.removeEventListener("click",dodge);no.addEventListener("click",reveal);no.style.cssText="";return;}
+      if(tries>=5){no.textContent="Yes";no.className="yes";no.removeEventListener("pointerdown",dodge);no.removeEventListener("click",dodge);no.addEventListener("click",reveal);no.style.cssText="";return;}
       var sc=Math.max(0.45,1-tries*0.1),W=innerWidth,H=innerHeight;no.classList.add("run");no.style.transform="scale("+sc+")";
       no.style.left=Math.round(20+Math.random()*Math.max(40,W-200))+"px";no.style.top=Math.round(90+Math.random()*Math.max(40,H-200))+"px";}
     no.addEventListener("pointerdown",dodge);no.addEventListener("click",dodge);}
-  function reveal(){try{sfx.good();confetti();}catch(x){}
+  function reveal(){var ST=LS.get("cg-bears2","");
+    if(ST){try{sfx.good();}catch(x){}o.className="bpoll stink";o.innerHTML="<img src='"+ST+"' alt='Stinky Bears'>";
+      setTimeout(function(){if(o.parentNode){o.remove();try{showMain();}catch(x){}}},2000);return;}
+    try{sfx.good();confetti();}catch(x){}
     o.innerHTML="<button class='bk'>‹ Back</button>"+logo()+"<div class='got'>GOTCHA! 😂</div><h2>We know you LOVE the Bears! 🧡💙</h2><p class='cap'>"+(tries?"The No button tried to escape "+tries+" time"+(tries>1?"s":"")+". It never had a chance. ":"")+"Bear down! 🐻</p><button class='yes' id='bpAgain'>Ask me again</button>";
     o.querySelector(".bk").addEventListener("click",close);o.querySelector("#bpAgain").addEventListener("click",function(){tries=0;ask();});}
   function close(){sfx.tick();o.remove();}
   ask();document.body.appendChild(o);sfx.pop();}
 
 /* ================= "new version" banner ================= */
-var APPV="2026.11.26m";
+var APPV="2026.11.26n";
 function verCheck(){if(!/^https?:$/.test(location.protocol)||/claude|localhost|127\.0/.test(location.hostname))return;
   fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.json():null;}).then(function(j){
     if(!j||!j.v||j.v===APPV||document.querySelector(".upd"))return;var b=h("button","upd","✨ New version! Tap to update");
