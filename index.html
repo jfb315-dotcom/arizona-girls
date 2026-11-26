@@ -2979,7 +2979,7 @@ function checkUpdate(btn){btn.disabled=true;fetch("version.json?t="+Date.now(),{
   else if(j)toast("You have the newest version ✓");else toast("Couldn't check right now");}).catch(function(){btn.disabled=false;toast("Couldn't check right now");});}
 
 /* ================= "new version" banner ================= */
-var APPV="2026.11.26e";
+var APPV="2026.11.26f";
 function verCheck(){if(!/^https?:$/.test(location.protocol)||/claude|localhost|127\.0/.test(location.hostname))return;
   fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.json():null;}).then(function(j){
     if(!j||!j.v||j.v===APPV||document.querySelector(".upd"))return;var b=h("button","upd","✨ New version! Tap to update");
@@ -3141,7 +3141,7 @@ $("#lgSvg").innerHTML=AZLOGO;
 function showMain(){world=null;["#home","#wview","#stage"].forEach(function(s){$(s).hidden=true;});$("#main").hidden=false;document.body.classList.remove("inworld");renderStars();scrollTo(0,0);}
 function showGames(){world=null;$("#main").hidden=true;$("#wview").hidden=true;$("#home").hidden=false;document.body.classList.remove("inworld");scrollTo(0,0);}
 $("#toGames").addEventListener("click",function(e){var wb=e.target.closest?e.target.closest("[data-w]"):null;sfx.pop();showGames();if(wb)openWorld(WORLDS[+wb.dataset.w]);});
-$("#upd2").addEventListener("click",function(){sfx.tick();checkUpdate(this);});
+$("#upd2").addEventListener("click",function(){this.disabled=true;this.textContent="⏳";var o=h("div","brk","<div class='card'><h2>🔄 Getting the newest version…</h2></div>");document.body.appendChild(o);setTimeout(function(){location.replace(location.pathname+"?v="+Date.now()+location.hash);},300);});
 $("#cdTile").addEventListener("click",function(){sfx.pop();openCount();});
 $("#gback").addEventListener("click",function(){sfx.tick();showMain();});
 $("#starsTile").addEventListener("click",function(e){if(e.target.closest&&e.target.closest("#hsBtn")){sfx.pop();openRecords();return;}$("#edit").click();});
