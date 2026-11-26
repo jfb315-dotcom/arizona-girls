@@ -337,6 +337,10 @@ body.inworld{background-image:var(--wbody)}
 .gt-joke .s{margin-top:auto;padding-top:8px}
 .gt-joke.open .s{color:var(--snow);font-family:var(--display);font-weight:600;font-size:19px}
 .gt-badges{grid-column:span 2}
+.a2hs{text-align:left;margin:10px auto 16px;max-width:420px;padding-left:24px;display:flex;flex-direction:column;gap:8px;font-weight:700;line-height:1.4}
+.a2tip{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;align-items:center;gap:10px;background:#fff7ee;color:#2b1d55;border-radius:999px;padding:8px 8px 8px 18px;font-weight:700;font-size:15px;box-shadow:0 8px 30px rgba(0,0,0,.4);max-width:calc(100% - 32px)}
+.a2tip button{font:inherit;font-weight:900;border:0;border-radius:999px;padding:8px 14px;background:#ffb35c;color:#2b1d55}
+.a2tip button+button{background:transparent;padding:8px 10px}
 .bstrip{display:flex;gap:8px;margin:12px 0 2px;flex-wrap:wrap}
 .bstrip .bi{width:48px;height:48px}
 .gt-wild .h{font-size:28px}
@@ -500,7 +504,11 @@ function applySetup(hs){var i=hs.indexOf("#setup=");if(i<0)return false;hs=hs.sl
     if(d.f){for(var k in d.f)if(d.f.hasOwnProperty(k))FACES[k]=d.f[k];LS.set("cg-faces",FACES);}
     if(d.p&&d.p.length===3){d.p.forEach(function(x,i){if(x[0])players[i].name=String(x[0]).slice(0,16);if(x[1])players[i].age=+x[1];});save();}
     return true;}catch(e){return false;}}
-if((location.hash||"").indexOf("#setup=")===0){window.SETUP_OK=applySetup(location.hash);try{history.replaceState(null,"",location.pathname+location.search);}catch(e){location.hash="";}}
+/* The setup link stays in the address bar on purpose: "Add to Home Screen" saves it, so the Home Screen app loads the photos too. Names are only applied the first time, so later edits stick. */
+var STANDALONE=!!(window.navigator.standalone||(window.matchMedia&&matchMedia("(display-mode: standalone)").matches));
+if((location.hash||"").indexOf("#setup=")===0){var firstSetup=!LS.get("cg-setup-done",false);
+  if(firstSetup){window.SETUP_OK=applySetup(location.hash);if(window.SETUP_OK)LS.set("cg-setup-done",true);}
+  else{try{var sd=JSON.parse(decodeURIComponent(location.hash.slice(7)));if(sd.f){for(var fk in sd.f)if(sd.f.hasOwnProperty(fk))FACES[fk]=sd.f[fk];LS.set("cg-faces",FACES);}}catch(e){}}}
 window.addEventListener("hashchange",function(){if((location.hash||"").indexOf("#setup=")===0)location.reload();});
 var BADGES=[["f1",1,"Rookie"],["f3",3,"Rising Star"],["f8",5,"Sharpshooter"],["f2",8,"Trailblazer"],["f4",12,"Champion"],["f5",16,"Legend"],["f7",20,"Hall of Famer"],["f6",25,"The GOAT 🐐"]];
 function badgeHTML(b,on,big){return "<span class='bdg"+(on?" on":"")+(big?" big":"")+"'>"+"<span class='bi'><img src='"+bsrc(b)+"' alt=''>"+(on?"":"<i>🔒</i>")+"</span>"+(big?"":"<small>"+(on?b[2]:b[2]+"<br>"+b[1]+" lv-up"+(b[1]>1?"s":""))+"</small>")+"</span>";}
@@ -1692,7 +1700,11 @@ $("#edit2").addEventListener("click",function(){$("#edit").click();});
 $("#mute2").addEventListener("click",function(){$("#mute").click();this.textContent=muted?"🔇":"🔊";});
 $("#mute2").textContent=muted?"🔇":"🔊";
 tickClock();setInterval(tickClock,10000);mainCount();renderJoke();renderStars();
-if(window.SETUP_OK){(function(){var t=h("div","ready","<div class='card'><div class='em'>🎉</div><h2>All set!</h2><p>Names and badge photos are saved on this iPad.</p><button class='btn go'>Let's play</button></div>");t.style.position="fixed";t.style.zIndex="60";document.body.appendChild(t);t.querySelector(".go").addEventListener("click",function(){t.remove();renderStars();});})();}
+if(!STANDALONE&&!window.SETUP_OK&&!LS.get("cg-tip-off",false)&&/iPad|iPhone|Macintosh/.test(navigator.userAgent)&&("ontouchend" in document)){(function(){var b=h("div","a2tip","<div><b>Make it an app:</b> tap Share, then Add to Home Screen.</div><button aria-label='Show how'>How?</button><button aria-label='Hide tip'>✕</button>");document.body.appendChild(b);var bs=b.querySelectorAll("button");
+  bs[0].addEventListener("click",function(){var t=h("div","ready","<div class='card'><div class='em'>📲</div><h2>Add to Home Screen</h2>"+A2HS+"<button class='btn go'>Got it</button></div>");t.style.position="fixed";t.style.zIndex="60";document.body.appendChild(t);t.querySelector(".go").addEventListener("click",function(){t.remove();});});
+  bs[1].addEventListener("click",function(){LS.set("cg-tip-off",true);b.remove();});})();}
+var A2HS="<ol class='a2hs'><li>Tap the Share button "+"<svg viewBox='0 0 24 24' width='22' height='22' style='vertical-align:-4px'><path d='M12 3v12M7.5 7.5 12 3l4.5 4.5' fill='none' stroke='#2f7cf6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><path d='M8 10H6v10h12V10h-2' fill='none' stroke='#2f7cf6' stroke-width='2' stroke-linejoin='round'/></svg>"+" at the top of Safari.</li><li>Scroll down and tap <b>Add to Home Screen</b>.</li><li>Tap <b>Add</b>. Then open the new <b>AZ Girls</b> icon on the Home Screen.</li></ol>";
+if(window.SETUP_OK){(function(){var t=h("div","ready","<div class='card'><div class='em'>🎉</div><h2>All set!</h2><p>Names and badge photos are saved on this iPad.</p>"+(STANDALONE?"":"<p><b>Last step: put the game on the Home Screen</b> so it opens like an app.</p>"+A2HS)+"<button class='btn go'>"+(STANDALONE?"Let's play":"Got it")+"</button></div>");t.style.position="fixed";t.style.zIndex="60";document.body.appendChild(t);t.querySelector(".go").addEventListener("click",function(){t.remove();renderStars();});})();}
 
 renderHome();countdown();
 if(location.hostname==="localhost")window.__cg={GAMES:GAMES,openGame:openGame,get G(){return G;}};
