@@ -5748,7 +5748,7 @@ window.addEventListener("resize",function(){skyKey="";renderSky();fitText($("ver
 /* ---------- Cousins' HQ: John's Spy HQ and Fun pages, opened from the girls' home page ---------- */
 function hqTone(f,d){var a=audio();if(a)tone(f,a.currentTime+0.01,d||0.1,0.12);}
 var HQG=((location.hash||"").match(/^#g=(\w+)/)||[])[1]||"";
-var HQME=(function(){try{var m=JSON.parse(localStorage.getItem("cg-me")||"-1"),p=JSON.parse(localStorage.getItem("cg-players")||"null");if(m>=0&&m<3&&p&&p[m]&&p[m].name&&!/^Player \d$/.test(p[m].name))return String(p[m].name).replace(/[<>&"]/g,"");}catch(e){}return "";})();
+var HQME=(function(){try{var m=JSON.parse(localStorage.getItem("cg-me")||"-1"),p=JSON.parse(localStorage.getItem("cg-players")||"null");if(m>=0&&m<5&&p&&p[m]&&p[m].name&&!/^Player \d$/.test(p[m].name))return String(p[m].name).replace(/[<>&"]/g,"");}catch(e){}return "";})();
 if(HQME)document.title=HQME+" HQ";
 var HQ=(HQG||(location.hash||"").replace("#","")==="fun")?"fun":"spy";
 /* shrink the radar on shorter screens so the red Scan Agent ID button stays visible */
@@ -5768,7 +5768,7 @@ setPage(3);
 if(HQ==="fun"){openView(HQG||"fun");}
 else (function(){
   var AG=[["Player 1","NIGHT HAWK","#7aa7ff"],["Player 2","SILVER FOX","#41c9a0"],["Player 3","SHADOW KITTEN","#ff8fb1"]];
-  try{var cp=JSON.parse(localStorage.getItem("cg-players")||"null");if(cp&&cp.length===3){AG=cp.map(function(p,i){return [p.name,AG[i][1],AG[i][2]];});}}catch(e){}
+  try{var cp=JSON.parse(localStorage.getItem("cg-players")||"null");if(cp&&cp.length>=3){AG=AG.map(function(a,i){return [cp[i].name,a[1],a[2]];});}}catch(e){}
   var lg=document.createElement("div");lg.id="hqLogin";
   lg.innerHTML="<div class='hqbox'><div class='hqt'>TOP SECRET · "+(HQME?HQME.toUpperCase()+" HQ":"AGENT")+" LOGIN</div><div class='hqs' id='hqStep'>Tap your agent file</div><div id='hqAgents'></div>"+
     "<div id='hqPad' hidden><svg viewBox='0 0 120 150' width='170' height='212'><g fill='none' stroke='#4fffa0' stroke-width='3' stroke-linecap='round' opacity='.85'>"+

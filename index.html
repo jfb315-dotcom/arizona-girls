@@ -669,6 +669,13 @@ body{margin:0}
 .pacts{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
 .pnote{font-size:13px;opacity:.7;margin:8px 0 0}
 @media (max-width:700px){.mh{flex-wrap:wrap;row-gap:8px}}
+.whob.many{grid-template-columns:repeat(auto-fit,minmax(110px,1fr))}
+.whob.many button{min-height:96px}.whob.many button span{font-size:40px}
+.srow2{flex-wrap:wrap}
+.fmadd{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
+.fmadd input{flex:1;min-width:0;font:800 18px var(--body);padding:10px;border-radius:12px}
+.adtag{font-size:11px;font-weight:900;letter-spacing:.06em;opacity:.7;margin-left:4px}
+.srow2.many > span{flex:1 1 150px!important;min-width:150px!important}
 </style>
 
 <canvas id="snow"></canvas>
@@ -772,7 +779,7 @@ var LS={get:function(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(
 var EMO='"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
 
 /* ================= players ================= */
-var COLORS=["#7aa7ff","#41c9a0","#ff8fb1"];
+var COLORS=["#7aa7ff","#41c9a0","#ff8fb1","#f5a142","#a98bff"];
 var AVATARS=["🦄","🐍","🦌","🐧","🦊","🦉","🐰","🦄","🐱","🐶","🦌","⛄","🐼","🐨","🐻‍❄️","🦋","🐬"];
 var players=LS.get("cg-players",null)||[
   {name:"Player 1",age:11,av:"🦌",stars:0},
@@ -805,8 +812,8 @@ function cropper(i,im,done){
   bs[1].addEventListener("click",close);}
  if(!(cur>=0&&cur<3))cur=0;
 function save(){LS.set("cg-players",players);LS.set("cg-cur",cur);}
-function lvlFor(p){return p.age<=6?1:p.age<=9?2:3;}
-function baseD(p){var a=+p.age||8;return a<=5?1:a<=6?1.4:a<=7?1.8:a<=8?2.2:a<=9?2.5:a<=10?2.8:3.1;}
+function lvlFor(p){if(!p.ad&&evenMode())return 3;var a=ageOf(p);return a<=6?1:a<=9?2:3;}
+function baseD(p){if(!p.ad&&evenMode())return 3.1;var a=ageOf(p);return a<=5?1:a<=6?1.4:a<=7?1.8:a<=8?2.2:a<=9?2.5:a<=10?2.8:3.1;}
 var LVL=["","Easy","Medium","Hard"];
 /* levels: each girl levels up per game; level 1 starts at her age difficulty */
 var LV=LS.get("cg-lv",{}),MAXLV=20;if(!LV||typeof LV!=="object")LV={};
@@ -889,7 +896,7 @@ function pickPlayers(el,o,go){
   var sel=[];if(o.min<2)sel=[cur];else sel=[0,1,2];
   var box=h("div","ready","<div class='card'><h2>"+o.title+"</h2><p>Tap everyone who is playing.</p><div class='pick'></div><p style='font-size:15px'>"+o.text+"</p><button class='btn go'>Start!</button></div>");
   var pk=box.querySelector(".pick"),gb=box.querySelector(".go");
-  function draw(){pk.innerHTML="";players.forEach(function(p,i){var b=h("button",sel.indexOf(i)>=0?"on":"","<span>"+AVH(p)+"</span>"+esc(p.name));b.style.setProperty("--pc",COLORS[i]);b.addEventListener("click",function(){var k=sel.indexOf(i);if(k>=0)sel.splice(k,1);else sel.push(i);sel.sort();sfx.tick();draw();});pk.appendChild(b);});gb.disabled=sel.length<(o.min||1);}
+  function draw(){pk.innerHTML="";players.forEach(function(p,i){var b=h("button",sel.indexOf(i)>=0?"on":"","<span>"+AVH(p)+"</span>"+esc(p.name));b.style.setProperty("--pc",COLORS[i]);b.addEventListener("click",function(){var k=sel.indexOf(i);if(k>=0)sel.splice(k,1);else{if(sel.length>=3){toast("Up to 3 players at a time");return;}sel.push(i);}sel.sort();sfx.tick();draw();});pk.appendChild(b);});gb.disabled=sel.length<(o.min||1);}
   draw();el.appendChild(box);
   gb.addEventListener("click",function(){box.remove();sfx.pop();go(sel.slice());});
 }
@@ -899,7 +906,7 @@ function finish(o){
   else if(s>0)players[cur].stars+=s;
   save();var up="",lvUp=false;
   if(G.g.levels&&!o.award&&!o.noStars){var lv=lvOf(G.g.id,cur);
-    if(s>=2&&lv<MAXLV){lvUp=true;var nb0=badgesFor(cur),U0=unlockedN();if(leadLv(cur)-totalLv(cur)>1){players[cur].bx=(players[cur].bx||0)+1;}setLv(G.g.id,cur,lv+1);var nb1=badgesFor(cur),U1=unlockedN();up="<div class='lvup'>⬆️ "+esc(players[cur].name)+" is now <b>Level "+(lv+1)+"</b></div>";if(U1>U0){var ng=byId(ADV[U1-1]);if(ng)up+="<div class='unl'>🔓 New game unlocked for all three sisters: "+ng.em+" "+esc(ng.name)+"!</div>";}
+    if(s>=2&&lv<MAXLV){lvUp=true;var nb0=badgesFor(cur),U0=unlockedN();if(isKid(cur)&&leadLv(cur)-totalLv(cur)>1){players[cur].bx=(players[cur].bx||0)+1;}setLv(G.g.id,cur,lv+1);var nb1=badgesFor(cur),U1=unlockedN();up="<div class='lvup'>⬆️ "+esc(players[cur].name)+" is now <b>Level "+(lv+1)+"</b></div>";if(U1>U0){var ng=byId(ADV[U1-1]);if(ng)up+="<div class='unl'>🔓 New game unlocked for all three sisters: "+ng.em+" "+esc(ng.name)+"!</div>";}
       if(nb1>nb0){up+="<div class='newbdg'>"+badgeHTML(BADGES[nb1-1],true,true)+"<span>"+BADGES[nb1-1][2]+"!<br><small>New badge "+nb1+" of "+BADGES.length+"</small></span></div>";}if(!o.title)o.title="Level up!";}
     else if(s>=2)up="<div class='lvup'>👑 Top level! Level "+MAXLV+"</div>";
     else up="<div class='lvup dim'>Get 2 stars to reach Level "+(lv+1)+"</div>";}
@@ -1023,7 +1030,7 @@ start:function(el,L){
     });grid.appendChild(b);});
 }});
 
-/* ---- Quiz engine: one or more players take turns, each gets questions for her age ---- */
+/* ---- Quiz engine: one or more players take turns ---- */
 function pool(bank){var p={};return function(l){if(!p[l]||!p[l].length)p[l]=shuffle(bank[l]);return p[l].pop();};}
 function runQuiz(el,sel,per,makeQ){
   if(sel.length===1){cur=sel[0];save();}
@@ -1050,9 +1057,9 @@ function runQuiz(el,sel,per,makeQ){
 function arrQ(bank){var p=pool(bank);return function(l){var q=p(l);return {q:q[0],a:q[1],wrong:q[2],pic:q[3]};};}
 
 /* ---- Holiday Quiz (from the panel's Christmas Trivia, now takes turns) ---- */
-game({id:"quiz",name:"Holiday Quiz",em:"❓",bl:"Take turns. Everyone gets questions for her age.",tc:"#9fd8ff",both:true,
+game({id:"quiz",name:"Holiday Quiz",em:"❓",bl:"Take turns answering questions.",tc:"#9fd8ff",both:true,
 start:function(el){
-  pickPlayers(el,{title:"Holiday Quiz",text:"Each sister gets 4 questions picked for her age.",min:1},function(sel){runQuiz(el,sel,4,arrQ(QUIZ));});
+  pickPlayers(el,{title:"Holiday Quiz",text:"Everyone gets 4 questions.",min:1},function(sel){runQuiz(el,sel,4,arrQ(QUIZ));});
 }});
 
 /* ---- Snake or Not? (new) ---- */
@@ -1090,9 +1097,9 @@ var SNAKEQ={
    ["A snake's tongue carries smells to a special spot in its…","Roof of the mouth",["Nose","Ears","Tail"],"👅"],
    ["Are snakes warm-blooded or cold-blooded?","Cold-blooded",["Warm-blooded","Hot-blooded","No blood"],"🌡️"]]
 };
-game({id:"snakequiz",name:"Snake or Not?",em:"❓",bl:"Real snake facts. Big kids learn which snakes to stay away from.",tc:"#c8f2a0",both:true,
+game({id:"snakequiz",name:"Snake or Not?",em:"❓",bl:"Real snake facts, and which snakes to stay away from.",tc:"#c8f2a0",both:true,
 start:function(el){
-  pickPlayers(el,{title:"Snake or Not?",text:"5 snake questions each, picked for your age.",min:1},function(sel){runQuiz(el,sel,5,arrQ(SNAKEQ));});
+  pickPlayers(el,{title:"Snake or Not?",text:"5 snake questions each.",min:1},function(sel){runQuiz(el,sel,5,arrQ(SNAKEQ));});
 }});
 
 /* ---- Tracks Quiz (new) ---- */
@@ -1225,7 +1232,7 @@ start:function(el,L){
 }});
 
 /* ---- Math Race (new) ---- */
-game({id:"math",name:"Math Race",em:"➕",cats:["brain"],bl:"10 quick sums. Adding for little ones, times tables for big.",tc:"#a5f0d3",levels:true,
+game({id:"math",name:"Math Race",em:"➕",cats:["brain"],bl:"10 quick sums against the clock.",tc:"#a5f0d3",levels:true,
 start:function(el,L){
   var w=h("div","qwrap");el.appendChild(w);var n=0,right=0,res=[];
   function mk(){var a,b,op,ans,pic="";
@@ -1442,11 +1449,11 @@ start:function(el){
 }});
 
 /* ---- Reindeer Tap Race (from the panel's Reindeer Race) ---- */
-game({id:"race",name:"Reindeer Race",em:"🏁",cats:["together","arcade"],bl:"Tap your button fast! Younger sisters get a head start.",tc:"#ffc94a",both:true,
+game({id:"race",name:"Reindeer Race",em:"🏁",cats:["together","arcade"],bl:"Tap your button fast! First reindeer to the top wins.",tc:"#ffc94a",both:true,
 start:function(el){
-  pickPlayers(el,{title:"Reindeer Race",text:"Fair start: younger sisters need fewer taps to win.",min:2},function(sel){
+  pickPlayers(el,{title:"Reindeer Race",text:"Everyone needs 40 taps. Tap as fast as you can!",min:2},function(sel){
     var wrap=h("div","race");el.appendChild(wrap);var lanes=[],go=false,over=false;
-    sel.forEach(function(i){var need=[0,30,40,50][lvlFor(players[i])];var ln=h("div","lane","<div class='ln'>"+AVH(players[i])+" "+esc(players[i].name)+"</div><div class='track'><div class='fin'></div><div class='rd'>🦌</div></div><div class='need'>"+need+" taps</div>");
+    sel.forEach(function(i){var need=40;var ln=h("div","lane","<div class='ln'>"+AVH(players[i])+" "+esc(players[i].name)+"</div><div class='track'><div class='fin'></div><div class='rd'>🦌</div></div><div class='need'>"+need+" taps</div>");
       var b=h("button","tapb","TAP!");b.style.background=COLORS[i];ln.appendChild(b);wrap.appendChild(ln);
       var o={i:i,need:need,n:0,rd:ln.querySelector(".rd"),nd:ln.querySelector(".need")};o.rd.style.bottom="0%";lanes.push(o);
       tap(b,function(){if(!go||over)return;o.n++;tone(300+o.n*6,0.05,"square",0.05);var pct=Math.min(1,o.n/o.need);o.rd.style.bottom="calc("+(pct*100)+"% - "+(pct*60)+"px)";o.nd.textContent=Math.max(0,o.need-o.n)+" to go";
@@ -2104,7 +2111,7 @@ start:function(el,L){
   ready(el,{em:"🎨",title:"Color Mixer",text:"Tap the paint pots to add drops. Red and yellow make orange, blue and yellow make green. Match the secret color, then press Check. 3 tries per color."+(np>3?" Use white to make colors lighter"+(np>4?" and black to make them darker":"")+".":"")},newT);
 }});
 
-game({id:"pattern",name:"Pattern Painter",em:"🖼️",bl:"Copy the pixel picture. Big kids paint it from memory.",tc:"#e5d4ff",levels:true,
+game({id:"pattern",name:"Pattern Painter",em:"🖼️",bl:"Copy the pixel picture. Higher levels paint it from memory.",tc:"#e5d4ff",levels:true,
 start:function(el,L){
   var D=curD(),n=Math.min(8,P([4,5,6])),nc=Math.min(6,P([2,3,4]))+1,mem=D>=3,showT=Math.max(4,12-(D-3)*4.5),PIC=3,pic=0,bad=0,peeks=0;
   var COL=["#ffffff","#ff5fa2","#7b5cff","#ffc94a","#2fb3c9","#36b37e","#ff8f3d"];
@@ -2359,7 +2366,7 @@ start:function(el,L){
 }});
 
 /* ---- Snake Zone, batch 2 ---- */
-game({id:"smaze",name:"Snake Maze",em:"🌀",bl:"Slither through the maze to the mouse. Big kids play in the dark.",tc:"#a8e6c9",levels:true,
+game({id:"smaze",name:"Snake Maze",em:"🌀",bl:"Slither through the maze to the mouse. Higher levels play in the dark.",tc:"#a8e6c9",levels:true,
 start:function(el,L){
   var D=curD(),n=Math.min(15,P([7,9,11])),fog=D>=3,T=Math.round(n*n*0.75),t=0,wall=[],seen={},pos=0,trail=[0],dir=null,stepT=0;
   for(var i=0;i<n*n;i++)wall.push([1,1,1,1]);/* N E S W */
@@ -2695,7 +2702,7 @@ start:function(el,L){
 }});
 
 function tstr(h0,m){var hh=((h0%12)+12)%12||12;return hh+":"+("0"+m).slice(-2);}
-game({id:"clock",name:"Clock Reader",em:"🕰️",bl:"Read the clock. Big kids figure out what time it will be later.",tc:"#ffe08a",levels:true,
+game({id:"clock",name:"Clock Reader",em:"🕰️",bl:"Read the clock. Higher levels figure out what time it will be later.",tc:"#ffe08a",levels:true,
 start:function(el,L){
   var D=curD(),N=10,n=0,right=0;
   var w=h("div","n2wrap");el.appendChild(w);
@@ -2851,14 +2858,14 @@ start:function(el){
     drawTop();score("");});
 }});
 
-/* ================= take-a-break nudge: every 30 min of screen time, never locks ================= */
+/* ================= take-a-break nudge: every 45 min of screen time, never locks ================= */
 (function(){
-  var EVERY=30*60,STEP=15,ACT=[["🎣","go fishing"],["🎯","do some target practice with a grown-up"],["🚲","go for a bike ride"],["🥾","hike a desert trail"],["🦎","go lizard spotting"],["🪨","hunt for cool rocks"],["🏀","shoot some hoops"],["🐎","go see the horses"],["🌵","explore the backyard"],["🤸","have a cartwheel contest"],["🛝","race to the playground"],["🐕","play fetch with the dog"]];
+  var EVERY=45*60,STEP=15,ACT=[["🎣","go fishing"],["🎯","do some target practice with a grown-up"],["🚲","go for a bike ride"],["🥾","hike a desert trail"],["🦎","go lizard spotting"],["🪨","hunt for cool rocks"],["🏀","shoot some hoops"],["🐎","go see the horses"],["🌵","explore the backyard"],["🤸","have a cartwheel contest"],["🛝","race to the playground"],["🐕","play fetch with the dog"]];
   var MSG=[
-    ["Time for a break!","You've been playing for 30 minutes. How about we {a}? The games will be right here when you get back."],
-    ["Hey superstar! 👋","That's an hour on the pad. Your eyes would love some sunshine. Let's {a}!"],
-    ["Brain cells need fresh air!","90 minutes! Real fact: kids who play outside sleep better and get stronger. Let's {a}. The badges aren't going anywhere, promise."],
-    ["Psst… the tablet is getting tired. 😴","Two whole hours! It's begging for a nap. You go {a} and I'll keep your stars safe. Pinky promise."],
+    ["Time for a break!","You've been playing for 45 minutes. How about we {a}? The games will be right here when you get back."],
+    ["Hey superstar! 👋","That's an hour and a half on the pad. Your eyes would love some sunshine. Let's {a}!"],
+    ["Brain cells need fresh air!","Over two hours! Real fact: kids who play outside sleep better and get stronger. Let's {a}. The badges aren't going anywhere, promise."],
+    ["Psst… the tablet is getting tired. 😴","Three whole hours! It's begging for a nap. You go {a} and I'll keep your stars safe. Pinky promise."],
     ["Okay, this is the tablet speaking. 📢","I've been working SO hard. My screen is sweaty. The sun is out, the lizards are out, everyone's out except you! Go {a}. Please. I'm begging. 🙏"],
     ["Emergency adventure alert! 🚨","Fun outside has been waiting for hours and it's getting lonely. A real Hall of Famer knows when to {a}. Be legendary. Go now, tell the others!"]];
   var t=0,k=0;try{t=+sessionStorage.getItem("cg-brk-t")||0;k=+sessionStorage.getItem("cg-brk-k")||0;}catch(e){}
@@ -2869,7 +2876,13 @@ start:function(el){
     var fb=(typeof BADGES!=="undefined")?shuffle(BADGES.filter(function(b){return bsrc(b)!==BPH;}))[0]:null;
     o.innerHTML="<div class='card'>"+(fb?"<h2>"+esc(m[0])+"</h2><div class='bsay'><img src='"+bsrc(fb)+"' alt=''><div class='bub'><small>"+esc(fb[2])+" says:</small><p>"+txt+" "+emo(a[0],"🌞")+"</p></div></div>":"<div class='em'>"+emo(a[0],"🌞")+"</div><h2>"+esc(m[0])+"</h2><p>"+txt+"</p>")+"<button class='btn go'>Okay, I'm going! 🌞</button><button class='btn'>One more level, then I'll go</button></div>";
     document.body.appendChild(o);try{sfx.good();}catch(e){}
-    [].forEach.call(o.querySelectorAll("button"),function(x){x.addEventListener("click",function(){o.remove();});});}
+    [].forEach.call(o.querySelectorAll("button"),function(x,bi){x.addEventListener("click",function(){o.remove();if(bi===1)om=1;});});}
+  /* "One more level": after her next level ends, one friendly reminder. Still never locks. */
+  var om=0;
+  function oneMore(){var a=ACT[Math.floor(Math.random()*ACT.length)],o=document.createElement("div");o.className="brk";
+    o.innerHTML="<div class='card'><div class='em'>"+emo(a[0],"🌞")+"</div><h2>That was your one more level! 🌞</h2><p>Nice playing. Now go <b>"+a[1]+"</b>. Your stars will be right here when you get back.</p><button class='btn go'>Okay! 🌞</button></div>";
+    document.body.appendChild(o);try{sfx.good();}catch(e){}o.querySelector("button").addEventListener("click",function(){o.remove();});}
+  setInterval(function(){if(!om)return;if(om===1&&G&&G.alive&&!G.done)om=2;else if(om===2&&idle()&&!document.hidden&&!document.querySelector(".brk")){om=0;setTimeout(oneMore,G&&G.done?1800:300);}},1000);
   var due=false,n=0;
   function idle(){var st=document.getElementById("stage");return !G||!G.alive||G.done||!st||st.hidden;}
   setInterval(function(){if(due&&idle()&&!document.hidden&&!document.querySelector(".brk")){due=false;later2();}
@@ -2920,7 +2933,7 @@ function famNorm(c){return String(c||"").toUpperCase().replace(/[^A-Z0-9]/g,"");
 function famShow(c){return (c||"").replace(/(.{4})(?=.)/g,"$1-");}
 function famDoc(){return "fam-"+FAM+"-arizona-girls-sync";}
 (function(){var hs=location.hash||"",m=hs.match(/[#&]fam=([A-Za-z0-9-]+)/);if(!m)return;var c=famNorm(m[1]);if(c.length>=12){FAM=c;LS.set("cg-fam",FAM);}
-  var mm=hs.match(/[#&]me=(\d)/);if(mm&&+mm[1]<3){ME=+mm[1];LS.set("cg-me",ME);cur=ME;LS.set("cg-cur",cur);}
+  var mm=hs.match(/[#&]me=(\d)/);if(mm&&+mm[1]<5){ME=+mm[1];LS.set("cg-me",ME);cur=ME;LS.set("cg-cur",cur);}
   if(/[#&]admin=1/.test(hs)){ADMIN=true;LS.set("cg-admin",true);}})();
 if(ME>=0&&ME<3)cur=ME;
 function fsURL(q){return "https://firestore.googleapis.com/v1/projects/"+FB.proj+"/databases/(default)/documents/families/"+famDoc()+"?key="+FB.key+(q||"");}
@@ -2930,14 +2943,14 @@ function fsPut(obj){var keys=Object.keys(obj);if(!keys.length)return Promise.res
   return fetch(fsURL(keys.map(function(k){return "&updateMask.fieldPaths="+k;}).join("")),{method:"PATCH",headers:{"Content-Type":"application/json"},body:JSON.stringify({fields:f})}).then(function(r){if(!r.ok)throw new Error("Could not save ("+r.status+")");});}
 function wkKey(d){d=d||new Date();var m=new Date(d.getFullYear(),d.getMonth(),d.getDate()-((d.getDay()+6)%7));return m.getFullYear()+"-"+("0"+(m.getMonth()+1)).slice(-2)+"-"+("0"+m.getDate()).slice(-2);}
 function bumpWk(i,n){var p=players[i],k=wkKey();p.wk[k]=(p.wk[k]||0)+n;var keep=Object.keys(p.wk).sort().slice(-8),o={};keep.forEach(function(x){o[x]=p.wk[x];});p.wk=o;}
-function champ(key){var c=players.map(function(p){return (p.wk&&p.wk[key])||0;}),mx=Math.max.apply(null,c);return mx<1?null:{who:c.map(function(v,i){return v===mx?i:-1;}).filter(function(i){return i>=0;}),n:mx};}
+function champ(key){var c=players.map(function(p){return p.ad?0:((p.wk&&p.wk[key])||0);}),mx=Math.max.apply(null,c);return mx<1?null:{who:c.map(function(v,i){return v===mx?i:-1;}).filter(function(i){return i>=0;}),n:mx};}
 function lastWk(){var d=new Date();d.setDate(d.getDate()-7);return wkKey(d);}
 var _setLv0=setLv;setLv=function(id,i,v){var o=lvOf(id,i);_setLv0(id,i,v);if(v>o)bumpWk(i,v-o);save();};
 var _save0=save;save=function(){_save0();CLOUD.dirty=true;};
 function recP(i){var p=players[i],lv={};for(var id in LV)if(LV.hasOwnProperty(id)&&LV[id][i]>1)lv[id]=LV[id][i];
-  return {n:p.name,a:p.age,av:p.av,nt:p.nt||0,st:p.stars||0,lv:lv,fav:p.fav||[],ft:p.ft||0,wk:p.wk||{},pic:PICS[i]||null,pt:PICT[i]||0,bx:p.bx||0,hs:p.hs||{},bd:p.bd||"",pm:p.pm||{},la:p.la||0};}
+  return {n:p.name,a:p.age,av:p.av,nt:p.nt||0,st:p.stars||0,lv:lv,fav:p.fav||[],ft:p.ft||0,wk:p.wk||{},pic:PICS[i]||null,pt:PICT[i]||0,bx:p.bx||0,hs:p.hs||{},bd:p.bd||"",pm:p.pm||{},la:p.la||0,ad:!!p.ad,by:p.by||0};}
 function mergeP(i,r){var p=players[i];
-  if((r.nt||0)>(p.nt||0)){if(r.n)p.name=String(r.n).slice(0,16);if(r.a)p.age=+r.a;if(r.av)p.av=r.av;if(r.bd!=null)p.bd=String(r.bd);p.nt=r.nt;}
+  if((r.nt||0)>(p.nt||0)){if(r.n)p.name=String(r.n).slice(0,16);if(r.a)p.age=+r.a;if(r.av)p.av=r.av;if(r.bd!=null)p.bd=String(r.bd);if(r.by)p.by=+r.by;else setBY(p);p.nt=r.nt;}
   if((r.st||0)>(p.stars||0))p.stars=r.st;
   if((r.bx||0)>(p.bx||0))p.bx=r.bx;
   if((r.la||0)>(p.la||0))p.la=r.la;if(r.pm)for(var pk in r.pm)if(r.pm.hasOwnProperty(pk)&&(+r.pm[pk]||0)>(p.pm[pk]||0))p.pm[pk]=+r.pm[pk];
@@ -2950,7 +2963,8 @@ function wipeLocal(){LV={};LS.set("cg-lv",LV);players.forEach(function(p){p.star
 function cloudSync(){if(!FAM||CLOUD.busy)return Promise.resolve();CLOUD.busy=true;CLOUD.dirty=false;
   return fsGet().then(function(R){var out={};
     if((+R.rz||0)>LS.get("cg-rz",0)){wipeLocal();LS.set("cg-rz",+R.rz);}
-    [0,1,2].forEach(function(i){var r=R["p"+i];if(r)mergeP(i,r);var l=recP(i);if(!r||JSON.stringify(r)!==JSON.stringify(l))out["p"+i]=l;});
+    for(var ni=players.length;ni<5;ni++){var rr=R["p"+ni];if(!rr)break;players.push({name:String(rr.n||"Player").slice(0,16),age:+rr.a||18,av:rr.av||"🦊",stars:0,ad:!!rr.ad,fav:[],wk:{},hs:{},pm:{},nt:0});}
+    players.forEach(function(pp,i){var r=R["p"+i];if(r)mergeP(i,r);var l=recP(i);if(!r||JSON.stringify(r)!==JSON.stringify(l))out["p"+i]=l;});
     if(R.faces){var ch=false;for(var k in R.faces)if(R.faces.hasOwnProperty(k)&&FACES[k]!==R.faces[k]){FACES[k]=R.faces[k];ch=true;}if(ch)LS.set("cg-faces",FACES);}
     else if(Object.keys(FACES).length)out.faces=FACES;
     if(R.msgs)MSGS=R.msgs;LS.set("cg-msgs",MSGS);
@@ -2968,11 +2982,20 @@ document.addEventListener("visibilitychange",function(){if(!document.hidden&&FAM
    Catch-up: a sister more than one level-up behind the leader gets one hidden bonus level-up each time she levels up.
    The bonus only counts toward badges and unlocks; each game's own difficulty level is never changed. */
 var ADV=["colormix", "fishing", "smaze", "stack", "sudoku", "four", "pattern", "archery", "venom", "rrun", "memgrid", "dots", "jewels", "birds", "rattle", "sball", "picross", "drawg", "boutique", "compass", "sword", "lights", "clock", "buzz", "outfit", "survival", "lineup", "wsearch", "money", "membattle"];
-function famLv(){return totalLv(0)+totalLv(1)+totalLv(2);}
+function isKid(i){return !!players[i]&&!players[i].ad;}
+function kids(){var o=[];players.forEach(function(p,i){if(!p.ad)o.push(i);});return o;}
+
+/* ages grow on birthdays; once every sister is 10 or older all age-based balancing turns off (John, 2026-11-26) */
+function bdPassed(p,t){var q=String(p.bd||"").split("-"),m=t.getMonth()+1;return m>+q[0]||(m===+q[0]&&t.getDate()>=+q[1]);}
+function setBY(p){if(p.ad||!/^\d\d-\d\d$/.test(p.bd||""))return;var t=new Date();p.by=t.getFullYear()-(+p.age||8)-(bdPassed(p,t)?0:1);}
+function ageOf(p){if(p.ad)return 18;if(p.by&&/^\d\d-\d\d$/.test(p.bd||"")){var t=new Date();return t.getFullYear()-p.by-(bdPassed(p,t)?0:1);}return +p.age||8;}
+function evenMode(){var k=kids();return k.length>0&&k.every(function(i){return ageOf(players[i])>=10;});}
+players.forEach(function(p){if(p.bd&&!p.by)setBY(p);var a=ageOf(p);if(a!==p.age)p.age=a;});
+function famLv(){return kids().reduce(function(a,i){return a+totalLv(i);},0);}
 function unlockedN(){return Math.min(ADV.length,Math.floor(famLv()/2));}
 function isLocked(id){var k=ADV.indexOf(id);return k>=0&&k>=unlockedN();}
 function lvToUnlock(id){var k=ADV.indexOf(id);return Math.max(1,(k+1)*2-famLv());}
-function leadLv(i){var m=0;[0,1,2].forEach(function(j){if(j!==i)m=Math.max(m,totalLv(j));});return m;}
+function leadLv(i){var m=0;kids().forEach(function(j){if(j!==i)m=Math.max(m,totalLv(j));});return m;}
 
 
 /* ================= high scores (per game, per sister; no overall ranking) ================= */
@@ -3009,12 +3032,12 @@ var PARENT=LS.get("cg-parent",false);
 players.forEach(function(p){if(!p.pm||typeof p.pm!=="object")p.pm={};});
 function dKey(d){d=d||new Date();return d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2);}
 var lastTouch=0;["pointerdown","touchstart","keydown"].forEach(function(ev){document.addEventListener(ev,function(){lastTouch=Date.now();},{passive:true,capture:true});});
-setInterval(function(){if(document.hidden||PARENT||ADMIN||Date.now()-lastTouch>120000)return;var i=favWho();if(i<0||i>2)return;var p=players[i],k=dKey();
+setInterval(function(){if(document.hidden||ADMIN||(PARENT&&ME<0)||Date.now()-lastTouch>120000)return;var i=favWho();if(i<0||i>=players.length)return;var p=players[i],k=dKey();
   p.pm[k]=(p.pm[k]||0)+1;p.la=Date.now();var keep=Object.keys(p.pm).sort().slice(-14),o={};keep.forEach(function(x){o[x]=p.pm[x];});p.pm=o;save();},60000);
 function fmtMin(m){m=m||0;return m<60?m+" min":Math.floor(m/60)+" hr "+(m%60)+" min";}
 function openParent(){var o=h("div","brk msgs pview");
   function draw(){var days=[];for(var d=6;d>=0;d--){var x=new Date();x.setDate(x.getDate()-d);days.push(x);}
-    o.innerHTML="<div class='card'><h2>👪 Parent view</h2><p class='hsnote'>How the girls are doing. Read only. "+(CLOUD.ok?"Updated "+ago(CLOUD.last)+".":FAM?"Connecting…":"This device isn't joined to the family yet.")+"</p><div class='pkids'>"+
+    o.innerHTML="<div class='card'><h2>👪 Parent view</h2><p class='hsnote'>How everyone is doing. "+(CLOUD.ok?"Updated "+ago(CLOUD.last)+".":FAM?"Connecting…":"This device isn't joined to the family yet.")+"</p><div class='pkids'>"+
     players.map(function(p,i){var w=(p.wk&&p.wk[wkKey()])||0,today=(p.pm&&p.pm[dKey()])||0,week=days.reduce(function(a,x){return a+((p.pm&&p.pm[dKey(x)])||0);},0),mx=Math.max(30,Math.max.apply(null,days.map(function(x){return (p.pm&&p.pm[dKey(x)])||0;})));
       var tops=[];for(var id in LV)if(LV.hasOwnProperty(id)&&LV[id][i]>1){var g=byId(id);if(g)tops.push([LV[id][i],g]);}tops.sort(function(a,b){return b[0]-a[0];});
       return "<div class='pkid' style='--c:"+COLORS[i]+"'><h3><span class='av' style='background:"+COLORS[i]+"'>"+AVH(p)+"</span>"+(isChamp(i)?"👑 ":"")+esc(p.name)+"</h3><dl>"+
@@ -3031,7 +3054,7 @@ function openParent(){var o=h("div","brk msgs pview");
   draw();document.body.appendChild(o);}
 
 /* ================= "new version" banner ================= */
-var APPV="2026.11.26i";
+var APPV="2026.11.26l";
 function verCheck(){if(!/^https?:$/.test(location.protocol)||/claude|localhost|127\.0/.test(location.hostname))return;
   fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.json():null;}).then(function(j){
     if(!j||!j.v||j.v===APPV||document.querySelector(".upd"))return;var b=h("button","upd","✨ New version! Tap to update");
@@ -3040,13 +3063,13 @@ setInterval(function(){if(!document.hidden)verCheck();},15*60000);
 document.addEventListener("visibilitychange",function(){if(!document.hidden)verCheck();});
 
 /* ================= favorites, champion crown, message board ================= */
-function favWho(){return ME>=0&&ME<3?ME:cur;}
+function favWho(){return ME>=0&&ME<players.length?ME:cur;}
 function worldOf(id){for(var i=0;i<WORLDS.length;i++)if(WORLDS[i].games.indexOf(id)>=0)return WORLDS[i];return null;}
 function toggleFav(i,id){var p=players[i],k=p.fav.indexOf(id);if(k>=0)p.fav.splice(k,1);else{p.fav.unshift(id);p.fav=p.fav.slice(0,12);}p.ft=Date.now();save();}
 function renderFav(){var t=$("#favTile");if(!t)return;var i=favWho(),p=players[i],list=p.fav.map(byId).filter(function(g){return g&&!isLocked(g.id);}).slice(0,6);
   t.innerHTML="<span class='k'>⭐ "+esc(p.name)+"'s favorites</span><button class='fvsw' aria-label='Switch sister'>"+AVH(p)+" ⇄</button>"+
     (list.length?"<span class='fvl'>"+list.map(function(g){return "<button class='fvg' data-id='"+g.id+"'><i>"+g.em+"</i>"+esc(g.name)+"</button>";}).join("")+"</span>":"<span class='s'>Tap the ☆ on any game to pin it here.</span>");
-  t.querySelector(".fvsw").addEventListener("click",function(){if(ME>=0){ME=-1;LS.set("cg-me",-1);}cur=(cur+1)%3;LS.set("cg-cur",cur);sfx.tick();renderFav();});
+  t.querySelector(".fvsw").addEventListener("click",function(){if(ME>=0){ME=-1;LS.set("cg-me",-1);}cur=(cur+1)%players.length;LS.set("cg-cur",cur);sfx.tick();renderFav();});
   [].forEach.call(t.querySelectorAll(".fvg"),function(b){b.addEventListener("click",function(){var g=byId(b.dataset.id);if(!g)return;sfx.pop();world=worldOf(g.id);cur=i;openGame(g);});});}
 function crownLine(){var c=champ(wkKey()),l=c?null:champ(lastWk());
   if(c)return "👑 Sister Champion this week: "+c.who.map(function(i){return esc(players[i].name);}).join(" & ")+" ("+c.n+" level-up"+(c.n>1?"s":"")+")";
@@ -3054,23 +3077,28 @@ function crownLine(){var c=champ(wkKey()),l=c?null:champ(lastWk());
   return "👑 Level up this week to win the Sister Champion crown!";}
 function isChamp(i){var c=champ(wkKey());return !!(c&&c.who.indexOf(i)>=0);}
 function ago(t){var s=(Date.now()-t)/1000;return s<3600?Math.max(1,Math.round(s/60))+" min ago":s<86400?Math.round(s/3600)+" hr ago":Math.round(s/86400)+" day"+(s<172800?"":"s")+" ago";}
-function renderMsg(){var t=$("#joke");if(!t)return;var m=MSGS[0];t.classList.toggle("msgmode",!!(m||ADMIN));
+function renderMsg(){var t=$("#joke");if(!t)return;var m=MSGS[0];t.classList.toggle("msgmode",!!(m||ADMIN||PARENT));
   if(m){var seen=LS.get("cg-msg-seen",0);$("#jokeQ").innerHTML=(m.t>seen?"<b class='mnew'>NEW</b> ":"")+esc(m.text.length>90?m.text.slice(0,88)+"…":m.text);$("#jokeA").textContent="From "+m.from+" · "+ago(m.t)+" · Tap to read";t.querySelector(".k").textContent="📬 Message board";}
-  else if(ADMIN){$("#jokeQ").textContent="No messages yet.";$("#jokeA").textContent="Tap to post one for the girls";t.querySelector(".k").textContent="📬 Message board";}}
+  else if(ADMIN||PARENT){$("#jokeQ").textContent="No messages yet.";$("#jokeA").textContent="Tap to post one for the girls";t.querySelector(".k").textContent="📬 Message board";}}
 function openMsgs(){LS.set("cg-msg-seen",Date.now());var o=h("div","brk msgs");
-  function draw(){o.innerHTML="<div class='card'><h2>📬 Message board</h2>"+(ADMIN?"<div class='mpost'><input id='mFrom' maxlength='24' placeholder='From (like Grandpa)' value='"+esc(LS.get("cg-from",""))+"'><textarea id='mText' maxlength='400' rows='3' placeholder='Write a message for the girls'></textarea><button class='btn go' id='mGo'>Post</button><div class='n2small' id='mErr' style='color:#c8202f'></div></div>":"")+
+  function draw(){o.innerHTML="<div class='card'><h2>📬 Message board</h2>"+(ADMIN||PARENT?"<div class='mpost'><input id='mFrom' maxlength='24' placeholder='From (your name)' value='"+esc(LS.get("cg-from",""))+"'><textarea id='mText' maxlength='400' rows='3' placeholder='Write a message for the girls'></textarea><button class='btn go' id='mGo'>Post</button><div class='n2small' id='mErr' style='color:#c8202f'></div></div>":"")+
     "<div class='mlist'>"+(MSGS.length?MSGS.map(function(m,k){return "<div class='mitem'><p>"+esc(m.text)+"</p><small>From "+esc(m.from)+" · "+ago(m.t)+"</small>"+(ADMIN?"<button class='mdel' data-k='"+k+"'>Delete</button>":"")+"</div>";}).join(""):"<p>No messages yet.</p>")+"</div><button class='btn' id='mClose'>Close</button></div>";
     o.querySelector("#mClose").addEventListener("click",function(){o.remove();renderMsg();});
-    if(ADMIN){o.querySelector("#mGo").addEventListener("click",function(){var fr=o.querySelector("#mFrom").value.trim().slice(0,24)||"Family",tx=o.querySelector("#mText").value.trim().slice(0,400);if(!tx)return;LS.set("cg-from",fr);var btn=this;btn.disabled=true;
+    if(ADMIN||PARENT){o.querySelector("#mGo").addEventListener("click",function(){var fr=o.querySelector("#mFrom").value.trim().slice(0,24)||"Family",tx=o.querySelector("#mText").value.trim().slice(0,400);if(!tx)return;LS.set("cg-from",fr);var btn=this;btn.disabled=true;
         fsGet().then(function(R){var L=[{t:Date.now(),from:fr,text:tx}].concat(R.msgs||[]).slice(0,30);return fsPut({msgs:L}).then(function(){MSGS=L;LS.set("cg-msgs",MSGS);sfx.good();draw();});}).catch(function(e){btn.disabled=false;o.querySelector("#mErr").textContent="Couldn't post: "+(e.message||e);});});
       [].forEach.call(o.querySelectorAll(".mdel"),function(b){b.addEventListener("click",function(){var k=+b.dataset.k;fsGet().then(function(R){var L=(R.msgs||[]).filter(function(m){return !(MSGS[k]&&m.t===MSGS[k].t);});return fsPut({msgs:L}).then(function(){MSGS=L;LS.set("cg-msgs",MSGS);draw();});}).catch(function(){});});});}}
   draw();document.body.appendChild(o);}
 /* family sync section in the Stars & names sheet */
-function famPanel(box){function draw(){if(FAM){box.innerHTML="<p style='margin-top:14px'><b>☁️ Family sync is on.</b> Levels, stars, favorites and profile pictures sync between the sisters' tablets.<br><small>Family code "+famShow(FAM)+" · "+(CLOUD.ok?"synced "+ago(CLOUD.last):CLOUD.err?esc(CLOUD.err):"connecting…")+"</small></p><p style='font-size:15px;margin:6px 0'>Whose tablet is this?</p><div class='n2row fmme'>"+players.map(function(p,i){return "<button class='n2chip"+(ME===i?" on":"")+"' data-i='"+i+"'>"+AVH(p)+" "+esc(p.name)+"</button>";}).join("")+"<button class='n2chip"+(ME<0?" on":"")+"' data-i='-1'>Shared</button></div><button class='btn' id='fmSync'>Sync now</button>"+(ADMIN?"<p style='margin-top:12px;font-size:14px'><b>Grown-up only:</b> start the girls fresh. Clears levels, stars, high scores, unlocks and the champion crown on all three tablets. Names, birthdays, photos and favorites stay.</p><button class='btn' id='fmWipe' style='background:#c8202f;color:#fff'>Reset everyone's progress</button>":"");
+function famPanel(box){function draw(){if(FAM){box.innerHTML="<p style='margin-top:14px'><b>☁️ Family sync is on.</b> Levels, stars, favorites and profile pictures sync between the sisters' tablets.<br><small>Family code "+famShow(FAM)+" · "+(CLOUD.ok?"synced "+ago(CLOUD.last):CLOUD.err?esc(CLOUD.err):"connecting…")+"</small></p><p style='font-size:15px;margin:6px 0'>Whose tablet is this?</p><div class='n2row fmme'>"+players.map(function(p,i){return "<button class='n2chip"+(ME===i?" on":"")+"' data-i='"+i+"'>"+AVH(p)+" "+esc(p.name)+"</button>";}).join("")+"<button class='n2chip"+(ME<0?" on":"")+"' data-i='-1'>Shared</button></div><button class='btn' id='fmSync'>Sync now</button>"+(players.length<5?"<div class='fmadd'><input id='fmName' maxlength='16' placeholder='Grown-up? Your name' aria-label='Your name'><button class='btn go' id='fmAdd'>Join as a player</button></div><div class='n2small' id='fmAErr'></div>":"")+(ADMIN?"<p style='margin-top:12px;font-size:14px'><b>Grown-up only:</b> start the girls fresh. Clears levels, stars, high scores, unlocks and the champion crown on all three tablets. Names, birthdays, photos and favorites stay.</p><button class='btn' id='fmWipe' style='background:#c8202f;color:#fff'>Reset everyone's progress</button>":"");
       [].forEach.call(box.querySelectorAll(".fmme button"),function(b){b.addEventListener("click",function(){ME=+b.dataset.i;LS.set("cg-me",ME);if(ME>=0){cur=ME;LS.set("cg-cur",cur);}draw();});});
       box.querySelector("#fmSync").addEventListener("click",function(){var b=this;b.textContent="Syncing…";cloudSync().then(draw);});
+      var ab=box.querySelector("#fmAdd");if(ab)ab.addEventListener("click",function(){var nm=box.querySelector("#fmName").value.trim().slice(0,16),er=box.querySelector("#fmAErr");if(!nm){er.textContent="Type your name first.";return;}
+        ab.disabled=true;ab.textContent="Adding…";fsGet().then(function(R){var k=3;while(k<5&&R["p"+k])k++;if(k>=5)throw new Error("There are already 5 players.");
+          while(players.length<k)players.push({name:"Player "+(players.length+1),age:18,av:"🦊",stars:0,ad:true,fav:[],wk:{},hs:{},pm:{},nt:0});
+          var p={name:nm,age:18,av:["🦊","🦉","🐻","🦅","🐺"][k],stars:0,ad:true,fav:[],wk:{},hs:{},pm:{},nt:Date.now()};players[k]=p;ME=k;LS.set("cg-me",ME);cur=k;LS.set("cg-cur",cur);save();
+          var o={};o["p"+k]=recP(k);return fsPut(o);}).then(function(){sfx.good();draw();try{renderStars();}catch(e){}}).catch(function(e){ab.disabled=false;ab.textContent="Join as a player";er.textContent=String(e.message||e);});});
       var wb=box.querySelector("#fmWipe"),wn=0;if(wb)wb.addEventListener("click",function(){wn++;if(wn<2){wb.textContent="Tap again to erase all progress on all 3 tablets";return;}
-        wb.disabled=true;wb.textContent="Resetting…";var rz=Date.now();wipeLocal();LS.set("cg-rz",rz);var o={rz:rz};[0,1,2].forEach(function(i){o["p"+i]=recP(i);});
+        wb.disabled=true;wb.textContent="Resetting…";var rz=Date.now();wipeLocal();LS.set("cg-rz",rz);var o={rz:rz};players.forEach(function(pp,i){o["p"+i]=recP(i);});
         fsPut(o).then(function(){wb.textContent="✅ Everyone starts fresh";try{renderStars();}catch(e){}}).catch(function(e){wb.disabled=false;wn=0;wb.textContent="Couldn't reset: "+(e.message||e);});});}
     else{box.innerHTML="<p style='margin-top:14px'><b>☁️ Family sync</b><br><small>Got a family code from the setup sheet? Type it here so this tablet syncs with your sisters.</small></p><div class='n2row'><input id='fmIn' placeholder='XXXX-XXXX-XXXX' maxlength='16' style='flex:1;min-width:0;font:800 20px var(--body);padding:10px;border-radius:12px;text-transform:uppercase'><button class='btn go' id='fmGo'>Join</button></div><div class='n2small' id='fmErr'></div>";
       box.querySelector("#fmGo").addEventListener("click",function(){var c=famNorm(box.querySelector("#fmIn").value);if(c.length!==12){box.querySelector("#fmErr").textContent="The code has 12 letters and numbers.";return;}
@@ -3109,8 +3137,8 @@ function setDiff(i){if(!G)return;G.lvl=lvOf(G.g.id,i);G.D=diffFor(i,G.lvl);G.lev
 function stopGame(){if(!G)return;G.alive=false;G.timers.forEach(clearTimeout);G.off.forEach(function(f){f();});G=null;$("#stage").style.background="";}
 function setChips(){var who=$("#gWho"),lv=$("#gLvl");who.innerHTML=AVH(players[cur])+" "+esc(players[cur].name);lv.textContent="Level "+(G.lvl||1);}
 function whoCard(el,go){
-  var box=h("div","ready","<div class='card'><h2>Who's playing?</h2><div class='whob'></div></div>"),wb=box.querySelector(".whob");
-  players.forEach(function(p,i){var b=h("button","","<span>"+AVH(p)+"</span>"+esc(p.name)+"<small>"+(G&&G.g&&G.g.levels?"Level "+lvOf(G.g.id,i)+" · ":"Age "+p.age+" · ")+"★ "+p.stars+"</small>");b.style.setProperty("--pc",COLORS[i]);
+  var box=h("div","ready","<div class='card'><h2>Who's playing?</h2><div class='whob'></div></div>"),wb=box.querySelector(".whob");if(players.length>3)wb.classList.add("many");
+  players.forEach(function(p,i){var b=h("button","","<span>"+AVH(p)+"</span>"+esc(p.name)+"<small>"+(G&&G.g&&G.g.levels?"Level "+lvOf(G.g.id,i)+" · ":"")+"★ "+p.stars+"</small>");b.style.setProperty("--pc",COLORS[i]);
     b.addEventListener("click",function(){box.remove();sfx.pop();go(i);});wb.appendChild(b);});
   el.appendChild(box);}
 function openGame(g,level,skipWho){
@@ -3139,13 +3167,13 @@ $("#edit").addEventListener("click",function(){var sh=$("#sheet");sh.hidden=fals
   var sb=sh.querySelector("#sb");players.map(function(p,i){return [p,i];}).sort(function(a,b){return b[0].stars-a[0].stars;}).forEach(function(x){var r=h("div","starrow","<span class='av'>"+AVH(x[0])+"</span><span class='nm'>"+esc(x[0].name)+"</span><span class='ct'>★ "+x[0].stars+" <small style='font-size:16px;opacity:.85'>🏅 "+totalLv(x[1])+"</small></span>");r.style.background=COLORS[x[1]];sb.appendChild(r);
     var t=totalLv(x[1]),sf=h("div","shelf",BADGES.map(function(b){return badgeHTML(b,t>=b[1]);}).join(""));sb.appendChild(sf);});
   famPanel(sh.querySelector("#famBox"));var eds=sh.querySelector("#eds");
-  players.forEach(function(p,i){var r=h("div","edrow","<button class='avb'>"+AVH(p)+"</button><button class='phb'>📷<br>Photo</button><input id='nm"+i+"' maxlength='16' value='"+esc(p.name)+"' aria-label='Name'><select id='ag"+i+"' aria-label='Age'>"+[4,5,6,7,8,9,10,11,12,13].map(function(a){return "<option"+(a===p.age?" selected":"")+">"+a+"</option>";}).join("")+"</select>"+
+  players.forEach(function(p,i){var r=h("div","edrow","<button class='avb'>"+AVH(p)+"</button><button class='phb'>📷<br>Photo</button><input id='nm"+i+"' maxlength='16' value='"+esc(p.name)+"' aria-label='Name'><select id='ag"+i+"' aria-label='Age'>"+[4,5,6,7,8,9,10,11,12,13,18].map(function(a){return "<option value='"+a+"'"+(a===p.age?" selected":"")+">"+(a===18?"Grown-up":a)+"</option>";}).join("")+"</select>"+
       (function(){var q=String(p.bd||"").split("-"),bm=+q[0]||0,bd=+q[1]||0;return "<div class='bdrow'>🎂 Birthday <select class='bm' aria-label='Birthday month'><option value='0'>Month</option>"+MON.map(function(m,k){return "<option value='"+(k+1)+"'"+(bm===k+1?" selected":"")+">"+m+"</option>";}).join("")+"</select><select class='bdd' aria-label='Birthday day'><option value='0'>Day</option>"+Array.apply(null,Array(31)).map(function(x,k){return "<option"+(bd===k+1?" selected":"")+">"+(k+1)+"</option>";}).join("")+"</select></div>";})());
     var avb=r.querySelector(".avb");avb.addEventListener("click",function(){if(PICS[i]){delete PICS[i];LS.set("cg-pics",PICS);PICT[i]=Date.now();LS.set("cg-pict",PICT);}else{p.av=AVATARS[(AVATARS.indexOf(p.av)+1)%AVATARS.length];p.nt=Date.now();}avb.innerHTML=AVH(p);});
     r.querySelector(".phb").addEventListener("click",function(){photoPicker(i,function(){avb.innerHTML=AVH(p);});});
     r.querySelector("input").addEventListener("input",function(){p.name=this.value.trim()||("Player "+(i+1));p.nt=Date.now();});
-    r.querySelector("select").addEventListener("change",function(){p.age=+this.value;p.nt=Date.now();});
-    [].forEach.call(r.querySelectorAll(".bm,.bdd"),function(sel){sel.addEventListener("change",function(){var m=+r.querySelector(".bm").value,d=+r.querySelector(".bdd").value;p.bd=m&&d?("0"+m).slice(-2)+"-"+("0"+d).slice(-2):"";p.nt=Date.now();save();mainCount();});});eds.appendChild(r);});
+    r.querySelector("select").addEventListener("change",function(){p.age=+this.value;setBY(p);p.nt=Date.now();});
+    [].forEach.call(r.querySelectorAll(".bm,.bdd"),function(sel){sel.addEventListener("change",function(){var m=+r.querySelector(".bm").value,d=+r.querySelector(".bdd").value;p.bd=m&&d?("0"+m).slice(-2)+"-"+("0"+d).slice(-2):"";setBY(p);p.nt=Date.now();save();mainCount();});});eds.appendChild(r);});
   sh.querySelector("#setupIn").addEventListener("input",function(){var ok=applySetup(this.value.trim());if(ok){this.value="";this.placeholder="✅ Loaded! Tap Done.";players.forEach(function(p,i){var a=sh.querySelector("#nm"+i);if(a)a.value=p.name;var g=sh.querySelector("#ag"+i);if(g)g.value=p.age;});}});
   sh.querySelector("#rs").addEventListener("click",function(){resetN++;if(resetN<2){this.textContent="Tap again to reset";return;}players.forEach(function(p){p.stars=0;});this.textContent="Stars reset";});
   sh.querySelector("#ok").addEventListener("click",function(){save();sh.hidden=true;sh.innerHTML="";renderStars();if(FAM)cloudSync();});
@@ -3153,7 +3181,7 @@ $("#edit").addEventListener("click",function(){var sh=$("#sheet");sh.hidden=fals
 
 
 /* ================= badge board ================= */
-function renderBadgeStrip(){var best=Math.max.apply(null,players.map(function(p,i){return totalLv(i);}));
+function renderBadgeStrip(){var best=Math.max.apply(null,kids().map(function(i){return totalLv(i);}));
   $("#bstrip").innerHTML=BADGES.map(function(b){return "<span class='bi"+(best>=b[1]?"":" lk")+"'><img src='"+bsrc(b)+"' alt=''>"+(best>=b[1]?"":"<i>🔒</i>")+"</span>";}).join("");}
 function openBadges(){var sh=$("#sheet2");sh.hidden=false;sh.className="";sh.id="sheet2";
   var top=players.map(function(p,i){var t=totalLv(i),nx=BADGES.filter(function(b){return t<b[1];})[0];
@@ -3185,8 +3213,8 @@ function tickClock(){var n=new Date(),hh=n.getHours()%12||12,mm=("0"+n.getMinute
 function mainCount(){var now=new Date(),y=now.getFullYear(),x=new Date(y,11,25);if(now.getMonth()===11&&now.getDate()>25)x=new Date(y+1,11,25);
   var ev=nextEvents(2),e=ev[0],nx=ev[1];$("#cdK").textContent=e.em+" "+e.name.replace(/&#39;/g,"'")+" · "+fmtD(e.dt);$("#cdN").textContent=e.d===0?e.em:e.d;
   $("#cdS").innerHTML=(e.d===0?e.happy:e.d===1?"sleep to go!":"sleeps to go")+(nx?"<small class='cdnx'>Then "+nx.em+" "+nx.name+" ("+fmtD(nx.dt)+") in "+nx.d+"</small>":"");}
-function renderHQ(){var e=$("#hqName");if(e)e.textContent=(ME>=0&&ME<3&&players[ME]&&!/^Player \d$/.test(players[ME].name))?players[ME].name.toUpperCase()+" HQ":"AGENT HQ";}
-function renderStars(){renderHQ();if($("#bstrip"))renderBadgeStrip();var r=$("#srow");r.innerHTML="";players.forEach(function(p,i){var s=h("span","","<span class='av' style='background:"+COLORS[i]+"'>"+AVH(p)+"</span><span><b>"+(isChamp(i)?"👑 ":"")+esc(p.name)+"</b><small>★ "+p.stars+" · 🏅 "+totalLv(i)+" · 🎖️ "+badgesFor(i)+"/"+BADGES.length+"</small></span>");r.appendChild(s);});var cl=$("#crownL");if(!cl){cl=h("span","crown");cl.id="crownL";r.parentNode.appendChild(cl);}cl.innerHTML=crownLine();renderFav();renderMsg();}
+function renderHQ(){var e=$("#hqName");if(e)e.textContent=(ME>=0&&players[ME]&&!/^Player \d$/.test(players[ME].name))?players[ME].name.toUpperCase()+" HQ":"AGENT HQ";}
+function renderStars(){renderHQ();if($("#srow"))$("#srow").classList.toggle("many",players.length>3);if($("#bstrip"))renderBadgeStrip();var r=$("#srow");r.innerHTML="";players.forEach(function(p,i){var s=h("span","","<span class='av' style='background:"+COLORS[i]+"'>"+AVH(p)+"</span><span><b>"+(isChamp(i)?"👑 ":"")+esc(p.name)+(p.ad?"<span class='adtag'>GROWN-UP</span>":"")+"</b><small>★ "+p.stars+" · 🏅 "+totalLv(i)+" · 🎖️ "+badgesFor(i)+"/"+BADGES.length+"</small></span>");r.appendChild(s);});var cl=$("#crownL");if(!cl){cl=h("span","crown");cl.id="crownL";r.parentNode.appendChild(cl);}cl.innerHTML=crownLine();renderFav();renderMsg();}
 var jk=JOKES[((dayNo()%JOKES.length)+JOKES.length)%JOKES.length];
 function renderJoke(){$("#jokeQ").textContent=jk[0];$("#jokeA").textContent="Tap for the answer";$("#joke").classList.remove("open");}
 $("#joke").addEventListener("click",function(){if(this.classList.contains("msgmode")){sfx.pop();openMsgs();return;}var o=$("#joke").classList.toggle("open");$("#jokeA").textContent=o?jk[1]:"Tap for the answer";if(o)sfx.good();});
