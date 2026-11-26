@@ -1,4 +1,5 @@
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Arizona Girls</title>
 <link rel="apple-touch-icon" href="icon.png">
 <meta name="apple-mobile-web-app-title" content="AZ Girls">
@@ -698,6 +699,11 @@ body{margin:0}
 .bpoll.stink{background:#000;padding:0}
 .bpoll.stink img{width:100vw;height:100vh;object-fit:contain;animation:pop .35s}
 .bpoll .got{font:700 clamp(40px,8vw,80px)/1 var(--display);color:#ffb38a;animation:pop .4s}
+/* phones and small Kindles in portrait (needs the viewport meta) */
+.back{white-space:nowrap}
+@media (max-width:700px){.bar{flex-wrap:wrap;row-gap:6px;gap:8px}#gTitle{flex:1 1 auto;min-width:150px}}
+@media (max-width:520px){.back{padding:8px 14px;min-height:44px;font-size:16px}#gTitle{font-size:19px;min-width:120px}#gScore{font-size:17px}.chip{padding:6px 10px;font-size:13px;min-height:40px}
+  #main .gt-games .wm{grid-template-columns:repeat(3,1fr)}#main .gt-games .wm span{font-size:14px}.ktop{gap:6px}.ktop .chip{font-size:12px;padding:5px 9px;min-height:34px}.keys{top:96px;gap:5px;left:8px;right:8px}.key{font-size:20px;border-radius:16px}}
 </style>
 
 <canvas id="snow"></canvas>
@@ -929,7 +935,7 @@ function finish(o){
   else if(s>0)players[cur].stars+=s;
   save();var up="",lvUp=false;
   if(G.g.levels&&!o.award&&!o.noStars){var lv=lvOf(G.g.id,cur);
-    if(s>=2&&lv<MAXLV){lvUp=true;var nb0=badgesFor(cur),U0=unlockedN();if(isKid(cur)&&leadLv(cur)-totalLv(cur)>1){players[cur].bx=(players[cur].bx||0)+1;}setLv(G.g.id,cur,lv+1);var nb1=badgesFor(cur),U1=unlockedN();up="<div class='lvup'>⬆️ "+esc(players[cur].name)+" is now <b>Level "+(lv+1)+"</b></div>";if(U1>U0){var ng=byId(ADV[U1-1]);if(ng)up+="<div class='unl'>🔓 New game unlocked for all three sisters: "+ng.em+" "+esc(ng.name)+"!</div>";}
+    if(s>=2&&lv<MAXLV){lvUp=true;var nb0=badgesFor(cur),U0=unlockedN();if(isKid(cur)&&leadLv(cur)-totalLv(cur)>1){players[cur].bx=(players[cur].bx||0)+1;}setLv(G.g.id,cur,lv+1);var nb1=badgesFor(cur),U1=unlockedN();up="<div class='lvup'>⬆️ "+esc(players[cur].name)+" is now <b>Level "+(lv+1)+"</b></div>";try{$("#gLvl").textContent="Level "+(lv+1);}catch(e){}if(U1>U0){var ng=byId(ADV[U1-1]);if(ng)up+="<div class='unl'>🔓 New game unlocked for all three sisters: "+ng.em+" "+esc(ng.name)+"!</div>";}
       if(nb1>nb0){up+="<div class='newbdg'>"+badgeHTML(BADGES[nb1-1],true,true)+"<span>"+BADGES[nb1-1][2]+"!<br><small>New badge "+nb1+" of "+BADGES.length+"</small></span></div>";}if(!o.title)o.title="Level up!";}
     else if(s>=2)up="<div class='lvup'>👑 Top level! Level "+MAXLV+"</div>";
     else up="<div class='lvup dim'>Get 2 stars to reach Level "+(lv+1)+"</div>";}
@@ -1365,7 +1371,7 @@ start:function(el,L){
 }});
 
 /* ---- Balloon Pop (new) ---- */
-game({id:"balloon",name:"Balloon Pop",em:"🎈",cats:["arcade"],bl:"Pop balloons. Older sisters follow a tricky rule.",tc:"#ffb3a7",levels:true,
+game({id:"balloon",name:"Balloon Pop",em:"🎈",cats:["arcade"],bl:"Pop balloons fast. Higher levels add a tricky rule.",tc:"#ffb3a7",levels:true,
 start:function(el,L){
   var c=canvasIn(el),cx=c.cx,bl=[],t=40,sc=0,spawn=0,rule,ruleT=0,pops=[],NM=30;
   var COL=[["red","#e8424f"],["blue","#4b8cff"],["yellow","#ffc94a"],["green","#36b37e"]];
@@ -2987,6 +2993,7 @@ function mergeP(i,r){var p=players[i];
 function wipeLocal(){LV={};LS.set("cg-lv",LV);players.forEach(function(p){p.stars=0;p.wk={};p.bx=0;p.hs={};p.pm={};p.la=0;});_save0();}
 function cloudSync(){if(!FAM||CLOUD.busy)return Promise.resolve();CLOUD.busy=true;CLOUD.dirty=false;
   return fsGet().then(function(R){var out={};
+    if(!R.p0){FAM="";LS.set("cg-fam","");throw new Error("That family code didn't match. Type it in Stars & names.");}
     if((+R.rz||0)>LS.get("cg-rz",0)){wipeLocal();LS.set("cg-rz",+R.rz);}
     for(var ni=players.length;ni<5;ni++){var rr=R["p"+ni];if(!rr)break;players.push({name:String(rr.n||"Player").slice(0,16),age:+rr.a||18,av:rr.av||"🦊",stars:0,ad:!!rr.ad,fav:[],wk:{},hs:{},pm:{},nt:0});}
     players.forEach(function(pp,i){var r=R["p"+i];if(r)mergeP(i,r);var l=recP(i);if(!r||JSON.stringify(r)!==JSON.stringify(l))out["p"+i]=l;});
@@ -3073,7 +3080,7 @@ function openParent(){var o=h("div","brk msgs pview");
         "<div class='pbar' title='Minutes played, last 7 days'>"+days.map(function(x){var m=(p.pm&&p.pm[dKey(x)])||0;return "<i style='height:"+Math.round(100*m/mx)+"%'></i>";}).join("")+"</div><div class='pdays'>"+days.map(function(x){return "<span>"+"SMTWTFS".charAt(x.getDay())+"</span>";}).join("")+"</div>"+
         "<div class='top'>"+(tops.length?"Top games: "+tops.slice(0,3).map(function(t){return t[1].em+" "+esc(t[1].name)+" (Level "+t[0]+")";}).join(", "):"No level-ups yet.")+"</div></div>";}).join("")+
     "</div><div class='pacts'><button class='btn' id='pHs'>🏆 High scores</button><button class='btn' id='pMsg'>📬 Message board</button><button class='btn' id='pSync'>Refresh</button><button class='btn go' id='pClose'>Close</button></div>"+
-    "<p class='pnote'>Play time counts minutes the app is open and being used on each girl's own tablet. The 30-minute break reminders keep running on their own.</p></div>";
+    "<p class='pnote'>Play time counts minutes the app is open and being used on each girl's own tablet. The 45-minute break reminders keep running on their own.</p></div>";
     o.querySelector("#pClose").addEventListener("click",function(){o.remove();});
     o.querySelector("#pHs").addEventListener("click",function(){openRecords();});
     o.querySelector("#pMsg").addEventListener("click",function(){openMsgs();});
@@ -3106,7 +3113,7 @@ function bearsPoll(){var LOGO=LS.get("cg-bears","")||BEARS_LOGO,o=h("div","bpoll
   ask();document.body.appendChild(o);sfx.pop();}
 
 /* ================= "new version" banner ================= */
-var APPV="2026.11.26q";
+var APPV="2026.11.26r";
 function verCheck(){if(!/^https?:$/.test(location.protocol)||/claude|localhost|127\.0/.test(location.hostname))return;
   fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.json():null;}).then(function(j){
     if(!j||!j.v||j.v===APPV||document.querySelector(".upd"))return;var b=h("button","upd","✨ New version! Tap to update");
@@ -3141,7 +3148,7 @@ function openMsgs(){LS.set("cg-msg-seen",Date.now());var o=h("div","brk msgs");
       [].forEach.call(o.querySelectorAll(".mdel"),function(b){b.addEventListener("click",function(){var k=+b.dataset.k;fsGet().then(function(R){var L=(R.msgs||[]).filter(function(m){return !(MSGS[k]&&m.t===MSGS[k].t);});return fsPut({msgs:L}).then(function(){MSGS=L;LS.set("cg-msgs",MSGS);draw();});}).catch(function(){});});});}}
   draw();document.body.appendChild(o);}
 /* family sync section in the Stars & names sheet */
-function famPanel(box){function draw(){if(FAM){box.innerHTML="<p style='margin-top:14px'><b>☁️ Family sync is on.</b> Levels, stars, favorites and profile pictures sync between the sisters' tablets.<br><small>Family code "+famShow(FAM)+" · "+(CLOUD.ok?"synced "+ago(CLOUD.last):CLOUD.err?esc(CLOUD.err):"connecting…")+"</small></p><p style='font-size:15px;margin:6px 0'>Whose tablet is this?</p><div class='n2row fmme'>"+players.map(function(p,i){return "<button class='n2chip"+(ME===i?" on":"")+"' data-i='"+i+"'>"+AVH(p)+" "+esc(p.name)+"</button>";}).join("")+"<button class='n2chip"+(ME<0?" on":"")+"' data-i='-1'>Shared</button></div><button class='btn' id='fmSync'>Sync now</button>"+(players.length<5?"<div class='fmadd'><input id='fmName' maxlength='16' placeholder='Grown-up? Your name' aria-label='Your name'><button class='btn go' id='fmAdd'>Join as a player</button></div><div class='n2small' id='fmAErr'></div>":"")+(ADMIN?"<p style='margin-top:12px;font-size:14px'><b>Grown-up only:</b> start the girls fresh. Clears levels, stars, high scores, unlocks and the champion crown on all three tablets. Names, birthdays, photos and favorites stay.</p><button class='btn' id='fmWipe' style='background:#c8202f;color:#fff'>Reset everyone's progress</button>":"");
+function famPanel(box){function draw(){if(FAM){box.innerHTML="<p style='margin-top:14px'><b>☁️ Family sync is on.</b> Levels, stars, favorites and profile pictures sync between the sisters' tablets.<br><small>Family code "+famShow(FAM)+" · "+(CLOUD.ok?"synced "+ago(CLOUD.last):CLOUD.err?esc(CLOUD.err):"connecting…")+"</small></p><p style='font-size:15px;margin:6px 0'>Whose tablet is this?</p><div class='n2row fmme'>"+players.map(function(p,i){return "<button class='n2chip"+(ME===i?" on":"")+"' data-i='"+i+"'>"+AVH(p)+" "+esc(p.name)+"</button>";}).join("")+"<button class='n2chip"+(ME<0?" on":"")+"' data-i='-1'>Shared</button></div><button class='btn' id='fmSync'>Sync now</button>"+((PARENT||ADMIN)&&players.length<5?"<div class='fmadd'><input id='fmName' maxlength='16' placeholder='Grown-up? Your name' aria-label='Your name'><button class='btn go' id='fmAdd'>Join as a player</button></div><div class='n2small' id='fmAErr'></div>":"")+(ADMIN?"<p style='margin-top:12px;font-size:14px'><b>Grown-up only:</b> start the girls fresh. Clears levels, stars, high scores, unlocks and the champion crown on all three tablets. Names, birthdays, photos and favorites stay.</p><button class='btn' id='fmWipe' style='background:#c8202f;color:#fff'>Reset everyone's progress</button>":"");
       [].forEach.call(box.querySelectorAll(".fmme button"),function(b){b.addEventListener("click",function(){ME=+b.dataset.i;LS.set("cg-me",ME);if(ME>=0){cur=ME;LS.set("cg-cur",cur);}draw();});});
       box.querySelector("#fmSync").addEventListener("click",function(){var b=this;b.textContent="Syncing…";cloudSync().then(draw);});
       var ab=box.querySelector("#fmAdd");if(ab)ab.addEventListener("click",function(){var nm=box.querySelector("#fmName").value.trim().slice(0,16),er=box.querySelector("#fmAErr");if(!nm){er.textContent="Type your name first.";return;}
@@ -3161,14 +3168,14 @@ function openWorld(w){world=w;LS.set("cg-world",w.id);$("#home").hidden=true;$("
   document.body.classList.add("inworld");document.body.style.setProperty("--wbody",w.body);
   var box=$("#tiles");box.innerHTML="";
   w.games.forEach(function(id){var g=byId(id);if(!g)return;
-    var b=h("button","tile","<span class='tag"+(g.both?" both":"")+"'>"+(g.both?"Together":g.id==="wildlife"?"NEW · Level up":g.levels?"Level up":"Free play")+"</span><span class='em'>"+g.em+"</span><span class='nm'>"+g.name+"</span><span class='bl'>"+g.bl+"</span>"+
+    var b=h("button","tile","<span class='tag"+(g.both?" both":"")+"'>"+(g.both?"Together":g.levels?"Level up":"Free play")+"</span><span class='em'>"+g.em+"</span><span class='nm'>"+g.name+"</span><span class='bl'>"+g.bl+"</span>"+
       (g.levels?"<span class='tlv'>"+players.map(function(p,i){return "<i style='background:"+COLORS[i]+"'>"+AVH(p)+" "+lvOf(g.id,i)+"</i>";}).join("")+"</span>":""));
     b.style.setProperty("--tc",g.tc);
     if(isLocked(id)){b.classList.add("locked");var n=lvToUnlock(id);b.appendChild(h("span","lk","🔒 Unlocks after "+n+" more level-up"+(n>1?"s":"")+" (any sister)"));b.addEventListener("click",function(){sfx.tick();});box.appendChild(b);return;}
     b.addEventListener("click",function(){sfx.pop();openGame(g);});
     var fw=favWho(),fb=h("button","fvb"+(players[fw].fav.indexOf(id)>=0?" on":""),players[fw].fav.indexOf(id)>=0?"★":"☆");fb.setAttribute("aria-label","Favorite");
     fb.addEventListener("click",function(e){e.stopPropagation();var w=favWho();toggleFav(w,id);var on=players[w].fav.indexOf(id)>=0;fb.textContent=on?"★":"☆";fb.classList.toggle("on",on);sfx.tick();});b.appendChild(fb);box.appendChild(b);});
-  (w.links||[]).forEach(function(x){var b=h("button","tile","<span class='tag'>Holiday classic</span><span class='em'>"+x[1]+"</span><span class='nm'>"+x[2]+"</span><span class='bl'>"+x[3]+"</span>");
+  (w.links||[]).forEach(function(x){var b=h("button","tile","<span class='tag'>Just for fun</span><span class='em'>"+x[1]+"</span><span class='nm'>"+x[2]+"</span><span class='bl'>"+x[3]+"</span>");
     b.style.setProperty("--tc",x[0].charAt(0)==="t"?"#ffb36b":"#ff9aa5");b.addEventListener("click",function(){sfx.pop();location.href="hq.html#g="+x[0];});box.appendChild(b);});
   scrollTo(0,0);}
 function goHome(){world=null;LS.set("cg-world","");$("#wview").hidden=true;$("#home").hidden=false;document.body.classList.remove("inworld");}
@@ -3215,19 +3222,19 @@ $("#mute").textContent=muted?"🔇":"🔊";
 
 /* ================= stars & names sheet ================= */
 $("#edit").addEventListener("click",function(){var sh=$("#sheet");sh.hidden=false;var resetN=0;
-  sh.innerHTML="<div class='card'><h2>⭐ Star board</h2><p style='margin:-4px 0 10px;font-size:15px'>Every 🏅 level-up counts toward the next photo badge.</p><div id='sb'></div><p style='margin-top:18px'>Change names, ages and pictures. Age sets how hard the games are.</p><div id='eds'></div><p style='margin-top:14px;font-size:15px'>Got a setup link? Paste it here to load names and badge photos.</p><input id='setupIn' aria-label='Setup link' placeholder='Paste setup link' style='width:100%;box-sizing:border-box'><div id='famBox'></div><button class='btn' id='rs'>Reset all stars</button><button class='btn go' id='ok'>Done</button></div>";
+  sh.innerHTML="<div class='card'><h2>⭐ Star board</h2><p style='margin:-4px 0 10px;font-size:15px'>Every 🏅 level-up counts toward the next photo badge.</p><div id='sb'></div><p style='margin-top:18px'>Change names, pictures and birthdays.</p><div id='eds'></div><p style='margin-top:14px;font-size:15px'>Got a setup link? Paste it here to load names and badge photos.</p><input id='setupIn' aria-label='Setup link' placeholder='Paste setup link' style='width:100%;box-sizing:border-box'><div id='famBox'></div>"+(ADMIN?"<button class='btn' id='rs'>Reset all stars</button>":"")+"<button class='btn go' id='ok'>Done</button></div>";
   var sb=sh.querySelector("#sb");players.map(function(p,i){return [p,i];}).sort(function(a,b){return b[0].stars-a[0].stars;}).forEach(function(x){var r=h("div","starrow","<span class='av'>"+AVH(x[0])+"</span><span class='nm'>"+esc(x[0].name)+"</span><span class='ct'>★ "+x[0].stars+" <small style='font-size:16px;opacity:.85'>🏅 "+totalLv(x[1])+"</small></span>");r.style.background=COLORS[x[1]];sb.appendChild(r);
     var t=totalLv(x[1]),sf=h("div","shelf",BADGES.map(function(b){return badgeHTML(b,t>=b[1]);}).join(""));sb.appendChild(sf);});
   famPanel(sh.querySelector("#famBox"));var eds=sh.querySelector("#eds");
-  players.forEach(function(p,i){var r=h("div","edrow","<button class='avb'>"+AVH(p)+"</button><button class='phb'>📷<br>Photo</button><input id='nm"+i+"' maxlength='16' value='"+esc(p.name)+"' aria-label='Name'><select id='ag"+i+"' aria-label='Age'>"+[4,5,6,7,8,9,10,11,12,13,18].map(function(a){return "<option value='"+a+"'"+(a===p.age?" selected":"")+">"+(a===18?"Grown-up":a)+"</option>";}).join("")+"</select>"+
-      (function(){var q=String(p.bd||"").split("-"),bm=+q[0]||0,bd=+q[1]||0;return "<div class='bdrow'>🎂 Birthday <select class='bm' aria-label='Birthday month'><option value='0'>Month</option>"+MON.map(function(m,k){return "<option value='"+(k+1)+"'"+(bm===k+1?" selected":"")+">"+m+"</option>";}).join("")+"</select><select class='bdd' aria-label='Birthday day'><option value='0'>Day</option>"+Array.apply(null,Array(31)).map(function(x,k){return "<option"+(bd===k+1?" selected":"")+">"+(k+1)+"</option>";}).join("")+"</select></div>";})());
+  players.forEach(function(p,i){var r=h("div","edrow","<button class='avb'>"+AVH(p)+"</button><button class='phb'>📷<br>Photo</button><input id='nm"+i+"' maxlength='16' value='"+esc(p.name)+"' aria-label='Name'><select id='ag"+i+"' aria-label='Age'"+(ADMIN||PARENT?"":" hidden")+">"+[4,5,6,7,8,9,10,11,12,13,18].map(function(a){return "<option value='"+a+"'"+(a===p.age?" selected":"")+">"+(a===18?"Grown-up":a)+"</option>";}).join("")+"</select>"+
+      (function(){var q=String(p.bd||"").split("-"),bm=+q[0]||0,bd=+q[1]||0;return "<div class='bdrow'>🎂 Birthday <select class='bm' aria-label='Birthday month'"+(ADMIN||PARENT?"":" disabled")+"><option value='0'>Month</option>"+MON.map(function(m,k){return "<option value='"+(k+1)+"'"+(bm===k+1?" selected":"")+">"+m+"</option>";}).join("")+"</select><select class='bdd' aria-label='Birthday day'"+(ADMIN||PARENT?"":" disabled")+"><option value='0'>Day</option>"+Array.apply(null,Array(31)).map(function(x,k){return "<option"+(bd===k+1?" selected":"")+">"+(k+1)+"</option>";}).join("")+"</select></div>";})());
     var avb=r.querySelector(".avb");avb.addEventListener("click",function(){if(PICS[i]){delete PICS[i];LS.set("cg-pics",PICS);PICT[i]=Date.now();LS.set("cg-pict",PICT);}else{p.av=AVATARS[(AVATARS.indexOf(p.av)+1)%AVATARS.length];p.nt=Date.now();}avb.innerHTML=AVH(p);});
     r.querySelector(".phb").addEventListener("click",function(){photoPicker(i,function(){avb.innerHTML=AVH(p);});});
     r.querySelector("input").addEventListener("input",function(){p.name=this.value.trim()||("Player "+(i+1));p.nt=Date.now();});
     r.querySelector("select").addEventListener("change",function(){p.age=+this.value;setBY(p);p.nt=Date.now();});
     [].forEach.call(r.querySelectorAll(".bm,.bdd"),function(sel){sel.addEventListener("change",function(){var m=+r.querySelector(".bm").value,d=+r.querySelector(".bdd").value;p.bd=m&&d?("0"+m).slice(-2)+"-"+("0"+d).slice(-2):"";setBY(p);p.nt=Date.now();save();mainCount();});});eds.appendChild(r);});
   sh.querySelector("#setupIn").addEventListener("input",function(){var ok=applySetup(this.value.trim());if(ok){this.value="";this.placeholder="✅ Loaded! Tap Done.";players.forEach(function(p,i){var a=sh.querySelector("#nm"+i);if(a)a.value=p.name;var g=sh.querySelector("#ag"+i);if(g)g.value=p.age;});}});
-  sh.querySelector("#rs").addEventListener("click",function(){resetN++;if(resetN<2){this.textContent="Tap again to reset";return;}players.forEach(function(p){p.stars=0;});this.textContent="Stars reset";});
+  if(sh.querySelector("#rs"))sh.querySelector("#rs").addEventListener("click",function(){resetN++;if(resetN<2){this.textContent="Tap again to reset";return;}players.forEach(function(p){p.stars=0;});this.textContent="Stars reset";});
   sh.querySelector("#ok").addEventListener("click",function(){save();sh.hidden=true;sh.innerHTML="";renderStars();if(FAM)cloudSync();});
 });
 
