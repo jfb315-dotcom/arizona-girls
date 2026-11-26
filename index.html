@@ -680,6 +680,10 @@ body{margin:0}
 .world.bears .bl{width:96px;height:96px;flex:none;display:flex;align-items:center;justify-content:center;font-size:72px}
 .world.bears .bl img{width:100%;height:100%;object-fit:contain}
 .world.bears .wn{font-size:30px}
+.pill.bearbtn{display:inline-flex;align-items:center;gap:8px;padding:4px 16px 4px 6px;background:linear-gradient(135deg,#0b162a,#1c2c4a 55%,#c83803);color:#fff;border-color:rgba(255,255,255,.35)}
+.pill.bearbtn .bi{width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:26px}
+.pill.bearbtn .bi img{width:100%;height:100%;object-fit:contain}
+@media (max-width:700px){.pill.bearbtn .bt{display:none}.pill.bearbtn{padding:4px 6px}}
 .bpoll{position:fixed;inset:0;z-index:9990;background:radial-gradient(circle at 50% 30%,#1c2c4a,#0b162a 70%);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:70px 16px 24px;box-sizing:border-box;overflow:hidden;text-align:center}
 .bpoll .bk{position:absolute;left:14px;top:14px;background:#fff;color:#0b162a;border-radius:999px;padding:10px 18px;font:900 18px var(--body);z-index:3}
 .bpoll .logo{width:min(62vw,46vh,420px);aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:min(40vw,30vh)}
@@ -716,6 +720,7 @@ body{margin:0}
     <div class="sp"></div>
     <button class="pill" id="par2" hidden>👪 Parents</button>
     <button class="pill" id="upd2" aria-label="Check for update" title="Check for update">🔄</button>
+    <button class="pill bearbtn" id="bears2" aria-label="Bears Poll"></button>
     <button class="pill gag" id="gag2" aria-label="Don't press">🔴 Don't press</button>
     <button class="pill" id="mute2" aria-label="Sound on or off">🔊</button>
     <button class="pill" id="edit2">⭐ Stars &amp; names</button>
@@ -2929,6 +2934,7 @@ var GAGS=[{f:1,show:"Pfffffft"},{f:1,show:"Brrrrap"},{s:"I don't care."},{s:"Not
 function gag(){var i;do{i=Math.floor(Math.random()*GAGS.length);}while(i===lastGag&&GAGS.length>1);lastGag=i;var g=GAGS[i],dur=0;
  if(g.f)dur=fart()||0;if(g.s){if(dur)setTimeout(function(){speak(g.s);},dur*1000+150);else speak(g.s);}toast(g.s||g.show);}
 $("#gag2").addEventListener("click",gag);
+$("#bears2").addEventListener("click",function(){try{sfx.pop();}catch(x){}bearsPoll();});
 
 var WORLDS=[
   {id:"sparkle",name:"Sparkle Studio",em:"✨",pat:"✨💖",bg:"linear-gradient(135deg,#ff8fb1,#b07cff)",body:"linear-gradient(180deg,#3a1450 0%,#7a2f7a 55%,#c2559a 100%)",games:["nails","unicorn","cupcake","bracelet","snowman","draw","colormix","pattern","jewels","boutique","outfit"],bl:"nails, unicorns, cupcakes"},
@@ -2942,8 +2948,7 @@ function byId(id){for(var i=0;i<GAMES.length;i++)if(GAMES[i].id===id)return GAME
 function renderHome(){var box=$("#worlds");box.innerHTML="";
   WORLDS.forEach(function(w){var b=h("button","world","<div class='pat'>"+new Array(16).join(w.pat)+"</div><span class='we'>"+w.em+"</span><span class='wn'>"+w.name+"</span>"+"<span class='wnew'>+5 NEW</span>"+"<span class='wd'>"+(w.games.length+(w.links||[]).length)+" games · "+w.bl+"</span>");
     b.style.setProperty("--wbg",w.bg);b.addEventListener("click",function(){sfx.pop();openWorld(w);});box.appendChild(b);});
-  var bl=LS.get("cg-bears",""),bb=h("button","world bears","<span class='bl'>"+(bl?"<img src='"+bl+"' alt=''>":"🐻")+"</span><span><span class='wn'>Bears Poll</span><span class='wnew' style='position:static;display:inline-block;margin-left:10px'>NEW</span><span class='wd' style='display:block'>One quick question. Be honest!</span></span>");
-  bb.addEventListener("click",function(){bearsPoll();});box.appendChild(bb);}
+  bearsBtn();}
 /* ================= family sync (Firestore REST). The family code lives only on the tablets and the private QR sheet, never in this repo. ================= */
 var FB={key:"AIzaSyCxbZEqlOZmUv7RLlXW-Im62fKRa7I_5D8",proj:"arizona-girls"};
 var FAM=LS.get("cg-fam",""),ME=LS.get("cg-me",-1),ADMIN=LS.get("cg-admin",false),MSGS=LS.get("cg-msgs",[])||[],PICT=LS.get("cg-pict",{})||{};
@@ -2988,7 +2993,7 @@ function cloudSync(){if(!FAM||CLOUD.busy)return Promise.resolve();CLOUD.busy=tru
     if(R.faces){var ch=false;for(var k in R.faces)if(R.faces.hasOwnProperty(k)&&FACES[k]!==R.faces[k]){FACES[k]=R.faces[k];ch=true;}if(ch)LS.set("cg-faces",FACES);}
     else if(Object.keys(FACES).length)out.faces=FACES;
     if(R.bears2&&R.bears2!==LS.get("cg-bears2",""))LS.set("cg-bears2",R.bears2);
-    if(R.bears&&R.bears!==LS.get("cg-bears","")){LS.set("cg-bears",R.bears);try{renderHome();}catch(e){}}
+    if(R.bears&&R.bears!==LS.get("cg-bears","")){LS.set("cg-bears",R.bears);try{bearsBtn();}catch(e){}}
     if(R.msgs)MSGS=R.msgs;LS.set("cg-msgs",MSGS);
     _save0();LS.set("cg-lv",LV);LS.set("cg-pics",PICS);LS.set("cg-pict",PICT);
     CLOUD.ok=true;CLOUD.err="";CLOUD.last=Date.now();cloudRender();return fsPut(out);
@@ -3076,8 +3081,10 @@ function openParent(){var o=h("div","brk msgs pview");
   draw();document.body.appendChild(o);}
 
 
+var BEARS_LOGO="",BEARS_STINK="";
 /* ================= Bears poll (a prank from John). The logo comes from the private family record only. ================= */
-function bearsPoll(){var LOGO=LS.get("cg-bears",""),o=h("div","bpoll"),tries=0;
+function bearsBtn(){var b=document.getElementById("bears2");if(!b)return;var bl=LS.get("cg-bears","")||BEARS_LOGO;b.innerHTML="<span class='bi'>"+(bl?"<img src='"+bl+"' alt=''>":"🐻")+"</span><span class='bt'>Bears Poll</span>";}
+function bearsPoll(){var LOGO=LS.get("cg-bears","")||BEARS_LOGO,o=h("div","bpoll"),tries=0;
   var CAPS=["Hmm, that button seems broken. Try the other one!","Confirm: the Bears stink? 🤔","Error 404: \"No\" not found.","The No button is on a snack break. 🍿","Did you mean: YES, the Bears stink?","Nice try! The No button ran away. 🏃","This tablet only accepts correct answers. 😇","The No button has left the building. 🚪"];
   function logo(){return "<div class='logo'>"+(LOGO?"<img src='"+LOGO+"' alt='Bears logo'>":"🐻")+"</div>";}
   function ask(){o.innerHTML="<button class='bk'>‹ Back</button>"+logo()+"<h2>Do you agree the Bears stink?</h2><div class='cap'></div><div class='row'><button class='yes'>Yes</button><button class='no'>No</button></div>";
@@ -3089,7 +3096,7 @@ function bearsPoll(){var LOGO=LS.get("cg-bears",""),o=h("div","bpoll"),tries=0;
       var sc=Math.max(0.45,1-tries*0.1),W=innerWidth,H=innerHeight;no.classList.add("run");no.style.transform="scale("+sc+")";
       no.style.left=Math.round(20+Math.random()*Math.max(40,W-200))+"px";no.style.top=Math.round(90+Math.random()*Math.max(40,H-200))+"px";}
     no.addEventListener("pointerdown",dodge);no.addEventListener("click",dodge);}
-  function reveal(){var ST=LS.get("cg-bears2","");
+  function reveal(){var ST=LS.get("cg-bears2","")||BEARS_STINK;
     if(ST){try{sfx.good();}catch(x){}o.className="bpoll stink";o.innerHTML="<img src='"+ST+"' alt='Stinky Bears'>";
       setTimeout(function(){if(o.parentNode){o.remove();try{showMain();}catch(x){}}},2000);return;}
     try{sfx.good();confetti();}catch(x){}
@@ -3099,7 +3106,7 @@ function bearsPoll(){var LOGO=LS.get("cg-bears",""),o=h("div","bpoll"),tries=0;
   ask();document.body.appendChild(o);sfx.pop();}
 
 /* ================= "new version" banner ================= */
-var APPV="2026.11.26n";
+var APPV="2026.11.26p";
 function verCheck(){if(!/^https?:$/.test(location.protocol)||/claude|localhost|127\.0/.test(location.hostname))return;
   fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.json():null;}).then(function(j){
     if(!j||!j.v||j.v===APPV||document.querySelector(".upd"))return;var b=h("button","upd","✨ New version! Tap to update");
